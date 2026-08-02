@@ -141,6 +141,15 @@ export function CheckIcon({ size = 13, color: c = color.surface }: IconProps) {
   );
 }
 
+/** Marks a price as higher, so the delta isn't carried by colour alone. */
+export function ArrowUpIcon({ size = 10, color: c = color.error }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 10 10" fill="none">
+      <Path d="M5 8.5V2M2.2 4.6L5 1.6l2.8 3" stroke={c} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
 export function StarIcon({ size = 12, color: c = color.highlightPressed }: IconProps) {
   return (
     <Svg width={size} height={size} viewBox="0 0 12 12" fill="none">

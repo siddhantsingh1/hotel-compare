@@ -8,6 +8,7 @@ import { Chip, Pill } from '../components/Chip';
 import { EmptyState, NoPackagesArt } from '../components/EmptyState';
 import { Header } from '../components/Header';
 import {
+  ArrowUpIcon,
   CheckIcon,
   ChevronDown,
   ChevronLeft,
@@ -25,8 +26,6 @@ import {
   PACKAGES,
   PACKAGE_FILTERS,
   PACKAGE_SUMMARY,
-  PLATFORM_ROOMS,
-  PLATFORM_TABS,
   ROOM_AMENITIES,
   ROOM_AMENITY_GROUPS,
   ROOM_FACTS,
@@ -39,12 +38,10 @@ import { color, radius, shadow, space, TOUCH_TARGET } from '../theme/tokens';
 import { EditStaySheet } from './HotelDetailScreen';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'PriceComparison'>;
-type Layout = 'room' | 'platform';
 type SheetName = 'edit' | 'amenities' | 'prices' | null;
 
 export function PriceComparisonScreen({ navigation }: Props) {
   const { selectedHotel, stayLabel, setSelection } = useBooking();
-  const [layout, setLayout] = useState<Layout>('room');
   const [sheet, setSheet] = useState<SheetName>(null);
   const [filters, setFilters] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -77,46 +74,15 @@ export function PriceComparisonScreen({ navigation }: Props) {
         }
       />
 
-      <View style={styles.layoutTabs}>
-        {(
-          [
-            ['room', 'By room'],
-            ['platform', 'By site'],
-          ] as [Layout, string][]
-        ).map(([value, label]) => (
-          <Pressable
-            key={value}
-            style={[styles.layoutTab, layout === value && styles.layoutTabActive]}
-            onPress={() => setLayout(value)}
-          >
-            <Txt
-              variant={layout === value ? 'semibold14' : 'regular14'}
-              color={layout === value ? color.primary : color.textSecondary}
-            >
-              {label}
-            </Txt>
-          </Pressable>
-        ))}
-      </View>
-
-      {layout === 'room' ? (
-        <ByRoomLayout
-          filters={filters}
-          onToggleFilter={toggleFilter}
-          onOpenAmenities={() => setSheet('amenities')}
-          onOpenPrices={() => setSheet('prices')}
-          onOpenPhoto={setLightboxIndex}
-          onSelect={goToCheckout}
-          onClearFilters={() => setFilters([])}
-        />
-      ) : (
-        <ByPlatformLayout
-          filters={filters}
-          onToggleFilter={toggleFilter}
-          onSelect={goToCheckout}
-          onClearFilters={() => setFilters([])}
-        />
-      )}
+      <ByRoomLayout
+        filters={filters}
+        onToggleFilter={toggleFilter}
+        onOpenAmenities={() => setSheet('amenities')}
+        onOpenPrices={() => setSheet('prices')}
+        onOpenPhoto={setLightboxIndex}
+        onSelect={goToCheckout}
+        onClearFilters={() => setFilters([])}
+      />
 
       <EditStaySheet visible={sheet === 'edit'} onClose={() => setSheet(null)} />
 
@@ -154,12 +120,18 @@ export function PriceComparisonScreen({ navigation }: Props) {
                 <Txt variant="medium14">{site.platform}</Txt>
                 <View style={styles.priceSheetPrice}>
                   <Txt variant="semibold16">{site.price}</Txt>
-                  <Txt
-                    variant="medium12"
-                    color={index === 0 ? color.success : color.error}
-                  >
-                    {index === 0 ? site.note : `↑ ${site.note}`}
-                  </Txt>
+                  {index === 0 ? (
+                    <Txt variant="medium12" color={color.success}>
+                      {site.note}
+                    </Txt>
+                  ) : (
+                    <View style={styles.deltaRow}>
+                      <ArrowUpIcon size={10} />
+                      <Txt variant="medium12" color={color.error}>
+                        {site.note}
+                      </Txt>
+                    </View>
+                  )}
                 </View>
                 <Txt variant="regular12" color={color.textMuted} style={{ marginTop: space.x2 }}>
                   {site.taxes}
@@ -421,9 +393,12 @@ function PackageCard({
                   </Txt>
                   <View style={styles.otherPriceRow}>
                     <Txt variant="semibold16">{other.price}</Txt>
-                    <Txt variant="regular12" color={color.error}>
-                      ↑ {other.higherBy} higher
-                    </Txt>
+                    <View style={styles.deltaRow}>
+                      <ArrowUpIcon size={10} />
+                      <Txt variant="regular12" color={color.error}>
+                        {other.higherBy} higher
+                      </Txt>
+                    </View>
                   </View>
                 </View>
                 <ChevronRight size={14} />
@@ -438,158 +413,6 @@ function PackageCard({
         </View>
       ) : null}
     </Pressable>
-  );
-}
-
-function ByPlatformLayout({
-  filters,
-  onToggleFilter,
-  onSelect,
-  onClearFilters,
-}: {
-  filters: string[];
-  onToggleFilter: (label: string) => void;
-  onSelect: (packageIndex: number) => void;
-  onClearFilters: () => void;
-}) {
-  const [platformIndex, setPlatformIndex] = useState(0);
-  const [openRooms, setOpenRooms] = useState<number[]>([0]);
-
-  const hasPackages = filters.length === 0 || filters.every((f) => PACKAGES[0].tags.includes(f));
-
-  return (
-    <ScrollView style={styles.scroll}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabStrip}>
-        {PLATFORM_TABS.map((tab, index) => {
-          const active = platformIndex === index;
-          return (
-            <Pressable
-              key={tab.name}
-              style={[styles.platformTab, active ? styles.roomTabActive : styles.roomTabIdle]}
-              onPress={() => setPlatformIndex(index)}
-            >
-              <Photo uri={platformLogos[tab.name]} style={styles.platformTabLogo} />
-              <View>
-                <Txt variant="semibold14" color={active ? color.primary : color.textSecondary}>
-                  {tab.name}
-                </Txt>
-                <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x4 }}>
-                  from <Txt variant="semibold14" style={styles.smallText}>{tab.from}</Txt>
-                </Txt>
-              </View>
-            </Pressable>
-          );
-        })}
-      </ScrollView>
-
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.chipStripThick}
-        contentContainerStyle={styles.chipStripContent}
-      >
-        {PACKAGE_FILTERS.map((label) => (
-          <Chip
-            key={label}
-            label={label}
-            checkbox
-            active={filters.includes(label)}
-            onPress={() => onToggleFilter(label)}
-          />
-        ))}
-      </ScrollView>
-
-      {hasPackages ? (
-        <View style={styles.roomList}>
-          <Txt variant="regular14" color={color.textSecondary}>
-            <Txt variant="semibold14">{PACKAGE_SUMMARY.platformRoomCount} rooms</Txt> available on{' '}
-            <Txt variant="semibold14">{PLATFORM_TABS[platformIndex].name}</Txt>
-          </Txt>
-
-          {PLATFORM_ROOMS.map((room, index) => {
-            const open = openRooms.includes(index);
-            return (
-              <View key={room.name} style={{ gap: space.x12 }}>
-                <Pressable
-                  style={styles.roomRow}
-                  onPress={() =>
-                    setOpenRooms((prev) =>
-                      prev.includes(index) ? prev.filter((x) => x !== index) : [...prev, index]
-                    )
-                  }
-                >
-                  <Photo uri={room.photo} style={styles.roomThumb} />
-                  <View style={{ flex: 1, minWidth: 0 }}>
-                    <Txt variant="semibold16">{room.name}</Txt>
-                    <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x4 }}>
-                      {room.meta}
-                    </Txt>
-                    <Txt variant="semibold14" color={color.success} style={[styles.smallText, { marginTop: space.x4 }]}>
-                      {room.summary}
-                    </Txt>
-                  </View>
-                  <View style={{ transform: [{ rotate: open ? '180deg' : '0deg' }] }}>
-                    <ChevronDown size={16} />
-                  </View>
-                </Pressable>
-
-                {open
-                  ? room.packages.map((pkg, packageIndex) => (
-                      <View key={pkg.name} style={[styles.packageCard, shadow.card]}>
-                        <Txt variant="semibold16">{pkg.name}</Txt>
-                        <View style={{ gap: space.x8 }}>
-                          {pkg.inclusions.map((inclusion) => (
-                            <View key={inclusion} style={styles.inclusionRow}>
-                              <CheckIcon size={12} color={color.success} />
-                              <Txt variant="regular12" color={color.textSecondary} style={styles.inclusionText}>
-                                {inclusion}
-                              </Txt>
-                            </View>
-                          ))}
-                        </View>
-                        <View style={styles.bestPriceRow}>
-                          <View style={{ flex: 1, minWidth: 0 }}>
-                            <View style={styles.priceRow}>
-                              <Txt variant="bold24">{pkg.total}</Txt>
-                              <Txt variant="regular12" color={color.textMuted} style={styles.strikethrough}>
-                                {pkg.compareAt}
-                              </Txt>
-                              <Pill
-                                label={`${pkg.discount} off`}
-                                background={color.success}
-                                foreground={color.surface}
-                              />
-                            </View>
-                            <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x4 }}>
-                              {pkg.taxes}
-                            </Txt>
-                          </View>
-                          <Button
-                            label="Select"
-                            size="compact"
-                            variant={packageIndex === 0 ? 'primary' : 'secondary'}
-                            onPress={() => onSelect(packageIndex)}
-                          />
-                        </View>
-                      </View>
-                    ))
-                  : null}
-              </View>
-            );
-          })}
-        </View>
-      ) : (
-        <View style={styles.emptyWrap}>
-          <EmptyState
-            art={<NoPackagesArt />}
-            title="No packages match your filters"
-            body="Try removing a filter to see more packages for this room."
-            actionLabel="Clear filters"
-            onAction={onClearFilters}
-          />
-        </View>
-      )}
-    </ScrollView>
   );
 }
 
@@ -662,21 +485,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
   },
-  layoutTabs: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: color.border,
-    backgroundColor: color.surface,
-  },
-  layoutTab: {
-    paddingVertical: space.x12,
-    paddingHorizontal: space.x16,
-    borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
-  },
-  layoutTabActive: {
-    borderBottomColor: color.primary,
-  },
   tabStrip: {
     flexGrow: 0,
     borderBottomWidth: 1,
@@ -688,20 +496,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.x16,
     borderBottomWidth: 2,
     alignItems: 'center',
-  },
-  platformTab: {
-    minWidth: 120,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.x8,
-    paddingVertical: space.x12,
-    paddingHorizontal: space.x16,
-    borderBottomWidth: 2,
-  },
-  platformTabLogo: {
-    width: 24,
-    height: 24,
-    borderRadius: radius.sm,
   },
   roomTabActive: {
     borderBottomColor: color.primary,
@@ -760,11 +554,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: color.border,
   },
-  chipStripThick: {
-    flexGrow: 0,
-    borderBottomWidth: space.x8,
-    borderBottomColor: color.page,
-  },
   chipStripContent: {
     padding: space.x16,
     gap: space.x8,
@@ -772,10 +561,6 @@ const styles = StyleSheet.create({
   packageList: {
     padding: space.x16,
     gap: space.x12,
-  },
-  roomList: {
-    padding: space.x16,
-    gap: space.x16,
   },
   packageCard: {
     borderWidth: 1,
@@ -846,9 +631,14 @@ const styles = StyleSheet.create({
   },
   otherPriceRow: {
     flexDirection: 'row',
-    alignItems: 'baseline',
+    alignItems: 'center',
     gap: space.x8,
     marginTop: space.x2,
+  },
+  deltaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.x4,
   },
   viewAllRow: {
     borderTopWidth: 1,
@@ -856,16 +646,6 @@ const styles = StyleSheet.create({
     paddingTop: space.x12,
     minHeight: TOUCH_TARGET,
     justifyContent: 'center',
-  },
-  roomRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.x12,
-  },
-  roomThumb: {
-    width: 96,
-    height: 72,
-    borderRadius: radius.lg,
   },
   emptyWrap: {
     height: 420,
@@ -901,7 +681,7 @@ const styles = StyleSheet.create({
   },
   priceSheetPrice: {
     flexDirection: 'row',
-    alignItems: 'baseline',
+    alignItems: 'center',
     gap: space.x8,
     marginTop: space.x2,
   },

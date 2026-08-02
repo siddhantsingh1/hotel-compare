@@ -10,7 +10,7 @@ import {
   NoFilterMatchArt,
   NoHotelsArt,
 } from '../components/EmptyState';
-import { ChevronRight, FilterIcon, HeartIcon, MapIcon, SortIcon } from '../components/Icon';
+import { ArrowUpIcon, ChevronRight, FilterIcon, HeartIcon, MapIcon, SortIcon } from '../components/Icon';
 import { Header } from '../components/Header';
 import { Photo } from '../components/Photo';
 import { Stars } from '../components/Stars';
@@ -248,9 +248,12 @@ function HotelCard({ hotel, onOpen }: { hotel: Hotel; onOpen: () => void }) {
               </Txt>
               <View style={styles.altPriceRow}>
                 <Txt variant="semibold16">{alt.price}</Txt>
-                <Txt variant="regular12" color={color.error}>
-                  ↑ {alt.higherBy} higher
-                </Txt>
+                <View style={styles.deltaRow}>
+                  <ArrowUpIcon size={10} />
+                  <Txt variant="regular12" color={color.error}>
+                    {alt.higherBy} higher
+                  </Txt>
+                </View>
               </View>
             </View>
             <ChevronRight size={14} />
@@ -412,8 +415,13 @@ const styles = StyleSheet.create({
   },
   altPriceRow: {
     flexDirection: 'row',
-    alignItems: 'baseline',
+    alignItems: 'center',
     gap: space.x8,
     marginTop: space.x2,
+  },
+  deltaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.x4,
   },
 });

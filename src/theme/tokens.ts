@@ -74,10 +74,10 @@ export const space = {
 export const PAGE_MARGIN = space.x16;
 
 export const fontFamily = {
-  regular: 'Roboto_400Regular',
-  medium: 'Roboto_500Medium',
-  semibold: 'Roboto_600SemiBold',
-  bold: 'Roboto_700Bold',
+  regular: 'GoogleSansFlex-Regular',
+  medium: 'GoogleSansFlex-Medium',
+  semibold: 'GoogleSansFlex-SemiBold',
+  bold: 'GoogleSansFlex-Bold',
 } as const;
 
 type TypeStyle = {

@@ -266,7 +266,7 @@ export function BookingConfirmationScreen({ navigation }: Props) {
               </View>
             ))}
           </View>
-          <Button label="View all gift cards" variant="outlinePill" size="compact" />
+          <Button label="View all gift cards" variant="secondary" size="compact" />
           <View style={{ height: space.x56 }} />
         </View>
       </ScrollView>

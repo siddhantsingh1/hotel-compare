@@ -513,57 +513,7 @@ export const ALL_SITE_PRICES = [
   { platform: 'Hotel website', price: '₹5,650', note: '15% higher', taxes: '+ ₹678 taxes & fees' },
 ];
 
-export const PLATFORM_TABS = [
-  { name: 'MakeMyTrip', from: '₹4,899' },
-  { name: 'Goibibo', from: '₹5,010' },
-  { name: 'Booking.com', from: '₹5,120' },
-  { name: 'Agoda', from: '₹5,340' },
-];
-
-export const PLATFORM_ROOMS = [
-  {
-    name: 'Deluxe Room',
-    summary: '2 packages · from ₹4,290',
-    meta: '2 adults · 28 sqm · Garden view',
-    photo: roomPhotos[0],
-    packages: [
-      {
-        name: 'Breakfast + Free cancellation',
-        inclusions: INCLUSIONS_A,
-        total: '₹4,899',
-        compareAt: '₹6,299',
-        discount: '22%',
-        taxes: '+ ₹588 taxes & fees',
-      },
-      {
-        name: 'Room only · Non-refundable',
-        inclusions: INCLUSIONS_B,
-        total: '₹4,290',
-        compareAt: '₹5,200',
-        discount: '17%',
-        taxes: '+ ₹515 taxes & fees',
-      },
-    ],
-  },
-  {
-    name: 'Premier Sea View',
-    summary: '1 package · from ₹6,250',
-    meta: '2 adults · 34 sqm · Sea view',
-    photo: roomPhotos[1],
-    packages: [
-      {
-        name: 'Breakfast + Free cancellation',
-        inclusions: INCLUSIONS_A,
-        total: '₹6,250',
-        compareAt: '₹7,900',
-        discount: '21%',
-        taxes: '+ ₹750 taxes & fees',
-      },
-    ],
-  },
-];
-
-export const PACKAGE_SUMMARY = { packageCount: 6, siteCount: 8, platformRoomCount: 4 };
+export const PACKAGE_SUMMARY = { packageCount: 6, siteCount: 8 };
 
 export const CONFIRMATION = {
   bookingId: 'BH-4827-19340',

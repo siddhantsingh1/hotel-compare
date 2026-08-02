@@ -21,6 +21,7 @@ npm run typecheck  # tsc --noEmit
 | `src/screens/` | One file per screen, plus `screens/sheets/` for the filter, sort, date and guest sheets |
 | `src/state/BookingContext.tsx` | Search, filters, sort and selection shared across the flow |
 | `src/data/mock.ts` | Copy and pricing from the prototypes |
+| `assets/fonts/` | Google Sans Flex, four static weights (SIL OFL — see `OFL.txt`) |
 
 The flow runs Entry Search → Results → Hotel Detail → Price Comparison → Webview Checkout →
 Booking Confirmation. The four empty states are wired to real conditions rather than being
