@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&amp;family=Roboto+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F1F2F4; -webkit-font-smoothing: antialiased; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; }
+  a { color: #5855E5; text-decoration: none; }
+  a:hover { color: #4442B2; }
+  .hs::-webkit-scrollbar { display: none; }
+</style>
+</helmet>
+
+<div data-screen-label="Booking Confirmation" style="width: 390px; height: 780px; margin: 24px auto; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; position: relative; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; color: #030712;">
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 20px; z-index: 5; display: flex; justify-content: center; pointer-events: none;">
+    <div style="background: #5855E5; color: #FFFFFF; padding: 14px 28px; border-radius: 16px; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; box-shadow: 0 6px 20px rgba(88,85,229,0.35);">Back to Home</div>
+  </div>
+
+  <div style="flex-shrink: 0; padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between;">
+    <div style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #4A5565; cursor: pointer;" style-hover="border-color: #5855E5;">×</div>
+    <div style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: center; cursor: pointer;" style-hover="border-color: #5855E5;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.5 9.8l5 2.6M11.5 5.6l-5 2.6" stroke="#5855E5" stroke-width="1.4" stroke-linecap="round"></path><circle cx="13.2" cy="4.6" r="2.1" stroke="#5855E5" stroke-width="1.4"></circle><circle cx="4.8" cy="9" r="2.1" stroke="#5855E5" stroke-width="1.4"></circle><circle cx="13.2" cy="13.4" r="2.1" stroke="#5855E5" stroke-width="1.4"></circle></svg>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; overflow-y: auto;">
+
+    <div style="padding: 24px 16px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; border-bottom: 8px solid #F9FAFB;">
+      <svg width="120" height="96" viewBox="0 0 120 96" fill="none">
+        <circle cx="60" cy="48" r="40" fill="#E8F8F0"></circle>
+        <circle cx="60" cy="48" r="25" stroke="#00764F" stroke-width="3"></circle>
+        <path d="M50 48.5l7 7 14-14" stroke="#00764F" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M22 26l3.5 7 7 3.5-7 3.5-3.5 7-3.5-7-7-3.5 7-3.5L22 26z" fill="#FACC15"></path>
+        <path d="M99 62l2.4 4.8 4.8 2.4-4.8 2.4-2.4 4.8-2.4-4.8-4.8-2.4 4.8-2.4L99 62z" fill="#FACC15"></path>
+      </svg>
+      <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700; color: #030712; text-align: center; text-wrap: pretty;">Congrats! Your booking is confirmed.</div>
+      <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565;">Booked on MakeMyTrip · <span style="color: #030712; font-weight: 500;">{{ bookingId }}</span></div>
+      <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #FFFFFF; background: #00764F; border-radius: 999px; padding: 8px 16px; margin-top: 4px;">You saved {{ saved }} via hotel compare</div>
+    </div>
+
+    <div style="padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; border-bottom: 8px solid #F9FAFB;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 56px; height: 56px; border-radius: 12px; flex-shrink: 0; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 6px, #DDE0E5 6px 12px);"></div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Ocean Pearl Resort</div>
+          <div style="display: flex; align-items: center; gap: 6px; margin-top: 4px;">
+            <div style="font-size: 12px; line-height: 16px; color: #DEA20C; letter-spacing: 1px;">★★★★</div>
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">· Candolim, North Goa</div>
+          </div>
+        </div>
+        <div style="width: 44px; height: 44px; border-radius: 999px; background: #EFEFFF; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15 3L3 8l5.2 1.8L10 15l5-12z" stroke="#5855E5" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <sc-for list="{{ keyFeatures }}" as="f" hint-placeholder-count="3">
+          <div style="display: flex; align-items: center; gap: 8px; background: #E8F8F0; border-radius: 999px; padding: 8px 14px;">
+            <div style="font-size: 12px; line-height: 1; color: #00764F; font-weight: 700;">✓</div>
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #00764F; font-weight: 500;">{{ f }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding: 18px 16px; display: flex; flex-direction: column; gap: 16px; border-bottom: 8px solid #F9FAFB;">
+      <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Booking details</div>
+
+      <div style="border: 1px solid #E5E7EB; border-radius: 12px; display: flex;">
+        <div style="flex: 1; padding: 12px 16px; border-right: 1px solid #E5E7EB;">
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF;">Check-in</div>
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 600; margin-top: 4px;">12 Aug</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 4px;">After 2:00 PM</div>
+        </div>
+        <div style="flex: 1; padding: 12px 16px;">
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF;">Check-out</div>
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 600; margin-top: 4px;">15 Aug</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 4px;">Before 11:00 AM</div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 600; color: #4A5565;">Room &amp; package</div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Deluxe Room, Sea View</div>
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 4px;">Breakfast + Free cancellation</div>
+          </div>
+          <div style="width: 72px; height: 56px; border-radius: 8px; flex-shrink: 0; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 6px, #DDE0E5 6px 12px);"></div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 600; color: #4A5565;">Guests</div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 36px; height: 36px; border-radius: 999px; background: #EFEFFF; color: #5855E5; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 18px; font-weight: 600;">AR</div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Ananya Rao</div>
+              <div style="font-size: 12px; line-height: 16px; font-weight: 500; color: #5855E5; background: #EFEFFF; border-radius: 999px; padding: 4px 10px;">Primary guest</div>
+            </div>
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 4px;">1 room · 2 adults</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(3,7,18,0.04);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 3px, #DDE0E5 3px 6px);"></div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ platform }}</div>
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #00764F; font-weight: 500; margin-top: 4px;">You saved {{ saved }} via compare</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="display: flex; align-items: baseline; gap: 8px; justify-content: flex-end;">
+              <div style="font-size: 12px; line-height: 16px; color: #99A1AF; text-decoration: line-through;">₹7,630</div>
+              <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700; color: #030712;">₹5,642</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-top: 4px;">
+              <div style="font-size: 12px; line-height: 16px; font-weight: 500; color: #FFFFFF; background: #00764F; border-radius: 999px; padding: 4px 10px;">26% off</div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">Amount paid</div>
+            </div>
+          </div>
+        </div>
+        <div style="width: 100%; box-sizing: border-box; background: #5855E5; color: #FFFFFF; text-align: center; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;" style-hover="background: #4442B2;">
+          View confirmation on {{ platform }}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink: 0;"><path d="M4 10l6-6M5.4 4H10v4.6" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding: 18px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 8px solid #F9FAFB;">
+      <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712; padding: 0 16px;">Getting around in Goa</div>
+      <div class="hs" style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px; scrollbar-width: none;">
+        <sc-for list="{{ rideBanners }}" as="b" hint-placeholder-count="3">
+          <div style="flex-shrink: 0; width: 280px; border: 1px solid #E5E7EB; border-radius: 12px; background: #F9FAFB; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0; background: #EFEFFF; display: flex; align-items: center; justify-content: center;">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3.5 14v-3l2-4.5h11L18.5 11v3" stroke="#5855E5" stroke-width="1.6" stroke-linejoin="round"></path><path d="M3.5 14h15v2.5h-3V14M6.5 16.5V14" stroke="#5855E5" stroke-width="1.6" stroke-linejoin="round"></path><circle cx="7" cy="11.5" r="1" fill="#5855E5"></circle><circle cx="15" cy="11.5" r="1" fill="#5855E5"></circle></svg>
+              </div>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Compare Ride Fares</div>
+                <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 400; color: #4A5565; margin-top: 2px;">{{ b.title }}</div>
+              </div>
+              <div style="box-sizing: border-box; display: flex; flex-direction: row; gap: 12px; justify-content: normal; align-items: center;">
+                <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; text-align: right;">starting from
+                  <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 700; color: #030712; margin-top: 2px; text-align: right;">{{ b.from }}</div>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">Compare on</div>
+              <div style="display: flex; align-items: center;">
+                <sc-for list="{{ b.providers }}" as="pr" hint-placeholder-count="4">
+                  <div style="width: 24px; height: 24px; border-radius: 999px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 3px, #DDE0E5 3px 6px); border: 1.5px solid #FFFFFF; box-shadow: 0 0 0 1px #E5E7EB; margin-left: -8px;"></div>
+                </sc-for>
+              </div>
+              <div style="flex: 1; min-width: 0;"></div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #5855E5; font-weight: 600; background: #EFEFFF; border-radius: 999px; padding: 8px 14px; flex-shrink: 0; cursor: pointer;" style-hover="background: #E0E0FF;">{{ b.cta }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding: 18px 16px; border-bottom: 8px solid #F9FAFB;">
+      <div style="width: 100%; height: 110px; border-radius: 12px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 8px, #DDE0E5 8px 16px); display: flex; align-items: center; justify-content: center;">
+        
+      </div>
+    </div>
+
+    <div style="padding: 18px 16px 28px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Gift cards for your trip</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <sc-for list="{{ giftCards }}" as="g" hint-placeholder-count="6">
+          <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="width: 100%; height: 72px; border-radius: 8px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 6px, #DDE0E5 6px 12px); display: flex; align-items: center; justify-content: center;">
+              
+            </div>
+            <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ g.brand }}</div>
+            <div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">{{ g.offerType }}</div>
+              <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700; color: #00764F; margin-top: 2px;">{{ g.discount }}</div>
+            </div>
+            <div style="border: 1px solid #5855E5; color: #5855E5; text-align: center; padding: 10px; border-radius: 12px; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;" style-hover="background: #EFEFFF;">Buy now</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="width: 100%; box-sizing: border-box; border: 1px solid #E5E7EB; border-radius: 999px; text-align: center; padding: 14px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712; cursor: pointer;" style-hover="border-color: #99A1AF;">View all gift cards</div>
+      <div style="height: 56px;"></div>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 440, &quot;height&quot;: 830}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      bookingId: 'BH-4827-19340',
+      saved: '₹1,988',
+      platform: 'MakeMyTrip',
+      keyFeatures: ['Free cancellation till 10 Aug', 'Breakfast included', 'Pay at hotel'],
+      rideBanners: [
+        { title: 'Goa Airport → Hotel', sub: 'Compare cab fares', cta: 'Book Cabs', from: '₹1,180', providers: [1, 2, 3, 4] },
+        { title: 'Hotel → Goa Airport', sub: 'Pre-book for 15 Aug', cta: 'Book', from: '₹1,340', providers: [1, 2, 3] },
+        { title: 'Candolim → Old Goa', sub: 'Day trips & sightseeing', cta: 'Explore', from: '₹499', providers: [1, 2, 3] },
+      ],
+      giftCards: [
+        { brand: 'Ride brand', offerType: 'Instant off', discount: '6%' },
+        { brand: 'Food delivery brand', offerType: 'Cashback', discount: '10%' },
+        { brand: 'Restaurant chain', offerType: 'Instant off', discount: '8%' },
+        { brand: 'Retail brand', offerType: 'Cashback', discount: '5%' },
+        { brand: 'Fuel brand', offerType: 'Instant off', discount: '3%' },
+        { brand: 'Travel brand', offerType: 'Cashback', discount: '7%' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

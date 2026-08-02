@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap');
+  body { margin:0; background:#F3F4F6; font-family:'Google Sans','Google Sans Flex',Helvetica,Arial,sans-serif; }
+  a { color:#45556C; }
+  a:hover { color:#101828; }
+</style>
+</helmet>
+
+<section style="padding:32px;display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;">
+
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:14px;font-weight:600;color:#101828;">1 · No hotels found</div>
+    <div style="width:390px;height:780px;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="flex-shrink:0;padding:16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+        <div style="width:8px;height:8px;border-left:2px solid #45556C;border-bottom:2px solid #45556C;transform:rotate(45deg);flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:600;color:#101828;">Zuluk, Sikkim</div>
+          <div style="font-size:12px;color:#6A7282;margin-top:4px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+        </div>
+        <div style="font-size:12px;color:#45556C;font-weight:500;border:1px solid #D1D5DC;border-radius:999px;padding:8px 12px;flex-shrink:0;">Edit</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 32px 80px;">
+        <div style="width:150px;height:120px;border-radius:10px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 8px,#E5E7EB 8px,#E5E7EB 16px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:9px;color:#99A1AF;font-family:monospace;">illustration</div>
+        </div>
+        <div style="font-size:18px;font-weight:600;color:#101828;text-align:center;">No hotels found</div>
+        <div style="font-size:13px;color:#6A7282;text-align:center;line-height:20px;text-wrap:pretty;">We couldn't find stays for this search. Try a different location or change your dates from the search bar above.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:14px;font-weight:600;color:#101828;">2 · No hotels match filters</div>
+    <div style="width:390px;height:780px;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="flex-shrink:0;padding:16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+        <div style="width:8px;height:8px;border-left:2px solid #45556C;border-bottom:2px solid #45556C;transform:rotate(45deg);flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:600;color:#101828;">Goa</div>
+          <div style="font-size:12px;color:#6A7282;margin-top:4px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+        </div>
+        <div style="width:44px;height:44px;border:1px solid #D1D5DC;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:8px;color:#99A1AF;font-family:monospace;">map</div>
+        </div>
+      </div>
+      <div style="flex-shrink:0;padding:12px 16px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid #E5E7EB;">
+        <div style="flex-shrink:0;padding:8px 14px;border-radius:999px;border:1px solid #45556C;color:#101828;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;">
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <div style="width:10px;height:2px;background:#45556C;"></div>
+            <div style="width:10px;height:2px;background:#45556C;"></div>
+            <div style="width:10px;height:2px;background:#45556C;"></div>
+          </div>
+          Filter · 3
+        </div>
+        <sc-for list="{{ activeFilters }}" as="f" hint-placeholder-count="3">
+          <div style="flex-shrink:0;padding:8px 14px;border-radius:999px;background:#364153;color:#FFFFFF;font-size:13px;font-weight:500;white-space:nowrap;">{{ f }}</div>
+        </sc-for>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 32px 80px;">
+        <div style="width:150px;height:120px;border-radius:10px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 8px,#E5E7EB 8px,#E5E7EB 16px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:9px;color:#99A1AF;font-family:monospace;">illustration</div>
+        </div>
+        <div style="font-size:18px;font-weight:600;color:#101828;text-align:center;">No hotels match your filters</div>
+        <div style="font-size:13px;color:#6A7282;text-align:center;line-height:20px;text-wrap:pretty;">Try removing one or two filters to see more stays.</div>
+        <div style="background:#364153;color:#FFFFFF;text-align:center;padding:12px 26px;border-radius:10px;font-size:14px;font-weight:600;margin-top:4px;">Clear filters</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:14px;font-weight:600;color:#101828;">3 · No reviews available</div>
+    <div style="width:390px;height:780px;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="flex-shrink:0;padding:12px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+        <div style="width:8px;height:8px;border-left:2px solid #45556C;border-bottom:2px solid #45556C;transform:rotate(45deg);flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:600;color:#101828;">Ocean Pearl Resort</div>
+          <div style="font-size:12px;color:#6A7282;margin-top:4px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:20px;">
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:15px;font-weight:600;color:#101828;">Ratings &amp; reviews</div>
+          <div style="display:flex;gap:8px;overflow-x:auto;">
+            <div style="flex-shrink:0;padding:8px 16px;border-radius:999px;background:#364153;color:#FFFFFF;font-size:13px;font-weight:500;">Google</div>
+            <div style="flex-shrink:0;padding:8px 16px;border-radius:999px;border:1px solid #D1D5DC;color:#45556C;font-size:13px;font-weight:500;">MakeMyTrip</div>
+            <div style="flex-shrink:0;padding:8px 16px;border-radius:999px;border:1px solid #D1D5DC;color:#45556C;font-size:13px;font-weight:500;">Booking.com</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;font-weight:600;color:#99A1AF;text-transform:uppercase;letter-spacing:0.4px;">Primary fallback · star rating shown</div>
+          <div style="border:1px solid #E5E7EB;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:20px;color:#45556C;">★★★★</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:500;color:#101828;">4-star property</div>
+                <div style="font-size:12px;color:#6A7282;margin-top:4px;">No Google reviews yet</div>
+              </div>
+            </div>
+            <div style="border-top:1px solid #F3F4F6;padding-top:12px;font-size:12px;color:#6A7282;">Reviews available on MakeMyTrip &amp; Booking.com</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;font-weight:600;color:#99A1AF;text-transform:uppercase;letter-spacing:0.4px;">Secondary fallback · no rating either</div>
+          <div style="border:1px solid #E5E7EB;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:11px;font-weight:600;color:#45556C;border:1px solid #D1D5DC;border-radius:6px;padding:4px 10px;">Newly listed</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:12px;color:#6A7282;">Not rated yet · no reviews on any site</div>
+              </div>
+            </div>
+            <div style="border-top:1px solid #F3F4F6;padding-top:12px;font-size:12px;color:#6A7282;line-height:18px;">Ratings will appear here once guests review this property.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;font-weight:600;color:#99A1AF;text-transform:uppercase;letter-spacing:0.4px;">Alternate path · empty source tab</div>
+          <div style="border:1px solid #E5E7EB;border-radius:10px;padding:20px 14px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="width:110px;height:80px;border-radius:8px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 6px,#E5E7EB 6px,#E5E7EB 12px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+              <div style="font-size:9px;color:#99A1AF;font-family:monospace;">illustration</div>
+            </div>
+            <div style="font-size:14px;font-weight:600;color:#101828;text-align:center;">No Google reviews yet</div>
+            <div style="font-size:12px;color:#6A7282;text-align:center;line-height:18px;">Reviews available on MakeMyTrip (320) and Booking.com (118) — switch source above.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:14px;font-weight:600;color:#101828;">4 · No packages match filters</div>
+    <div style="width:390px;height:780px;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="flex-shrink:0;padding:12px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+        <div style="width:8px;height:8px;border-left:2px solid #45556C;border-bottom:2px solid #45556C;transform:rotate(45deg);flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:600;color:#101828;">Ocean Pearl Resort</div>
+          <div style="font-size:12px;color:#6A7282;margin-top:4px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+        </div>
+        <div style="font-size:12px;color:#45556C;font-weight:500;border:1px solid #D1D5DC;border-radius:999px;padding:8px 12px;flex-shrink:0;">Edit</div>
+      </div>
+
+      <div style="flex-shrink:0;display:flex;overflow-x:auto;border-bottom:1px solid #E5E7EB;">
+        <sc-for list="{{ roomTabs }}" as="t" hint-placeholder-count="3">
+          <div style="flex-shrink:0;min-width:130px;padding:12px 16px;border-bottom:2px solid {{ t.underline }};background:{{ t.bg }};">
+            <div style="font-size:13px;font-weight:600;color:{{ t.color }};">{{ t.name }}</div>
+            <div style="font-size:12px;color:#6A7282;margin-top:4px;">from {{ t.from }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="flex-shrink:0;padding:16px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid #E5E7EB;">
+        <sc-for list="{{ packageFilters }}" as="f" hint-placeholder-count="3">
+          <div style="flex-shrink:0;padding:8px 12px;border-radius:999px;border:1px solid #45556C;background:#EEF0F3;color:#101828;font-size:13px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px;">
+            <div style="width:14px;height:14px;border-radius:3px;background:#364153;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1;">✓</div>
+            {{ f }}
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 32px 80px;">
+        <div style="width:150px;height:120px;border-radius:10px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 8px,#E5E7EB 8px,#E5E7EB 16px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:9px;color:#99A1AF;font-family:monospace;">illustration</div>
+        </div>
+        <div style="font-size:18px;font-weight:600;color:#101828;text-align:center;">No packages match your filters</div>
+        <div style="font-size:13px;color:#6A7282;text-align:center;line-height:20px;text-wrap:pretty;">Try removing a filter to see more packages for this room.</div>
+        <div style="background:#364153;color:#FFFFFF;text-align:center;padding:12px 26px;border-radius:10px;font-size:14px;font-weight:600;margin-top:4px;">Clear filters</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      activeFilters: ['Free cancellation', '5 star', 'Under ₹3,000'],
+      packageFilters: ['Breakfast included', 'Free cancellation', 'Pay at hotel'],
+      roomTabs: [
+        { name: 'Deluxe Room', from: '₹4,899', bg: '#FFFFFF', color: '#101828', underline: '#364153' },
+        { name: 'Premier Sea View', from: '₹6,250', bg: '#F9FAFB', color: '#6A7282', underline: 'transparent' },
+        { name: 'Executive Suite', from: '₹9,400', bg: '#F9FAFB', color: '#6A7282', underline: 'transparent' },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

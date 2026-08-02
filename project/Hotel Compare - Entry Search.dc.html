@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&amp;family=Roboto+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F1F2F4; -webkit-font-smoothing: antialiased; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; }
+  a { color: #5855E5; text-decoration: none; }
+  a:hover { color: #4442B2; }
+  .hs::-webkit-scrollbar { display: none; }
+  @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+</style>
+</helmet>
+
+<div style="position: relative; width: 390px; height: 780px; margin: 24px auto; background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; color: #030712;">
+
+<div data-screen-label="Entry Search" style="position: absolute; inset: 0; overflow-y: auto; display: flex; flex-direction: column;">
+
+  <div style="padding: 20px 16px 24px; background: #5855E5;">
+    <div style="font-size: 12px; line-height: 16px; letter-spacing: 0; color: #EFEFFF; text-transform: uppercase; margin-bottom: 6px;">Buyhatke · Hotel Compare</div>
+    <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700; color: #FFFFFF; text-wrap: pretty;">Compare &amp; Book Hotels at Best Price</div>
+  </div>
+
+  <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; margin-top: -12px; border-radius: 20px 20px 0 0; border-bottom: 8px solid #F9FAFB;">
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #4A5565;">Destination</div>
+      <div onClick="{{ openSearch }}" style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; background: #FFFFFF; cursor: pointer;" style-hover="border-color: #5855E5;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink: 0;"><circle cx="9" cy="9" r="6" stroke="#5855E5" stroke-width="1.6"></circle><line x1="13.5" y1="13.5" x2="17.5" y2="17.5" stroke="#5855E5" stroke-width="1.6" stroke-linecap="round"></line></svg>
+        <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: {{ destinationColor }}; flex: 1;" data-comment-anchor="a76ff86b2d-div">{{ destinationLabel }}</div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #4A5565;">Dates</div>
+      <div style="border: 1px solid #E5E7EB; border-radius: 12px; display: flex; background: #FFFFFF; overflow: hidden;">
+        <div onClick="{{ openDates }}" style="flex: 1; padding: 12px 16px; border-right: 1px solid #E5E7EB; cursor: pointer;" style-hover="background: #F9FAFB;">
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF; margin-bottom: 2px;">Check-in</div>
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 500;" data-comment-anchor="b425d79152-div">{{ checkInLabel }}</div>
+        </div>
+        <div onClick="{{ openDates }}" style="flex: 1; padding: 12px 16px; cursor: pointer;" style-hover="background: #F9FAFB;">
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF; margin-bottom: 2px;">Check-out</div>
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 500;">{{ checkOutLabel }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #4A5565;">Rooms &amp; guests</div>
+      <div onClick="{{ openGuests }}" style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; cursor: pointer;" style-hover="border-color: #5855E5;" data-comment-anchor="c1e67248f3-div">
+        <div>
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 500;">{{ roomsLabel }}</div>
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ guestsLabel }}</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="#4A5565" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #4A5565;">Trip type <span style="color: #99A1AF; font-weight: 400;">(optional)</span></div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <sc-for list="{{ tripTypes }}" as="t" hint-placeholder-count="4">
+          <div onClick="{{ t.onClick }}" style="padding: 10px 14px; border-radius: 999px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; background: {{ t.bg }}; border: 1px solid {{ t.border }}; color: {{ t.color }}; cursor: pointer;">{{ t.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="width: 100%; box-sizing: border-box; background: #5855E5; color: #FFFFFF; text-align: center; padding: 16px; border-radius: 16px; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; margin-top: 4px; cursor: pointer;" style-hover="background: #4442B2;">Search hotels</div>
+  </div>
+
+  <div style="padding: 20px 16px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; border-bottom: 8px solid #F9FAFB;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600;">Recent searches</div>
+    <sc-for list="{{ recentSearches }}" as="r" hint-placeholder-count="3">
+      <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 12px; background: #FFFFFF; cursor: pointer;" style-hover="border-color: #5855E5; background: #FCFCFF;">
+        <div style="width: 79px; height: 63px; border-radius: 8px; flex-shrink: 0; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 5px, #DDE0E5 5px 10px)"></div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; color: #030712;">{{ r.place }}</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ r.dates }} · {{ r.guests }}</div>
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #030712; font-weight: 600; margin-top: 4px">From {{ r.price }}</div>
+        </div>
+        <div style="width: 32px; height: 32px; border-radius: 999px; background: #EFEFFF; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="#5855E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="padding: 20px 0 20px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; border-bottom: 8px solid #F9FAFB;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; padding: 0 16px;">Popular destinations</div>
+    <div class="hs" style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px; scrollbar-width: none;">
+      <sc-for list="{{ destinations }}" as="d" hint-placeholder-count="4">
+        <div style="flex-shrink: 0; width: 132px; cursor: pointer;">
+          <div style="width: 132px; height: 96px; border-radius: 12px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 8px, #DDE0E5 8px 16px); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; box-sizing: border-box;">
+            <div style="font-size: 12px; line-height: 16px; color: #4A5565; font-family: 'Roboto Mono', monospace; background: rgba(255,255,255,0.85); padding: 2px 6px; border-radius: 4px;">city photo</div>
+          </div>
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712; margin-top: 8px;">{{ d.city }}</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ d.hotels }}</div>
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #030712; font-weight: 600; margin-top: 4px;">From {{ d.startingPrice }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; border-bottom: 8px solid #F9FAFB;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; padding: 0 16px;">Deals on top hotel chains</div>
+    <div class="hs" style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px; scrollbar-width: none;">
+      <sc-for list="{{ chainDeals }}" as="c" hint-placeholder-count="3">
+        <div style="flex-shrink: 0; width: 232px; height: 104px; border-radius: 12px; border: 1px solid #E5E7EB; background: #FDF5D4; display: flex; flex-direction: column; justify-content: space-between; padding: 16px; box-sizing: border-box; cursor: pointer;" style-hover="border-color: #DEA20C;">
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ c.chain }}</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">{{ c.offer }}</div>
+            <div style="font-size: 12px; line-height: 16px; font-weight: 500; color: #FFFFFF; background: #00764F; border-radius: 999px; padding: 4px 10px; white-space: nowrap;">{{ c.savings }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding: 20px 16px 32px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600;">Gift cards for select hotel chains</div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <sc-for list="{{ giftCards }}" as="g" hint-placeholder-count="3">
+        <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 12px; background: #FFFFFF; cursor: pointer;" style-hover="border-color: #5855E5;">
+          <div style="width: 67px; height: 51px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 5px, #DDE0E5 5px 10px)">
+            
+          </div>
+          <div style="flex: 1;">
+            <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; color: #030712;">{{ g.chain }}</div>
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;"><span style="color: #00764F; font-weight: 500;">{{ g.discount }}</span> off gift cards</div>
+          </div>
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #5855E5; font-weight: 600; background: #EFEFFF; border-radius: 999px; padding: 10px 14px; flex-shrink: 0;">Buy Now</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+
+<!-- DESTINATION SEARCH + KEYBOARD -->
+<sc-if value="{{ showSearch }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Destination search" style="position: absolute; inset: 0; background: #FFFFFF; display: flex; flex-direction: column; animation: fadeIn 0.14s ease-out;">
+  <div style="padding: 12px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #E5E7EB;">
+    <div onClick="{{ closeOverlay }}" style="width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4l-5 5 5 5" stroke="#030712" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </div>
+    <div style="flex: 1; background: #F9FAFB; border: 1px solid #5855E5; border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 10px;">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="flex-shrink: 0;"><circle cx="9" cy="9" r="6" stroke="#5855E5" stroke-width="1.6"></circle><line x1="13.5" y1="13.5" x2="17.5" y2="17.5" stroke="#5855E5" stroke-width="1.6" stroke-linecap="round"></line></svg>
+      <div style="flex: 1; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: {{ queryColor }}; display: flex; align-items: center; min-width: 0;">
+        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ queryDisplay }}</span>
+        <span style="display: inline-block; width: 2px; height: 18px; background: #5855E5; margin-left: 1px; animation: caret 1s step-end infinite;"></span>
+      </div>
+      <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ clearQuery }}" style="width: 20px; height: 20px; border-radius: 999px; background: #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4A5565; cursor: pointer; flex-shrink: 0;">×</div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow-y: auto;">
+    <div style="padding: 12px 16px 4px; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #4A5565; text-transform: uppercase;">{{ resultsHeading }}</div>
+    <sc-for list="{{ results }}" as="s" hint-placeholder-count="4">
+      <div onClick="{{ s.onClick }}" style="padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-bottom: 1px solid #F9FAFB;" style-hover="background: #F9FAFB;">
+        <div style="width: 36px; height: 36px; border-radius: 8px; background: {{ s.iconBg }}; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 16px; font-weight: 600; color: {{ s.iconColor }};">{{ s.initial }}</div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 500; color: #030712;">{{ s.name }}</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ s.meta }}</div>
+        </div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #00764F; font-weight: 500; flex-shrink: 0;">{{ s.from }}</div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 32px 16px; text-align: center; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565;">No matches. Try a city or hotel name.</div>
+    </sc-if>
+  </div>
+
+  <div style="background: #E8E9ED; padding: 8px 4px 12px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+    <sc-for list="{{ keyRows }}" as="row" hint-placeholder-count="3">
+      <div style="display: flex; gap: 5px; padding: 0 {{ row.pad }};">
+        <sc-for list="{{ row.keys }}" as="k" hint-placeholder-count="10">
+          <div onClick="{{ k.onClick }}" style="flex: {{ k.flex }}; height: 42px; background: {{ k.bg }}; border-radius: 6px; box-shadow: 0 1px 0 rgba(3,7,18,0.28); display: flex; align-items: center; justify-content: center; font-size: 18px; line-height: 22px; color: #030712; cursor: pointer; user-select: none;">{{ k.label }}</div>
+        </sc-for>
+      </div>
+    </sc-for>
+    <div style="display: flex; gap: 5px; padding: 0 4px;">
+      <div style="width: 40px; height: 42px; background: #C4C7CE; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 18px; color: #030712;">123</div>
+      <div onClick="{{ typeSpace }}" style="flex: 1; height: 42px; background: #FFFFFF; border-radius: 6px; box-shadow: 0 1px 0 rgba(3,7,18,0.28); cursor: pointer;"></div>
+      <div onClick="{{ closeOverlay }}" style="width: 76px; height: 42px; background: #5855E5; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 18px; font-weight: 600; color: #FFFFFF; cursor: pointer;">Search</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- DATE SELECTION SHEET -->
+<sc-if value="{{ showDates }}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(3,7,18,0.45); display: flex; flex-direction: column; justify-content: flex-end; animation: fadeIn 0.14s ease-out;">
+  <div onClick="{{ closeOverlay }}" style="flex: 1;"></div>
+  <div data-screen-label="Date selection" style="background: #FFFFFF; border-radius: 20px 20px 0 0; max-height: 640px; display: flex; flex-direction: column; animation: sheetUp 0.2s cubic-bezier(0.2,0,0,1);">
+    <div style="padding: 12px 16px 0; display: flex; flex-direction: column; gap: 12px;">
+      <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB; align-self: center;"></div>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600;">Select dates</div>
+        <div onClick="{{ closeOverlay }}" style="width: 28px; height: 28px; border-radius: 999px; background: #F9FAFB; display: flex; align-items: center; justify-content: center; color: #4A5565; font-size: 14px; cursor: pointer;">×</div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <div style="flex: 1; border: 1px solid {{ checkInBorder }}; background: {{ checkInBg }}; border-radius: 12px; padding: 10px 12px;">
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">Check-in</div>
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; margin-top: 2px;">{{ checkInLabel }}</div>
+        </div>
+        <div style="flex: 1; border: 1px solid {{ checkOutBorder }}; background: {{ checkOutBg }}; border-radius: 12px; padding: 10px 12px;">
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">Check-out</div>
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; margin-top: 2px;">{{ checkOutLabel }}</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, 1fr); border-bottom: 1px solid #E5E7EB; padding-bottom: 8px;">
+        <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+          <div style="text-align: center; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF;">{{ w.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="flex: 1; overflow-y: auto; padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 16px;">
+      <sc-for list="{{ months }}" as="m" hint-placeholder-count="2">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600;">{{ m.name }}</div>
+          <div style="display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 4px;">
+            <sc-for list="{{ m.cells }}" as="c" hint-placeholder-count="35">
+              <div onClick="{{ c.onClick }}" style="height: 40px; background: {{ c.rangeBg }}; border-radius: {{ c.rangeRadius }}; display: flex; align-items: center; justify-content: center; cursor: {{ c.cursor }};">
+                <div style="width: 36px; height: 36px; border-radius: 999px; background: {{ c.bg }}; color: {{ c.color }}; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: {{ c.weight }}; display: flex; align-items: center; justify-content: center;">{{ c.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="padding: 12px 16px 16px; border-top: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px;">
+      <div style="flex: 1; min-width: 0;">
+        <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600;">{{ nightsLabel }}</div>
+        <div onClick="{{ resetDates }}" style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #5855E5; font-weight: 500; margin-top: 2px; cursor: pointer;">Reset</div>
+      </div>
+      <div onClick="{{ closeOverlay }}" style="background: {{ datesCtaBg }}; color: #FFFFFF; border-radius: 999px; padding: 14px 28px; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;">Apply</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ROOMS &amp; GUESTS SHEET -->
+<sc-if value="{{ showGuests }}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; background: rgba(3,7,18,0.45); display: flex; flex-direction: column; justify-content: flex-end; animation: fadeIn 0.14s ease-out;">
+  <div onClick="{{ closeOverlay }}" style="flex: 1;"></div>
+  <div data-screen-label="Rooms and guests" style="background: #FFFFFF; border-radius: 20px 20px 0 0; padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 16px; animation: sheetUp 0.2s cubic-bezier(0.2,0,0,1);">
+    <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB; align-self: center;"></div>
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600;">Rooms &amp; guests</div>
+      <div onClick="{{ closeOverlay }}" style="width: 28px; height: 28px; border-radius: 999px; background: #F9FAFB; display: flex; align-items: center; justify-content: center; color: #4A5565; font-size: 14px; cursor: pointer;">×</div>
+    </div>
+
+    <sc-for list="{{ counters }}" as="c" hint-placeholder-count="3">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F9FAFB;">
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 500;">{{ c.label }}</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ c.hint }}</div>
+        </div>
+        <div style="display: flex; align-items: center; border: 1px solid #5855E5; border-radius: 14px; flex-shrink: 0; overflow: hidden;">
+          <div onClick="{{ c.dec }}" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 20px; color: {{ c.decColor }}; cursor: {{ c.decCursor }}; user-select: none;">−</div>
+          <div style="min-width: 24px; text-align: center; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ c.value }}</div>
+          <div onClick="{{ c.inc }}" style="width: 44px; height: 44px; color: {{ c.incColor }}; display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 20px; cursor: {{ c.incCursor }}; user-select: none;">+</div>
+        </div>
+      </div>
+    </sc-for>
+
+    
+
+    <div onClick="{{ closeOverlay }}" style="background: #5855E5; color: #FFFFFF; text-align: center; padding: 16px; border-radius: 16px; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;" style-hover="background: #4442B2;">Apply</div>
+  </div>
+</div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 440, &quot;height&quot;: 830}}">
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTH_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const PLACES = [
+  { name: 'Goa, India', meta: 'City · 1,200+ hotels', from: 'From ₹2,499' },
+  { name: 'Gurugram, Haryana', meta: 'City · 540+ hotels', from: 'From ₹3,100' },
+  { name: 'Gangtok, Sikkim', meta: 'City · 210+ hotels', from: 'From ₹1,750' },
+  { name: 'Manali, Himachal Pradesh', meta: 'City · 480+ hotels', from: 'From ₹1,899' },
+  { name: 'Mumbai, Maharashtra', meta: 'City · 1,600+ hotels', from: 'From ₹3,450' },
+  { name: 'Taj Lands End, Mumbai', meta: 'Hotel · Bandra West', from: 'From ₹9,200' },
+  { name: 'Taj Holiday Village, Goa', meta: 'Hotel · Candolim', from: 'From ₹8,420' },
+  { name: 'Jaipur, Rajasthan', meta: 'City · 650+ hotels', from: 'From ₹2,199' },
+  { name: 'Bangkok, Thailand', meta: 'City · 2,100+ hotels', from: 'From ₹3,499' },
+  { name: 'Bali, Indonesia', meta: 'Region · 3,400+ hotels', from: 'From ₹4,050' },
+  { name: 'Dubai, UAE', meta: 'City · 1,900+ hotels', from: 'From ₹6,200' },
+];
+const KEY_ROWS = [
+  { pad: '4px', keys: 'qwertyuiop'.split('') },
+  { pad: '20px', keys: 'asdfghjkl'.split('') },
+  { pad: '4px', keys: null },
+];
+
+class Component extends DCLogic {
+  state = { overlay: null, query: '', destination: '', checkIn: null, checkOut: null, rooms: 1, adults: 2, children: 0, tripType: null };
+
+  iso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  fmt(s) { if (!s) return 'Select date'; const p = s.split('-'); return Number(p[2]) + ' ' + MON[Number(p[1]) - 1]; }
+
+  pickDay(key) {
+    const { checkIn, checkOut } = this.state;
+    if (!checkIn || checkOut || key < checkIn) this.setState({ checkIn: key, checkOut: null });
+    else if (key === checkIn) this.setState({ checkOut: null });
+    else this.setState({ checkOut: key });
+  }
+
+  bump(field, delta, min, max) {
+    const v = Math.min(max, Math.max(min, this.state[field] + delta));
+    this.setState({ [field]: v });
+  }
+
+  counter(field, label, hint, min, max) {
+    const v = this.state[field];
+    const off = { border: '#E5E7EB', color: '#99A1AF', cursor: 'default' };
+    const on = { border: '#5855E5', color: '#5855E5', cursor: 'pointer' };
+    const d = v > min ? on : off, i = v < max ? on : off;
+    return {
+      label, hint, value: v,
+      dec: () => this.bump(field, -1, min, max), inc: () => this.bump(field, 1, min, max),
+      decBorder: d.border, decColor: d.color, decCursor: d.cursor,
+      incBorder: i.border, incColor: i.color, incCursor: i.cursor,
+    };
+  }
+
+  buildMonth(y, m, today) {
+    const { checkIn, checkOut } = this.state;
+    const first = new Date(y, m, 1), total = new Date(y, m + 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < first.getDay(); i++) cells.push({ label: '', bg: 'transparent', color: '#030712', rangeBg: 'transparent', rangeRadius: '0', weight: '400', cursor: 'default' });
+    for (let d = 1; d <= total; d++) {
+      const key = this.iso(new Date(y, m, d));
+      const past = key < today;
+      const isIn = key === checkIn, isOut = key === checkOut;
+      const inRange = checkIn && checkOut && key > checkIn && key < checkOut;
+      let rangeBg = 'transparent', rangeRadius = '0';
+      if (inRange) rangeBg = '#EFEFFF';
+      if (checkOut && isIn) { rangeBg = '#EFEFFF'; rangeRadius = '999px 0 0 999px'; }
+      if (checkOut && isOut) { rangeBg = '#EFEFFF'; rangeRadius = '0 999px 999px 0'; }
+      cells.push({
+        label: String(d),
+        bg: (isIn || isOut) ? '#5855E5' : 'transparent',
+        color: (isIn || isOut) ? '#FFFFFF' : (past ? '#99A1AF' : '#030712'),
+        weight: (isIn || isOut) ? '600' : '400',
+        rangeBg, rangeRadius,
+        cursor: past ? 'default' : 'pointer',
+        onClick: past ? undefined : () => this.pickDay(key),
+      });
+    }
+    return { name: MONTH_FULL[m] + ' ' + y, cells };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const now = new Date(2026, 7, 2);
+    const today = this.iso(now);
+    const q = s.query.trim().toLowerCase();
+    const matches = q ? PLACES.filter(p => p.name.toLowerCase().includes(q)) : PLACES.slice(0, 5);
+
+    const nights = (s.checkIn && s.checkOut)
+      ? Math.round((new Date(s.checkOut) - new Date(s.checkIn)) / 86400000) : 0;
+
+    const guestParts = [s.adults + (s.adults > 1 ? ' adults' : ' adult')];
+    if (s.children > 0) guestParts.push(s.children + (s.children > 1 ? ' children' : ' child'));
+
+    return {
+      showSearch: s.overlay === 'search',
+      showDates: s.overlay === 'dates',
+      showGuests: s.overlay === 'guests',
+      openSearch: () => this.setState({ overlay: 'search' }),
+      openDates: () => this.setState({ overlay: 'dates' }),
+      openGuests: () => this.setState({ overlay: 'guests' }),
+      closeOverlay: () => this.setState({ overlay: null }),
+
+      destinationLabel: s.destination || 'Search hotel, city, or country',
+      destinationColor: s.destination ? '#030712' : '#99A1AF',
+
+      queryDisplay: s.query,
+      queryColor: '#030712',
+      hasQuery: s.query.length > 0,
+      clearQuery: () => this.setState({ query: '' }),
+      resultsHeading: q ? matches.length + ' results' : 'Popular right now',
+      noResults: q.length > 0 && matches.length === 0,
+      results: matches.map(p => ({
+        ...p,
+        initial: p.name.charAt(0),
+        iconBg: p.meta.startsWith('Hotel') ? '#EFEFFF' : '#E5F1FF',
+        iconColor: p.meta.startsWith('Hotel') ? '#5855E5' : '#006CE5',
+        onClick: () => this.setState({ destination: p.name, overlay: null, query: '' }),
+      })),
+      keyRows: KEY_ROWS.map(r => ({
+        pad: r.pad,
+        keys: (r.keys || 'zxcvbnm'.split('')).map(k => ({
+          label: k, flex: '1', bg: '#FFFFFF',
+          onClick: () => this.setState(st => ({ query: st.query + k })),
+        })).concat(r.keys ? [] : [{
+          label: '⌫', flex: '1.5', bg: '#C4C7CE',
+          onClick: () => this.setState(st => ({ query: st.query.slice(0, -1) })),
+        }]),
+      })),
+      typeSpace: () => this.setState(st => ({ query: st.query + ' ' })),
+
+      checkInLabel: this.fmt(s.checkIn),
+      checkOutLabel: this.fmt(s.checkOut),
+      checkInBorder: s.checkIn && !s.checkOut ? '#5855E5' : '#E5E7EB',
+      checkInBg: s.checkIn && !s.checkOut ? '#EFEFFF' : '#FFFFFF',
+      checkOutBorder: s.checkIn && !s.checkOut ? '#E5E7EB' : (s.checkOut ? '#E5E7EB' : '#5855E5'),
+      checkOutBg: '#FFFFFF',
+      weekdays: ['S','M','T','W','T','F','S'].map((label, i) => ({ label, key: i })),
+      months: [this.buildMonth(2026, 7, today), this.buildMonth(2026, 8, today), this.buildMonth(2026, 9, today)],
+      nightsLabel: nights > 0 ? nights + (nights > 1 ? ' nights' : ' night') + ' selected' : 'Pick your check-in date',
+      datesCtaBg: nights > 0 ? '#5855E5' : '#99A1AF',
+      resetDates: () => this.setState({ checkIn: null, checkOut: null }),
+
+      roomsLabel: s.rooms + (s.rooms > 1 ? ' rooms' : ' room'),
+      guestsLabel: guestParts.join(' · '),
+      summaryInline: s.rooms + (s.rooms > 1 ? ' rooms' : ' room') + ', ' + guestParts.join(' and '),
+      counters: [
+        this.counter('rooms', 'Rooms', 'Separate rooms in one booking', 1, 8),
+        this.counter('adults', 'Adults', 'Age 13 and above', 1, 16),
+        this.counter('children', 'Children', 'Age 0–12', 0, 8),
+      ],
+
+      tripTypes: ['Business','Leisure','Family','Solo'].map(label => {
+        const active = s.tripType === label;
+        return {
+          label,
+          bg: active ? '#EFEFFF' : '#FFFFFF',
+          border: active ? '#5855E5' : '#E5E7EB',
+          color: active ? '#5855E5' : '#030712',
+          onClick: () => this.setState(st => ({ tripType: st.tripType === label ? null : label })),
+        };
+      }),
+
+      recentSearches: [
+        { place: 'Manali, Himachal Pradesh', dates: '12 Aug – 15 Aug', guests: '2 adults', price: '₹1,899' },
+        { place: 'Dubai, UAE', dates: '02 Sep – 06 Sep', guests: '2 adults · 1 child', price: '₹6,200' },
+        { place: 'Ubud, Bali', dates: '20 Oct – 25 Oct', guests: '1 room · 2 adults', price: '₹4,050' },
+      ],
+      destinations: [
+        { city: 'Goa', hotels: '1,200+ hotels', startingPrice: '₹2,499' },
+        { city: 'Manali', hotels: '480+ hotels', startingPrice: '₹1,899' },
+        { city: 'Jaipur', hotels: '650+ hotels', startingPrice: '₹2,199' },
+        { city: 'Bangkok', hotels: '2,100+ hotels', startingPrice: '₹3,499' },
+      ],
+      chainDeals: [
+        { chain: 'Taj Hotels', offer: 'Up to 25% off', savings: 'Save ₹4,200' },
+        { chain: 'Marriott', offer: 'Extra 15% off', savings: 'Save ₹3,000' },
+        { chain: 'OYO Rooms', offer: 'Flat 30% off', savings: 'Save ₹1,500' },
+      ],
+      giftCards: [
+        { chain: 'Taj Hotels', discount: '10%' },
+        { chain: 'Marriott Bonvoy', discount: '8%' },
+        { chain: 'ITC Hotels', discount: '12%' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

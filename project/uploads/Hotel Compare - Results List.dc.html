@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap');
+  body { margin:0; background:#F3F4F6; font-family:'Google Sans','Google Sans Flex',Helvetica,Arial,sans-serif; }
+  a { color:#45556C; }
+  a:hover { color:#101828; }
+</style>
+</helmet>
+<div style="width:390px;height:780px;margin:24px auto;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+
+  <div style="flex-shrink:0;padding:16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+    <div style="width:8px;height:8px;border-left:2px solid #45556C;border-bottom:2px solid #45556C;transform:rotate(45deg);flex-shrink:0;"></div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:14px;font-weight:600;color:#101828;">Goa</div>
+      <div style="font-size:12px;color:#6A7282;margin-top:4px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+    </div>
+    <div style="width:44px;height:44px;border:1px solid #D1D5DC;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+      <div style="font-size:8px;color:#99A1AF;font-family:monospace;">map</div>
+    </div>
+  </div>
+
+  <div style="flex-shrink:0;padding:12px 16px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid #E5E7EB;">
+    <div style="flex-shrink:0;padding:8px 14px;border-radius:999px;border:1px solid #45556C;color:#101828;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;">
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <div style="width:10px;height:2px;background:#45556C;"></div>
+        <div style="width:10px;height:2px;background:#45556C;"></div>
+        <div style="width:10px;height:2px;background:#45556C;"></div>
+      </div>
+      Filter
+    </div>
+    <div style="flex-shrink:0;padding:8px 14px;border-radius:999px;border:1px solid #45556C;color:#101828;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;">
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <div style="width:10px;height:2px;background:#45556C;"></div>
+        <div style="width:7px;height:2px;background:#45556C;"></div>
+        <div style="width:4px;height:2px;background:#45556C;"></div>
+      </div>
+      Sort: Best price
+    </div>
+    <sc-for list="{{ quickFilters }}" as="f" hint-placeholder-count="5">
+      <div style="flex-shrink:0;padding:8px 14px;border-radius:999px;border:1px solid #D1D5DC;color:#45556C;font-size:13px;font-weight:500;">{{ f }}</div>
+    </sc-for>
+  </div>
+
+  <div style="flex:1;min-height:0;overflow-y:auto;">
+
+  <div style="font-size:14px;color:#6A7282;padding:16px 10px;">{{ resultsCount }} hotels found from {{ siteCount }} sites</div>
+
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <sc-for list="{{ hotels }}" as="h" hint-placeholder-count="3">
+      <div style="border-bottom:8px solid #F3F4F6;padding:16px;display:flex;flex-direction:column;gap:12px;">
+
+        <div style="width:100%;height:180px;border-radius:10px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 8px,#E5E7EB 8px,#E5E7EB 16px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;position:relative;">
+          <div style="font-size:10px;color:#99A1AF;font-family:monospace;">hotel photo · swipeable</div>
+          <div style="position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:4px;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#FFFFFF;border:1px solid #D1D5DC;"></div>
+            <div style="width:6px;height:6px;border-radius:50%;background:#99A1AF;"></div>
+            <div style="width:6px;height:6px;border-radius:50%;background:#99A1AF;"></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:16px;font-weight:600;color:#101828;text-wrap:pretty;">{{ h.name }}</div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px;">
+            <div style="font-size:12px;color:#6A7282;">{{ h.stars }}</div>
+            <div style="font-size:12px;color:#6A7282;">·</div>
+            <div style="font-size:12px;font-weight:600;color:#101828;background:#F3F4F6;border-radius:5px;padding:4px 8px;">{{ h.guestRating }}</div>
+            <div style="font-size:12px;color:#6A7282;">({{ h.reviewCount }} reviews)</div>
+          </div>
+          <div style="font-size:12px;color:#6A7282;margin-top:8px;">{{ h.location }} · {{ h.distance }}</div>
+        </div>
+
+        <div style="border:1px solid #D1D5DC;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:18px;height:18px;border-radius:4px;background:#E5E7EB;border:1px solid #D1D5DC;flex-shrink:0;"></div>
+            <div style="font-size:12px;font-weight:600;color:#45556C;">{{ h.bestPrice.platform }} · Best price</div>
+          </div>
+
+          <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+            <div style="font-size:24px;font-weight:700;color:#101828;">{{ h.bestPrice.total }}</div>
+            <div style="font-size:12px;color:#99A1AF;text-decoration:line-through;">{{ h.bestPrice.compareAt }}</div>
+            <div style="font-size:12px;font-weight:600;color:#FFFFFF;background:#4A5565;border-radius:6px;padding:4px 8px;">{{ h.bestPrice.discount }} off</div>
+          </div>
+          <div style="font-size:12px;color:#6A7282;">{{ h.bestPrice.taxes }}</div>
+
+          <div style="font-size:13px;font-weight:500;color:#101828;margin-top:4px;">{{ h.bestPrice.roomName }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <sc-for list="{{ h.bestPrice.highlights }}" as="hl" hint-placeholder-count="2">
+              <div style="font-size:11px;color:#45556C;border:1px solid #E5E7EB;border-radius:6px;padding:4px 8px;">{{ hl }}</div>
+            </sc-for>
+          </div>
+
+          
+
+          <div style="width:100%;box-sizing:border-box;background:#364153;color:#FFFFFF;text-align:center;padding:12px;border-radius:8px;font-size:14px;font-weight:600;margin-top:4px;">View and book</div><div style="font-size:12px;color:#45556C;font-weight:500;margin-top:4px;">View other packages from {{ h.bestPrice.platform }}</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;">
+          <sc-for list="{{ h.altPrices }}" as="alt" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-top:1px solid #F3F4F6;">
+              <div style="width:16px;height:16px;border-radius:4px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;color:#45556C;">{{ alt.platform }}</div>
+                <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px;">
+                  <div style="font-size:14px;font-weight:600;color:#101828;">{{ alt.price }}</div>
+                  <div style="font-size:11px;color:#6A7282;">{{ alt.higherBy }} higher</div>
+                </div>
+              </div>
+              <div style="width:44px;height:44px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                <div style="width:6px;height:6px;border-right:2px solid #6A7282;border-bottom:2px solid #6A7282;transform:rotate(45deg);"></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+      </div>
+    </sc-for>
+  </div>
+
+</div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      resultsCount: 128,
+      siteCount: 8,
+      quickFilters: ['Price', 'Star rating', 'Guest rating', 'Free cancellation', 'Best deals'],
+      hotels: [
+        {
+          name: 'Ocean Pearl Resort',
+          stars: '★★★★',
+          guestRating: '4.3',
+          reviewCount: '1,240',
+          location: 'Candolim Beach',
+          distance: '2.1 km from center',
+          bestPrice: {
+            platform: 'MakeMyTrip',
+            total: '₹4,899',
+            compareAt: '₹6,299',
+            discount: '22%',
+            taxes: '+ ₹588 taxes & fees',
+            roomName: 'Deluxe Room, Sea View',
+            highlights: ['Free breakfast', 'Free cancellation', 'Pay later'],
+          },
+          altPrices: [
+            { platform: 'Booking.com', price: '₹5,120', higherBy: '5%' },
+            { platform: 'Goibibo', price: '₹5,340', higherBy: '9%' },
+          ],
+        },
+        {
+          name: 'Palm Grove Inn',
+          stars: '★★★',
+          guestRating: '4.0',
+          reviewCount: '620',
+          location: 'Baga',
+          distance: '3.4 km from center',
+          bestPrice: {
+            platform: 'Booking.com',
+            total: '₹2,999',
+            compareAt: '₹3,799',
+            discount: '21%',
+            taxes: '+ ₹360 taxes & fees',
+            roomName: 'Standard Room, City View',
+            highlights: ['Free Wi-Fi', 'Pay at hotel', 'No prepayment'],
+          },
+          altPrices: [
+            { platform: 'MakeMyTrip', price: '₹3,150', higherBy: '5%' },
+            { platform: 'Agoda', price: '₹3,299', higherBy: '10%' },
+          ],
+        },
+        {
+          name: 'The Grand Vista',
+          stars: '★★★★★',
+          guestRating: '4.6',
+          reviewCount: '2,015',
+          location: 'Miramar',
+          distance: '1.2 km from center',
+          bestPrice: {
+            platform: 'Agoda',
+            total: '₹7,450',
+            compareAt: '₹9,900',
+            discount: '25%',
+            taxes: '+ ₹894 taxes & fees',
+            roomName: 'Executive Suite, Ocean View',
+            highlights: ['Free breakfast', 'Free airport pickup', 'Spa credit'],
+          },
+          altPrices: [
+            { platform: 'MakeMyTrip', price: '₹7,820', higherBy: '5%' },
+            { platform: 'Booking.com', price: '₹8,010', higherBy: '8%' },
+          ],
+        },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

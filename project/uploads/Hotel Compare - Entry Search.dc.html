@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap');
+  body { margin:0; background:#F3F4F6; font-family:'Google Sans','Google Sans Flex',Helvetica,Arial,sans-serif; }
+  a { color:#45556C; }
+  a:hover { color:#101828; }
+</style>
+</helmet>
+<div style="width:390px;height:780px;margin:24px auto;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow-y:auto;display:flex;flex-direction:column;">
+
+  <div style="padding:16px 16px 8px;border-bottom:1px solid #E5E7EB;">
+    <div style="font-size:12px;color:#99A1AF;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;">Buyhatke · Hotel Compare</div>
+    <div style="font-size:20px;font-weight:700;color:#101828;">Compare &amp; Book Hotels at Best Price</div>
+  </div>
+
+  <div style="padding:16px;display:flex;flex-direction:column;gap:12px;border-bottom:8px solid #F3F4F6;">
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:12px;font-weight:500;color:#6A7282;">Destination</div>
+      <div style="border:1px solid #D1D5DC;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+        <div style="width:16px;height:16px;border-radius:50%;border:2px solid #6A7282;flex-shrink:0;"></div>
+        <div style="font-size:15px;color:#99A1AF;flex:1;">Search hotel, city, or country</div>
+      </div>
+      
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:12px;font-weight:500;color:#6A7282;">Dates</div>
+      <div style="border:1px solid #D1D5DC;border-radius:10px;display:flex;">
+        <div style="flex:1;padding:12px 16px;border-right:1px solid #E5E7EB;">
+          <div style="font-size:11px;color:#99A1AF;margin-bottom:4px;">Check-in</div>
+          <div style="font-size:15px;color:#101828;font-weight:500;">Select date</div>
+        </div>
+        <div style="flex:1;padding:12px 16px;">
+          <div style="font-size:11px;color:#99A1AF;margin-bottom:4px;">Check-out</div>
+          <div style="font-size:15px;color:#101828;font-weight:500;">Select date</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:12px;font-weight:500;color:#6A7282;">Rooms &amp; guests</div>
+      <div style="border:1px solid #D1D5DC;border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:15px;color:#101828;font-weight:500;">1 room</div>
+          <div style="font-size:13px;color:#6A7282;margin-top:4px;">2 adults</div>
+        </div>
+        <div style="width:8px;height:8px;border-right:2px solid #6A7282;border-bottom:2px solid #6A7282;transform:rotate(45deg);"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:12px;font-weight:500;color:#6A7282;">Trip type <span style="color:#99A1AF;font-weight:400;">(optional)</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <sc-for list="{{ tripTypes }}" as="t" hint-placeholder-count="4">
+          <div style="padding:8px 14px;border:1px solid {{ t.border }};border-radius:999px;font-size:13px;color:{{ t.color }};background:{{ t.bg }};font-weight:500;">{{ t.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="width:100%;box-sizing:border-box;background:#364153;color:#FFFFFF;text-align:center;padding:16px;border-radius:10px;font-size:16px;font-weight:600;margin-top:4px;">Search hotels</div>
+  </div>
+
+  <div style="padding:20px 16px;display:flex;flex-direction:column;gap:12px;border-bottom:8px solid #F3F4F6;">
+    <div style="font-size:15px;font-weight:600;color:#101828;">Recent searches</div>
+    <sc-for list="{{ recentSearches }}" as="r" hint-placeholder-count="3">
+      <div style="border:1px solid #E5E7EB;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:500;color:#101828;">{{ r.place }}</div>
+          <div style="font-size:12px;color:#6A7282;margin-top:4px;">{{ r.dates }} · {{ r.guests }}</div>
+        </div>
+        <div style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <div style="width:8px;height:8px;border-top:2px solid #45556C;border-right:2px solid #45556C;transform:rotate(45deg) translate(-1px,1px);"></div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="padding:20px 16px;display:flex;flex-direction:column;gap:12px;border-bottom:8px solid #F3F4F6;">
+    <div style="font-size:15px;font-weight:600;color:#101828;">Popular destinations</div>
+    <div style="display:flex;gap:12px;overflow-x:auto;">
+      <sc-for list="{{ destinations }}" as="d" hint-placeholder-count="4">
+        <div style="flex-shrink:0;width:120px;">
+          <div style="width:120px;height:90px;border-radius:10px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 8px,#E5E7EB 8px,#E5E7EB 16px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+            <div style="font-size:9px;color:#99A1AF;font-family:monospace;text-align:center;">destination photo</div>
+          </div>
+          <div style="font-size:13px;font-weight:500;color:#101828;margin-top:8px;">{{ d.city }}</div>
+          <div style="font-size:11px;color:#6A7282;">{{ d.hotels }}</div>
+          <div style="font-size:12px;color:#101828;font-weight:600;margin-top:4px;">From {{ d.startingPrice }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding:20px 16px;display:flex;flex-direction:column;gap:12px;border-bottom:8px solid #F3F4F6;">
+    <div style="font-size:15px;font-weight:600;color:#101828;">Deals on top hotel chains</div>
+    <div style="display:flex;gap:12px;overflow-x:auto;">
+      <sc-for list="{{ chainDeals }}" as="c" hint-placeholder-count="3">
+        <div style="flex-shrink:0;width:220px;height:100px;border-radius:10px;border:1px solid #E5E7EB;background:#F9FAFB;display:flex;flex-direction:column;justify-content:space-between;padding:16px;">
+          <div style="font-size:14px;font-weight:600;color:#101828;">{{ c.chain }}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:12px;color:#6A7282;">{{ c.offer }}</div>
+            <div style="font-size:12px;font-weight:600;color:#FFFFFF;background:#4A5565;border-radius:6px;padding:4px 8px;">{{ c.savings }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding:20px 16px 32px;display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:15px;font-weight:600;color:#101828;">Gift cards for select hotel chains</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <sc-for list="{{ giftCards }}" as="g" hint-placeholder-count="3">
+        <div style="border:1px solid #E5E7EB;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <div style="width:44px;height:44px;border-radius:8px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+            <div style="font-size:8px;color:#99A1AF;font-family:monospace;">logo</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:500;color:#101828;">{{ g.chain }}</div>
+            <div style="font-size:12px;color:#6A7282;margin-top:4px;">{{ g.discount }} off gift cards</div>
+          </div>
+          <div style="font-size:12px;color:#45556C;font-weight:500;border:1px solid #D1D5DC;border-radius:999px;padding:8px 12px;flex-shrink:0;">View</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      autocomplete: [
+        { label: 'Goa, India', meta: 'City' },
+        { label: 'Taj Lands End, Mumbai', meta: 'Hotel' },
+        { label: 'Thailand', meta: 'Country' },
+      ],
+      tripTypes: [
+        { label: 'Business', bg: '#FFFFFF', border: '#D1D5DC', color: '#45556C' },
+        { label: 'Leisure', bg: '#FFFFFF', border: '#D1D5DC', color: '#45556C' },
+        { label: 'Family', bg: '#FFFFFF', border: '#D1D5DC', color: '#45556C' },
+        { label: 'Solo', bg: '#FFFFFF', border: '#D1D5DC', color: '#45556C' },
+      ],
+      recentSearches: [
+        { place: 'Manali, Himachal Pradesh', dates: '12 Aug – 15 Aug', guests: '2 adults' },
+        { place: 'Dubai, UAE', dates: '02 Sep – 06 Sep', guests: '2 adults · 1 child' },
+        { place: 'Ubud, Bali', dates: '20 Oct – 25 Oct', guests: '1 room · 2 adults' },
+      ],
+      destinations: [
+        { city: 'Goa', hotels: '1,200+ hotels', startingPrice: '₹2,499' },
+        { city: 'Manali', hotels: '480+ hotels', startingPrice: '₹1,899' },
+        { city: 'Jaipur', hotels: '650+ hotels', startingPrice: '₹2,199' },
+        { city: 'Bangkok', hotels: '2,100+ hotels', startingPrice: '₹3,499' },
+      ],
+      chainDeals: [
+        { chain: 'Taj Hotels', offer: 'Up to 25% off', savings: 'Save ₹4,200' },
+        { chain: 'Marriott', offer: 'Extra 15% off', savings: 'Save ₹3,000' },
+        { chain: 'OYO Rooms', offer: 'Flat 30% off', savings: 'Save ₹1,500' },
+      ],
+      giftCards: [
+        { chain: 'Taj Hotels', discount: '10%' },
+        { chain: 'Marriott Bonvoy', discount: '8%' },
+        { chain: 'ITC Hotels', discount: '12%' },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

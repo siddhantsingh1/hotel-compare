@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap');
+  body { margin:0; background:#F3F4F6; font-family:'Google Sans','Google Sans Flex',Helvetica,Arial,sans-serif; }
+  a { color:#45556C; }
+  a:hover { color:#101828; }
+</style>
+</helmet>
+
+<section style="padding:32px;display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;">
+
+  <div id="4a" style="display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="font-size:12px;font-weight:700;color:#FFFFFF;background:#364153;border-radius:6px;padding:3px 8px;">4a</div>
+      <div style="font-size:14px;font-weight:600;color:#101828;">Layout A — tabbed by room</div>
+    </div>
+    <div style="width:390px;height:780px;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow:hidden;position:relative;display:flex;flex-direction:column;">
+    <div style="flex:1;min-height:0;overflow-y:auto;">
+
+      <div style="padding:12px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+        <div style="width:8px;height:8px;border-left:2px solid #45556C;border-bottom:2px solid #45556C;transform:rotate(45deg);flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:600;color:#101828;">Ocean Pearl Resort</div>
+          <div style="font-size:12px;color:#6A7282;margin-top:4px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+        </div>
+        <div onClick="{{ openBooking }}" style="font-size:12px;color:#45556C;font-weight:500;border:1px solid #D1D5DC;border-radius:999px;padding:8px 12px;flex-shrink:0;cursor:pointer;">Edit</div>
+      </div>
+
+      <div style="display:flex;overflow-x:auto;border-bottom:1px solid #E5E7EB;">
+        <sc-for list="{{ roomTabs }}" as="t" hint-placeholder-count="3">
+          <div onClick="{{ t.onClick }}" style="flex-shrink:0;min-width:130px;padding:12px 16px;cursor:pointer;border-bottom:2px solid {{ t.underline }};background:{{ t.bg }};">
+            <div style="font-size:13px;font-weight:600;color:{{ t.color }};">{{ t.name }}</div>
+            <div style="font-size:12px;color:#6A7282;margin-top:4px;">from {{ t.from }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:16px;display:flex;gap:12px;overflow-x:auto;">
+        <sc-for list="{{ roomPhotos }}" as="p" hint-placeholder-count="3">
+          <div onClick="{{ p.onClick }}" style="cursor:pointer;flex-shrink:0;width:312px;height:200px;border-radius:8px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 6px,#E5E7EB 6px,#E5E7EB 12px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+            <div style="font-size:9px;color:#99A1AF;font-family:monospace;">{{ p.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:0 16px 14px;display:flex;flex-wrap:wrap;gap:8px 14px;">
+        <sc-for list="{{ roomFacts }}" as="f" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:16px;height:16px;border-radius:4px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+            <div style="font-size:12px;color:#45556C;">{{ f }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:0 16px 14px;display:flex;flex-direction:column;gap:12px;border-bottom:8px solid #F3F4F6;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-size:13px;font-weight:600;color:#101828;">Room amenities</div>
+          <div onClick="{{ openAmenities }}" style="font-size:12px;color:#45556C;font-weight:500;border:1px solid #D1D5DC;border-radius:999px;padding:8px 12px;cursor:pointer;">View all</div>
+        </div>
+        <div style="display:grid;grid-auto-flow:column;grid-template-rows:auto auto;gap:8px 16px;overflow-x:auto;justify-content:start;">
+          <sc-for list="{{ roomAmenities }}" as="a" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:18px;height:18px;border-radius:4px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+              <div style="font-size:12px;color:#45556C;white-space:nowrap;">{{ a }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="padding:16px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid #E5E7EB;">
+        <sc-for list="{{ filterChips }}" as="f" hint-placeholder-count="4">
+          <div onClick="{{ f.onClick }}" style="flex-shrink:0;padding:8px 12px;border-radius:999px;border:1px solid #D1D5DC;font-size:13px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px;cursor:pointer;background:{{ f.bg }};color:{{ f.color }};border-color:{{ f.border }};">
+            <div style="width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1;border:1px solid {{ f.boxBorder }};background:{{ f.boxBg }};color:{{ f.tickColor }};">{{ f.tick }}</div>
+            {{ f.label }}
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;color:#6A7282;">{{ packageCount }} packages from {{ siteCount }} sites</div>
+        <sc-for list="{{ packages }}" as="p" hint-placeholder-count="2">
+          <div onClick="{{ p.onToggle }}" style="border:1px solid {{ p.cardBorder }};border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;cursor:pointer;">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:14px;font-weight:600;color:#101828;">{{ p.name }}</div>
+                <div style="font-size:12px;color:#6A7282;margin-top:4px;">{{ p.collapsedSummary }}</div>
+              </div>
+              <div style="width:8px;height:8px;border-right:2px solid #6A7282;border-bottom:2px solid #6A7282;flex-shrink:0;margin-top:5px;transform:{{ p.chevron }};"></div>
+            </div>
+
+            <sc-if value="{{ p.expanded }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ p.inclusions }}" as="i" hint-placeholder-count="5">
+                    <div style="display:flex;gap:8px;align-items:flex-start;">
+                      <div style="font-size:11px;color:#45556C;line-height:17px;flex-shrink:0;">✓</div>
+                      <div style="font-size:12px;color:#45556C;line-height:17px;">{{ i }}</div>
+                    </div>
+                  </sc-for>
+                  <div style="font-size:12px;color:#45556C;font-weight:500;margin-top:4px;">View all inclusions</div>
+                </div>
+
+                <div style="border-top:1px solid #F3F4F6;padding-top:12px;display:flex;align-items:flex-end;gap:12px;">
+                  <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <div style="width:14px;height:14px;border-radius:4px;background:#E5E7EB;border:1px solid #D1D5DC;flex-shrink:0;"></div>
+                      <div style="font-size:11px;font-weight:600;color:#45556C;">{{ p.best.platform }} · Best price</div>
+                    </div>
+                    <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:4px;">
+                      <div style="font-size:22px;font-weight:700;color:#101828;">{{ p.best.total }}</div>
+                      <div style="font-size:12px;color:#99A1AF;text-decoration:line-through;">{{ p.best.compareAt }}</div>
+                      <div style="font-size:12px;font-weight:600;color:#FFFFFF;background:#4A5565;border-radius:6px;padding:4px 8px;">{{ p.best.discount }} off</div>
+                    </div>
+                    <div style="font-size:11px;color:#6A7282;margin-top:4px;">{{ p.best.taxes }}</div>
+                  </div>
+                  <div style="background:#364153;color:#FFFFFF;text-align:center;padding:12px 18px;border-radius:8px;font-size:14px;font-weight:600;flex-shrink:0;">Select</div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;">
+                  <sc-for list="{{ p.others }}" as="o" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid #F3F4F6;">
+                      <div style="width:16px;height:16px;border-radius:4px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+                      <div style="flex:1;min-width:0;">
+                        <div style="font-size:13px;color:#45556C;">{{ o.platform }}</div>
+                        <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px;">
+                          <div style="font-size:14px;font-weight:600;color:#101828;">{{ o.price }}</div>
+                          <div style="font-size:11px;color:#6A7282;">{{ o.higherBy }} higher</div>
+                        </div>
+                      </div>
+                      <div style="width:7px;height:7px;border-right:2px solid #6A7282;border-bottom:2px solid #6A7282;transform:rotate(45deg);flex-shrink:0;"></div>
+                    </div>
+                  </sc-for>
+                  <div onClick="{{ p.onViewAll }}" style="border-top:1px solid #F3F4F6;padding-top:12px;font-size:12px;color:#45556C;font-weight:500;cursor:pointer;">View prices from {{ p.remaining }} more sites</div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      </div>
+
+      <sc-if value="{{ bookingOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:12;display:flex;align-items:flex-end;">
+          <div onClick="{{ closeBooking }}" style="position:absolute;inset:0;background:rgba(16,24,40,0.45);"></div>
+          <div style="position:relative;width:100%;max-height:86%;background:#FFFFFF;border-radius:16px 16px 0 0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:10px 0 0;display:flex;justify-content:center;">
+              <div style="width:40px;height:4px;border-radius:999px;background:#D1D5DC;"></div>
+            </div>
+            <div style="padding:12px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+              <div style="font-size:16px;font-weight:600;color:#101828;flex:1;">Edit your stay</div>
+              <div onClick="{{ closeBooking }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;display:flex;align-items:center;justify-content:center;font-size:13px;color:#45556C;cursor:pointer;">×</div>
+            </div>
+            <div style="padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;">
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="font-size:12px;font-weight:500;color:#6A7282;">Destination</div>
+                <div style="border:1px solid #D1D5DC;border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+                  <div style="width:16px;height:16px;border-radius:50%;border:2px solid #6A7282;flex-shrink:0;"></div>
+                  <div style="font-size:15px;color:#101828;flex:1;">Ocean Pearl Resort, Candolim</div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="font-size:12px;font-weight:500;color:#6A7282;">Dates</div>
+                <div style="border:1px solid #D1D5DC;border-radius:10px;display:flex;">
+                  <div style="flex:1;padding:12px 16px;border-right:1px solid #E5E7EB;">
+                    <div style="font-size:11px;color:#99A1AF;margin-bottom:4px;">Check-in</div>
+                    <div style="font-size:15px;color:#101828;font-weight:500;">12 Aug</div>
+                  </div>
+                  <div style="flex:1;padding:12px 16px;">
+                    <div style="font-size:11px;color:#99A1AF;margin-bottom:4px;">Check-out</div>
+                    <div style="font-size:15px;color:#101828;font-weight:500;">15 Aug</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="font-size:12px;font-weight:500;color:#6A7282;">Rooms &amp; guests</div>
+                <div style="border:1px solid #D1D5DC;border-radius:10px;display:flex;flex-direction:column;">
+                  <sc-for list="{{ guestSteppers }}" as="s" hint-placeholder-count="3">
+                    <div style="padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #F3F4F6;">
+                      <div style="flex:1;">
+                        <div style="font-size:14px;color:#101828;font-weight:500;">{{ s.label }}</div>
+                        <div style="font-size:11px;color:#99A1AF;margin-top:4px;">{{ s.hint }}</div>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:12px;">
+                        <div style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;display:flex;align-items:center;justify-content:center;font-size:14px;color:#45556C;">−</div>
+                        <div style="font-size:14px;font-weight:600;color:#101828;min-width:14px;text-align:center;">{{ s.value }}</div>
+                        <div style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;display:flex;align-items:center;justify-content:center;font-size:14px;color:#45556C;">+</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div onClick="{{ closeBooking }}" style="width:100%;background:#364153;color:#FFFFFF;text-align:center;padding:16px;border-radius:10px;font-size:15px;font-weight:600;margin-top:4px;cursor:pointer;">Update search</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:15;background:#101828;display:flex;flex-direction:column;">
+          <div style="padding:12px 16px;display:flex;align-items:center;gap:12px;">
+            <div onClick="{{ closeLightbox }}" style="width:30px;height:30px;border-radius:50%;border:1px solid #6A7282;display:flex;align-items:center;justify-content:center;font-size:14px;color:#FFFFFF;cursor:pointer;flex-shrink:0;">×</div>
+            <div style="font-size:13px;color:#FFFFFF;font-weight:500;flex:1;">{{ lightboxCaption }}</div>
+            <div style="font-size:12px;color:#D1D5DC;">{{ lightboxCounter }}</div>
+          </div>
+          <div style="flex:1;display:flex;align-items:center;gap:8px;padding:0 12px 16px;">
+            <div onClick="{{ prevPhoto }}" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+              <div style="width:8px;height:8px;border-left:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF;transform:rotate(45deg);"></div>
+            </div>
+            <div style="flex:1;aspect-ratio:4/3;border-radius:8px;background:repeating-linear-gradient(45deg,#364153,#364153 8px,#45556C 8px,#45556C 16px);display:flex;align-items:center;justify-content:center;">
+              <div style="font-size:10px;color:#D1D5DC;font-family:monospace;">{{ lightboxCaption }}</div>
+            </div>
+            <div onClick="{{ nextPhoto }}" style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+              <div style="width:8px;height:8px;border-right:2px solid #FFFFFF;border-top:2px solid #FFFFFF;transform:rotate(45deg);"></div>
+            </div>
+          </div>
+          <div style="padding:0 16px 20px;display:flex;gap:8px;overflow-x:auto;">
+            <sc-for list="{{ lightboxThumbs }}" as="t" hint-placeholder-count="3">
+              <div onClick="{{ t.onClick }}" style="flex-shrink:0;width:64px;height:48px;border-radius:6px;background:repeating-linear-gradient(45deg,#364153,#364153 6px,#45556C 6px,#45556C 12px);cursor:pointer;border:2px solid {{ t.border }};"></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ amenitiesOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:10;display:flex;align-items:flex-end;">
+          <div onClick="{{ closeAmenities }}" style="position:absolute;inset:0;background:rgba(16,24,40,0.45);"></div>
+          <div style="position:relative;width:100%;max-height:82%;background:#FFFFFF;border-radius:16px 16px 0 0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:10px 0 0;display:flex;justify-content:center;">
+              <div style="width:40px;height:4px;border-radius:999px;background:#D1D5DC;"></div>
+            </div>
+            <div style="padding:12px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+              <div style="font-size:16px;font-weight:600;color:#101828;flex:1;">Room amenities</div>
+              <div onClick="{{ closeAmenities }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;display:flex;align-items:center;justify-content:center;font-size:13px;color:#45556C;cursor:pointer;">×</div>
+            </div>
+            <div style="padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:18px;">
+              <sc-for list="{{ amenityGroups }}" as="g" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                  <div style="font-size:13px;font-weight:600;color:#101828;">{{ g.title }}</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="4">
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <div style="width:20px;height:20px;border-radius:5px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+                        <div style="font-size:13px;color:#45556C;">{{ i }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ pricesOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:10;display:flex;align-items:flex-end;">
+          <div onClick="{{ closePrices }}" style="position:absolute;inset:0;background:rgba(16,24,40,0.45);"></div>
+          <div style="position:relative;width:100%;max-height:82%;background:#FFFFFF;border-radius:16px 16px 0 0;display:flex;flex-direction:column;overflow:hidden;">
+            <div style="padding:10px 0 0;display:flex;justify-content:center;">
+              <div style="width:40px;height:4px;border-radius:999px;background:#D1D5DC;"></div>
+            </div>
+            <div style="padding:12px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:16px;font-weight:600;color:#101828;">All site prices</div>
+                <div style="font-size:12px;color:#6A7282;margin-top:4px;">{{ pricesSheetPackage }}</div>
+              </div>
+              <div onClick="{{ closePrices }}" style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;display:flex;align-items:center;justify-content:center;font-size:13px;color:#45556C;cursor:pointer;">×</div>
+            </div>
+            <div style="padding:8px 16px 16px;overflow-y:auto;display:flex;flex-direction:column;">
+              <sc-for list="{{ allSitePrices }}" as="s" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F3F4F6;">
+                  <div style="width:20px;height:20px;border-radius:4px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:13px;color:#101828;font-weight:500;">{{ s.platform }}</div>
+                    <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px;">
+                      <div style="font-size:15px;font-weight:600;color:#101828;">{{ s.price }}</div>
+                      <div style="font-size:11px;color:#6A7282;">{{ s.note }}</div>
+                    </div>
+                    <div style="font-size:11px;color:#99A1AF;margin-top:4px;">{{ s.taxes }}</div>
+                  </div>
+                  <div style="border:1px solid #364153;color:#101828;text-align:center;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;flex-shrink:0;">Select</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <div id="4b" style="display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="font-size:12px;font-weight:700;color:#FFFFFF;background:#364153;border-radius:6px;padding:3px 8px;">4b</div>
+      <div style="font-size:14px;font-weight:600;color:#101828;">Layout B — tabbed by platform</div>
+    </div>
+    <div style="width:390px;height:780px;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow-y:auto;">
+
+      <div style="padding:12px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:12px;">
+        <div style="width:8px;height:8px;border-left:2px solid #45556C;border-bottom:2px solid #45556C;transform:rotate(45deg);flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:14px;font-weight:600;color:#101828;">Ocean Pearl Resort</div>
+          <div style="font-size:12px;color:#6A7282;margin-top:4px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+        </div>
+        <div style="font-size:12px;color:#45556C;font-weight:500;border:1px solid #D1D5DC;border-radius:999px;padding:8px 12px;flex-shrink:0;">Edit</div>
+      </div>
+
+      <div style="display:flex;overflow-x:auto;border-bottom:1px solid #E5E7EB;">
+        <sc-for list="{{ platformTabs }}" as="t" hint-placeholder-count="4">
+          <div onClick="{{ t.onClick }}" style="flex-shrink:0;min-width:120px;padding:12px 16px;cursor:pointer;border-bottom:2px solid {{ t.underline }};background:{{ t.bg }};display:flex;align-items:center;gap:8px;">
+            <div style="width:18px;height:18px;border-radius:4px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:{{ t.color }};white-space:nowrap;">{{ t.name }}</div>
+              <div style="font-size:12px;color:#6A7282;margin-top:4px;white-space:nowrap;">from {{ t.from }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:16px;display:flex;gap:8px;overflow-x:auto;border-bottom:8px solid #F3F4F6;">
+        <sc-for list="{{ filterChipsB }}" as="f" hint-placeholder-count="4">
+          <div onClick="{{ f.onClick }}" style="flex-shrink:0;padding:8px 12px;border-radius:999px;border:1px solid #D1D5DC;font-size:13px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:8px;cursor:pointer;background:{{ f.bg }};color:{{ f.color }};border-color:{{ f.border }};">
+            <div style="width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1;border:1px solid {{ f.boxBorder }};background:{{ f.boxBg }};color:{{ f.tickColor }};">{{ f.tick }}</div>
+            {{ f.label }}
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-size:13px;color:#6A7282;">{{ platformRoomCount }} rooms available on {{ activePlatform }}</div>
+        <sc-for list="{{ platformRooms }}" as="r" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div onClick="{{ r.onToggle }}" style="display:flex;align-items:center;gap:12px;cursor:pointer;">
+              <div style="width:96px;height:72px;border-radius:8px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 6px,#E5E7EB 6px,#E5E7EB 12px);border:1px solid #E5E7EB;flex-shrink:0;"></div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:14px;font-weight:600;color:#101828;">{{ r.name }}</div>
+                <div style="font-size:12px;color:#6A7282;margin-top:4px;">{{ r.meta }}</div>
+                <div style="font-size:12px;color:#45556C;font-weight:500;margin-top:4px;">{{ r.summary }}</div>
+              </div>
+              <div style="width:8px;height:8px;border-right:2px solid #6A7282;border-bottom:2px solid #6A7282;flex-shrink:0;transform:{{ r.chevron }};"></div>
+            </div>
+            <sc-if value="{{ r.expanded }}" hint-placeholder-val="{{ true }}">
+            <sc-for list="{{ r.packages }}" as="p" hint-placeholder-count="2">
+              <div style="border:1px solid #D1D5DC;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+                <div style="font-size:13px;font-weight:600;color:#101828;">{{ p.name }}</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ p.inclusions }}" as="i" hint-placeholder-count="5">
+                    <div style="display:flex;gap:8px;align-items:flex-start;">
+                      <div style="font-size:11px;color:#45556C;line-height:17px;flex-shrink:0;">✓</div>
+                      <div style="font-size:12px;color:#45556C;line-height:17px;">{{ i }}</div>
+                    </div>
+                  </sc-for>
+                  <div style="font-size:12px;color:#45556C;font-weight:500;margin-top:4px;">View all inclusions</div>
+                </div>
+                <div style="border-top:1px solid #F3F4F6;padding-top:12px;display:flex;align-items:flex-end;gap:12px;">
+                  <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+                      <div style="font-size:20px;font-weight:700;color:#101828;">{{ p.total }}</div>
+                      <div style="font-size:12px;color:#99A1AF;text-decoration:line-through;">{{ p.compareAt }}</div>
+                      <div style="font-size:12px;font-weight:600;color:#FFFFFF;background:#4A5565;border-radius:6px;padding:4px 8px;">{{ p.discount }} off</div>
+                    </div>
+                    <div style="font-size:11px;color:#6A7282;margin-top:4px;">{{ p.taxes }}</div>
+                  </div>
+                  <div style="background:#364153;color:#FFFFFF;text-align:center;padding:12px 18px;border-radius:8px;font-size:14px;font-weight:600;flex-shrink:0;">Select</div>
+                </div>
+              </div>
+            </sc-for>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { room: 0, platform: 0, expanded: 0, filters: [], filtersB: [], amenitiesOpen: false, pricesFor: null, photoIndex: null, bookingOpen: false };
+
+  tab(name, from, active, onClick) {
+    return { name, from, onClick, bg: active ? '#FFFFFF' : '#F9FAFB', color: active ? '#101828' : '#6A7282', underline: active ? '#364153' : 'transparent' };
+  }
+  chip(label, active, onClick) {
+    return {
+      label, onClick,
+      bg: active ? '#EEF0F3' : '#FFFFFF',
+      color: active ? '#101828' : '#45556C',
+      border: active ? '#45556C' : '#D1D5DC',
+      boxBg: active ? '#364153' : '#FFFFFF',
+      boxBorder: active ? '#364153' : '#D1D5DC',
+      tickColor: '#FFFFFF',
+      tick: active ? '✓' : '',
+    };
+  }
+  toggle(key, label) {
+    const cur = this.state[key];
+    const next = cur.includes(label) ? cur.filter((x) => x !== label) : cur.concat(label);
+    this.setState({ [key]: next });
+  }
+
+  decorateRooms(rooms) {
+    const open = this.state.openRooms || [0];
+    return rooms.map((r, i) => ({
+      ...r,
+      expanded: open.includes(i),
+      chevron: open.includes(i) ? 'rotate(-135deg)' : 'rotate(45deg)',
+      onToggle: () => this.setState({
+        openRooms: open.includes(i) ? open.filter((x) => x !== i) : open.concat(i),
+      }),
+    }));
+  }
+  renderVals() {
+    const filterLabels = ['Breakfast included', 'Free cancellation', 'Bed preference', 'Pay at hotel'];
+    const inclusionsA = ['Breakfast for 2', 'Free cancellation till 10 Aug', 'King bed', 'Free Wi-Fi', 'Pay at hotel'];
+    const inclusionsB = ['Room only', 'Non-refundable', 'Twin beds', 'Free Wi-Fi', 'Early check-in on request'];
+    const platforms = ['MakeMyTrip', 'Goibibo', 'Booking.com', 'Agoda'];
+    const photoLabels = ['room photo 1', 'room photo 2', 'bathroom', 'balcony view'];
+
+    const packageData = [
+      {
+        name: 'Breakfast + Free cancellation',
+        collapsedSummary: 'Best ₹4,899 on MakeMyTrip · 7 more sites',
+        inclusions: inclusionsA,
+        best: { platform: 'MakeMyTrip', total: '₹4,899', compareAt: '₹6,299', discount: '22%', taxes: '+ ₹588 taxes & fees' },
+        others: [
+          { platform: 'Goibibo', price: '₹5,010', higherBy: '2%' },
+          { platform: 'Booking.com', price: '₹5,120', higherBy: '5%' },
+          { platform: 'Agoda', price: '₹5,340', higherBy: '9%' },
+        ],
+        remaining: 4,
+      },
+      {
+        name: 'Room only · Non-refundable',
+        collapsedSummary: 'Best ₹4,150 on Agoda · 6 more sites',
+        inclusions: inclusionsB,
+        best: { platform: 'Agoda', total: '₹4,150', compareAt: '₹5,200', discount: '20%', taxes: '+ ₹498 taxes & fees' },
+        others: [
+          { platform: 'MakeMyTrip', price: '₹4,290', higherBy: '3%' },
+          { platform: 'Booking.com', price: '₹4,420', higherBy: '7%' },
+          { platform: 'Goibibo', price: '₹4,560', higherBy: '10%' },
+        ],
+        remaining: 3,
+      },
+    ];
+
+    return {
+      packageCount: 6,
+      siteCount: 8,
+      platformRoomCount: 4,
+      activePlatform: platforms[this.state.platform],
+      roomTabs: [
+        ['Deluxe Room', '₹4,899'],
+        ['Premier Sea View', '₹6,250'],
+        ['Executive Suite', '₹9,400'],
+      ].map(([n, f], i) => this.tab(n, f, this.state.room === i, () => this.setState({ room: i, expanded: 0 }))),
+      platformTabs: [
+        ['MakeMyTrip', '₹4,899'],
+        ['Goibibo', '₹5,010'],
+        ['Booking.com', '₹5,120'],
+        ['Agoda', '₹5,340'],
+      ].map(([n, f], i) => this.tab(n, f, this.state.platform === i, () => this.setState({ platform: i }))),
+      roomPhotos: photoLabels.map((label, i) => ({ label, onClick: () => this.setState({ photoIndex: i }) })),
+      lightboxOpen: this.state.photoIndex !== null,
+      closeLightbox: () => this.setState({ photoIndex: null }),
+      lightboxCaption: photoLabels[this.state.photoIndex || 0],
+      lightboxCounter: ((this.state.photoIndex || 0) + 1) + ' of ' + photoLabels.length,
+      prevPhoto: () => this.setState({ photoIndex: (this.state.photoIndex + photoLabels.length - 1) % photoLabels.length }),
+      nextPhoto: () => this.setState({ photoIndex: (this.state.photoIndex + 1) % photoLabels.length }),
+      lightboxThumbs: photoLabels.map((label, i) => ({
+        border: this.state.photoIndex === i ? '#FFFFFF' : 'transparent',
+        onClick: () => this.setState({ photoIndex: i }),
+      })),
+      roomFacts: ['28 sqm', 'Sleeps 2 adults + 1 child', '1 king bed'],
+      roomAmenities: ['Sea view', 'Balcony', 'Air conditioning', 'Mini fridge', 'Safe', 'Tea/coffee maker'],
+      filterChips: filterLabels.map((l) => this.chip(l, this.state.filters.includes(l), () => this.toggle('filters', l))),
+      filterChipsB: filterLabels.map((l) => this.chip(l, this.state.filtersB.includes(l), () => this.toggle('filtersB', l))),
+      packages: packageData.map((p, i) => ({
+        ...p,
+        expanded: this.state.expanded === i,
+        cardBorder: this.state.expanded === i ? '#45556C' : '#D1D5DC',
+        chevron: this.state.expanded === i ? 'rotate(-135deg)' : 'rotate(45deg)',
+        onToggle: () => this.setState({ expanded: this.state.expanded === i ? -1 : i }),
+        onViewAll: (e) => { if (e) e.stopPropagation(); this.setState({ pricesFor: i }); },
+      })),
+      bookingOpen: this.state.bookingOpen,
+      openBooking: () => this.setState({ bookingOpen: true }),
+      closeBooking: () => this.setState({ bookingOpen: false }),
+      guestSteppers: [
+        { label: 'Rooms', hint: 'Up to 4 rooms', value: 1 },
+        { label: 'Adults', hint: 'Age 13+', value: 2 },
+        { label: 'Children', hint: 'Age 0–12', value: 0 },
+      ],
+      amenitiesOpen: this.state.amenitiesOpen,
+      openAmenities: () => this.setState({ amenitiesOpen: true }),
+      closeAmenities: () => this.setState({ amenitiesOpen: false }),
+      amenityGroups: [
+        { title: 'Room features', items: ['Sea view', 'Balcony', 'Air conditioning', 'Blackout curtains', 'Safe', 'Iron & board'] },
+        { title: 'Bathroom', items: ['Rain shower', 'Bathtub', 'Toiletries', 'Hairdryer'] },
+        { title: 'Food & drink', items: ['Mini fridge', 'Tea/coffee maker', 'Room service', 'Bottled water'] },
+        { title: 'Entertainment', items: ['Smart TV', 'Free Wi-Fi', 'Bluetooth speaker', 'Reading nook'] },
+      ],
+      pricesOpen: this.state.pricesFor !== null,
+      closePrices: () => this.setState({ pricesFor: null }),
+      pricesSheetPackage: this.state.pricesFor !== null ? packageData[this.state.pricesFor].name : '',
+      allSitePrices: [
+        { platform: 'MakeMyTrip', price: '₹4,899', note: 'Best price', taxes: '+ ₹588 taxes & fees' },
+        { platform: 'Goibibo', price: '₹5,010', note: '2% higher', taxes: '+ ₹601 taxes & fees' },
+        { platform: 'Booking.com', price: '₹5,120', note: '5% higher', taxes: '+ ₹614 taxes & fees' },
+        { platform: 'Agoda', price: '₹5,340', note: '9% higher', taxes: '+ ₹641 taxes & fees' },
+        { platform: 'Cleartrip', price: '₹5,410', note: '10% higher', taxes: '+ ₹649 taxes & fees' },
+        { platform: 'EaseMyTrip', price: '₹5,520', note: '13% higher', taxes: '+ ₹662 taxes & fees' },
+        { platform: 'Hotel website', price: '₹5,650', note: '15% higher', taxes: '+ ₹678 taxes & fees' },
+      ],
+      platformRooms: this.decorateRooms([
+        {
+          name: 'Deluxe Room',
+          summary: '2 packages · from ₹4,290',
+          meta: '2 adults · 28 sqm · Garden view',
+          packages: [
+            { name: 'Breakfast + Free cancellation', inclusions: inclusionsA, total: '₹4,899', compareAt: '₹6,299', discount: '22%', taxes: '+ ₹588 taxes & fees' },
+            { name: 'Room only · Non-refundable', inclusions: inclusionsB, total: '₹4,290', compareAt: '₹5,200', discount: '17%', taxes: '+ ₹515 taxes & fees' },
+          ],
+        },
+        {
+          name: 'Premier Sea View',
+          summary: '1 package · from ₹6,250',
+          meta: '2 adults · 34 sqm · Sea view',
+          packages: [
+            { name: 'Breakfast + Free cancellation', inclusions: inclusionsA, total: '₹6,250', compareAt: '₹7,900', discount: '21%', taxes: '+ ₹750 taxes & fees' },
+          ],
+        },
+      ]),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

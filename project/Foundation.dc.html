@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F1F2F4; -webkit-font-smoothing: antialiased; }
+  a { color: #5855E5; text-decoration: none; }
+  a:hover { color: #4442B2; }
+</style>
+</helmet>
+
+<div style="font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; color: #030712; padding: 48px; display: flex; flex-direction: column; gap: 56px; background: #F1F2F4;">
+
+  <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px;">
+    <div style="font-size: 12px; line-height: 16px; letter-spacing: 0; font-family: 'Roboto Mono', monospace; color: #4A5565; text-transform: uppercase;">Buyhatke · Hotel compare</div>
+    <div style="font-size: 32px; line-height: 36px; letter-spacing: -0.5px; font-weight: 700;">Design foundation</div>
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #4A5565; text-wrap: pretty;">Tokens and the eight recurring components, locked at high fidelity before any screens are built. Components are shown at 360dp with a 16px page margin.</div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div style="display: flex; flex-direction: column; gap: 20px;">
+    <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700;">Typography</div>
+    <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 24px;">
+      <div style="display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap;">
+        <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600;">Google Sans Flex</div>
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">Regular 400 · Medium 500 · SemiBold 600 · Bold 700</div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(200px, 1fr)); gap: 32px;">
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF; border-bottom: 1px solid #E5E7EB; padding-bottom: 8px;">REGULAR</div>
+          <div style="font-weight: 400; font-size: 20px; line-height: 24px; letter-spacing: -0.5px;">20/24/-0.5</div>
+          <div style="font-weight: 400; font-size: 18px; line-height: 22px; letter-spacing: -0.5px;">18/22/-0.5</div>
+          <div style="font-weight: 400; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">16/20/-0.5</div>
+          <div style="font-weight: 400; font-size: 14px; line-height: 18px; letter-spacing: -0.5px;">14/18/-0.5</div>
+          <div style="font-weight: 400; font-size: 12px; line-height: 16px; letter-spacing: 0;">12/16/0</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF; border-bottom: 1px solid #E5E7EB; padding-bottom: 8px;">MEDIUM</div>
+          <div style="font-weight: 500; font-size: 20px; line-height: 24px; letter-spacing: -0.5px;">20/24/-0.5</div>
+          <div style="font-weight: 500; font-size: 18px; line-height: 22px; letter-spacing: -0.5px;">18/22/-0.5</div>
+          <div style="font-weight: 500; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">16/20/-0.5</div>
+          <div style="font-weight: 500; font-size: 14px; line-height: 18px; letter-spacing: -0.5px;">14/18/-0.5</div>
+          <div style="font-weight: 500; font-size: 12px; line-height: 16px; letter-spacing: -0.5px;">12/16/-0.5</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF; border-bottom: 1px solid #E5E7EB; padding-bottom: 8px;">SEMIBOLD</div>
+          <div style="font-weight: 600; font-size: 20px; line-height: 24px; letter-spacing: -0.5px;">20/24/-0.5</div>
+          <div style="font-weight: 600; font-size: 18px; line-height: 22px; letter-spacing: -0.5px;">18/22/-0.5</div>
+          <div style="font-weight: 600; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">16/20/-0.5</div>
+          <div style="font-weight: 600; font-size: 14px; line-height: 18px; letter-spacing: -0.5px;">14/18/-0.5</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF; border-bottom: 1px solid #E5E7EB; padding-bottom: 8px;">BOLD</div>
+          <div style="font-weight: 700; font-size: 32px; line-height: 36px; letter-spacing: -0.5px;">32/36</div>
+          <div style="font-weight: 700; font-size: 24px; line-height: 30px; letter-spacing: -0.5px;">24/30/-0.5</div>
+          <div style="font-weight: 700; font-size: 20px; line-height: 24px; letter-spacing: -0.5px;">20/24/-0.5</div>
+          <div style="font-weight: 700; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">16/20/-0.5</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 32px; flex-wrap: wrap; border-top: 1px solid #E5E7EB; padding-top: 20px;">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">HERO NUMBER — Bold 24–32</div>
+          <div style="font-weight: 700; font-size: 32px; line-height: 36px; letter-spacing: -0.5px;">₹8,420</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">SECTION HEADING — SemiBold 16–18</div>
+          <div style="font-weight: 600; font-size: 18px; line-height: 22px; letter-spacing: -0.5px;">Compare 14 booking sites</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">BODY / LABEL — Regular–Medium 12–14</div>
+          <div style="font-weight: 400; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565;">2 nights · 2 adults · incl. taxes &amp; fees</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOR -->
+  <div style="display: flex; flex-direction: column; gap: 20px;">
+    <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700;">Color</div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden;">
+        <div style="height: 88px; background: #5855E5;"></div>
+        <div style="display: flex;">
+          <div style="flex: 1; height: 40px; background: #4442B2;"></div>
+          <div style="flex: 1; height: 40px; background: #EFEFFF;"></div>
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-weight: 600; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">Poli Purple</div>
+          <div style="font-size: 12px; line-height: 16px; color: #4A5565;">Primary — brand, CTAs, active states</div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">#5855E5 · #4442B2 · #EFEFFF</div>
+        </div>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden;">
+        <div style="height: 88px; background: #006CE5;"></div>
+        <div style="display: flex;">
+          <div style="flex: 1; height: 40px; background: #0054B2;"></div>
+          <div style="flex: 1; height: 40px; background: #E5F1FF;"></div>
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-weight: 600; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">Neelagiri</div>
+          <div style="font-size: 12px; line-height: 16px; color: #4A5565;">Secondary — informational</div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">#006CE5 · #0054B2 · #E5F1FF</div>
+        </div>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden;">
+        <div style="height: 88px; background: #00764F;"></div>
+        <div style="display: flex;">
+          <div style="flex: 1; height: 40px; background: #005C3D;"></div>
+          <div style="flex: 1; height: 40px; background: #E8F8F0;"></div>
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-weight: 600; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">Pachadi</div>
+          <div style="font-size: 12px; line-height: 16px; color: #4A5565;">Success — price drops, savings, discount %</div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">#00764F · #005C3D · #E8F8F0</div>
+        </div>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden;">
+        <div style="height: 88px; background: #FACC15;"></div>
+        <div style="display: flex;">
+          <div style="flex: 1; height: 40px; background: #DEA20C;"></div>
+          <div style="flex: 1; height: 40px; background: #FDF5D4;"></div>
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-weight: 600; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">Idukki Gold</div>
+          <div style="font-size: 12px; line-height: 16px; color: #4A5565;">Highlight — deals, coupon banners</div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">#FACC15 · #DEA20C · #FDF5D4</div>
+        </div>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden;">
+        <div style="height: 88px; background: #D6383B;"></div>
+        <div style="display: flex;">
+          <div style="flex: 1; height: 40px; background: #A72B2E;"></div>
+          <div style="flex: 1; height: 40px; background: #FDECEC;"></div>
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-weight: 600; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">Red bull</div>
+          <div style="font-size: 12px; line-height: 16px; color: #4A5565;">Error / warning — sold out, price rise</div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">#D6383B · #A72B2E · #FDECEC</div>
+        </div>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden;">
+        <div style="display: flex; height: 88px;">
+          <div style="flex: 1; background: #030712;"></div>
+          <div style="flex: 1; background: #4A5565;"></div>
+          <div style="flex: 1; background: #99A1AF;"></div>
+        </div>
+        <div style="display: flex;">
+          <div style="flex: 1; height: 40px; background: #E5E7EB;"></div>
+          <div style="flex: 1; height: 40px; background: #F9FAFB;"></div>
+          <div style="flex: 1; height: 40px; background: #FFFFFF;"></div>
+        </div>
+        <div style="padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="font-weight: 600; font-size: 16px; line-height: 20px; letter-spacing: -0.5px;">Neutrals</div>
+          <div style="font-size: 12px; line-height: 16px; color: #4A5565;">Text · secondary · muted / border · page · card</div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">#030712 #4A5565 #99A1AF · #E5E7EB #F9FAFB #FFFFFF</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RADIUS + SPACING -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px;">
+
+    <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+      <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700;">Corner radius</div>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 0;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">0</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 2px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">2</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 4px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">4</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 8px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">8</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 12px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">12</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 16px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">16</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 20px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">20</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 24px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">24</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 32px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">32</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 40px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">40</div></div>
+        <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;"><div style="width: 52px; height: 52px; background: #EFEFFF; border: 1px solid #5855E5; border-radius: 999px;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">999</div></div>
+      </div>
+      <div style="font-size: 12px; line-height: 16px; color: #4A5565;">Cards 8–12 · bottom sheets 16–20 (top corners) · chips, pills and CTAs 999.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 20px;">
+      <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700;">Spacing</div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 2px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">2</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 4px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">4</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 8px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">8</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 12px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">12</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 16px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">16 — page margin</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 20px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">20</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 24px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">24</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 32px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">32</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 40px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">40</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 48px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">48</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 56px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">56</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 64px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">64</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 80px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">80</div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><div style="width: 120px; height: 14px; background: #5855E5;"></div><div style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #4A5565;">120</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPONENTS -->
+  <div style="display: flex; flex-direction: column; gap: 20px;">
+    <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700;">Components</div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(392px, max-content)); gap: 16px; justify-content: start;">
+
+      <!-- SEARCH BAR -->
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; width: 392px; box-sizing: border-box;">
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">01 — SEARCH BAR</div>
+        <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 12px;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#4A5565" stroke-width="1.6"></circle><line x1="13.5" y1="13.5" x2="17.5" y2="17.5" stroke="#4A5565" stroke-width="1.6" stroke-linecap="round"></line></svg>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+              <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">Goa, India</div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">12–14 Sep · 2 guests, 1 room</div>
+            </div>
+            <div style="width: 28px; height: 28px; border-radius: 999px; background: #EFEFFF; display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 16px; font-weight: 500; color: #5855E5;">⌄</div>
+          </div>
+          <div style="background: #FFFFFF; border: 1px solid #5855E5; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 0 0 3px #EFEFFF;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#5855E5" stroke-width="1.6"></circle><line x1="13.5" y1="13.5" x2="17.5" y2="17.5" stroke="#5855E5" stroke-width="1.6" stroke-linecap="round"></line></svg>
+            <div style="flex: 1; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #99A1AF;">Search a city, area or hotel</div>
+            <div style="width: 20px; height: 20px; border-radius: 999px; background: #E5E7EB; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #4A5565;">×</div>
+          </div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">default · focused</div>
+        </div>
+      </div>
+
+      <!-- BADGES -->
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; width: 392px; box-sizing: border-box;">
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">02 — PRICE / SAVINGS BADGE</div>
+        <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            <div style="background: #E8F8F0; color: #00764F; border-radius: 999px; padding: 4px 10px; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500;">Save ₹1,240</div>
+            <div style="background: #00764F; color: #FFFFFF; border-radius: 999px; padding: 4px 10px; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500;">32% off</div>
+            <div style="background: #E5F1FF; color: #006CE5; border-radius: 999px; padding: 4px 10px; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500;">Free cancellation</div>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            <div style="background: #FDF5D4; color: #030712; border-radius: 999px; padding: 4px 10px; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; display: flex; align-items: center; gap: 6px;"><div style="width: 8px; height: 8px; border-radius: 999px; background: #FACC15;"></div>Coupon applied</div>
+            <div style="background: #FDECEC; color: #D6383B; border-radius: 999px; padding: 4px 10px; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500;">Only 2 rooms left</div>
+            <div style="background: #EFEFFF; color: #5855E5; border-radius: 999px; padding: 4px 10px; font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500;">Lowest in 30 days</div>
+          </div>
+          <div style="border-top: 1px solid #E5E7EB; padding-top: 12px; display: flex; align-items: flex-end; gap: 10px;">
+            <div style="font-weight: 700; font-size: 24px; line-height: 30px; letter-spacing: -0.5px;">₹8,420</div>
+            <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #99A1AF; text-decoration: line-through; padding-bottom: 4px;">₹12,400</div>
+            <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #00764F; font-weight: 600; padding-bottom: 4px;">32% off</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; width: 392px; box-sizing: border-box;">
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">03 — BUTTONS</div>
+        <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="background: #5855E5; color: #FFFFFF; border-radius: 999px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;" style-hover="background: #4442B2;">Book on Agoda · ₹8,420</div>
+          <div style="display: flex; gap: 12px;">
+            <div style="flex: 1; background: #4442B2; color: #FFFFFF; border-radius: 999px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600;">Pressed</div>
+            <div style="flex: 1; background: #E5E7EB; color: #99A1AF; border-radius: 999px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600;">Disabled</div>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <div style="flex: 1; background: #EFEFFF; color: #5855E5; border-radius: 999px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;" style-hover="background: #E0E0FF;">Set price alert</div>
+            <div style="flex: 1; background: #FFFFFF; border: 1px solid #E5E7EB; color: #030712; border-radius: 999px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;" style-hover="border-color: #99A1AF;">Share</div>
+          </div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">primary 48h · secondary 44h · radius 999</div>
+        </div>
+      </div>
+
+      <!-- CHIPS -->
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; width: 392px; box-sizing: border-box;">
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">04 — FILTER CHIPS</div>
+        <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <div style="background: #5855E5; color: #FFFFFF; border: 1px solid #5855E5; border-radius: 999px; padding: 8px 14px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">All</div>
+            <div style="background: #FFFFFF; color: #030712; border: 1px solid #E5E7EB; border-radius: 999px; padding: 8px 14px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">Under ₹5,000</div>
+            <div style="background: #FFFFFF; color: #030712; border: 1px solid #E5E7EB; border-radius: 999px; padding: 8px 14px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">4★ &amp; up</div>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <div style="background: #EFEFFF; color: #5855E5; border: 1px solid #5855E5; border-radius: 999px; padding: 8px 14px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; display: flex; align-items: center; gap: 8px;">Free breakfast <span style="font-size: 14px;">×</span></div>
+            <div style="background: #FFFFFF; color: #030712; border: 1px solid #E5E7EB; border-radius: 999px; padding: 8px 14px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; display: flex; align-items: center; gap: 8px;">Sort <span style="color: #99A1AF;">⌄</span></div>
+            <div style="background: #FFFFFF; color: #99A1AF; border: 1px solid #E5E7EB; border-radius: 999px; padding: 8px 14px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">Pool</div>
+          </div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">selected · default · tinted-active · dropdown · disabled</div>
+        </div>
+      </div>
+
+      <!-- HOTEL CARD -->
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; width: 392px; box-sizing: border-box;">
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">05 — HOTEL CARD</div>
+        <div style="background: #F9FAFB; padding: 16px; border-radius: 8px;">
+          <div style="width: 328px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(3,7,18,0.04);">
+            <div style="position: relative; height: 160px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 8px, #DDE0E5 8px 16px); display: flex; align-items: center; justify-content: center;">
+              <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #4A5565; background: rgba(255,255,255,0.85); padding: 4px 8px; border-radius: 4px;">hotel photo 328×160</div>
+              <div style="position: absolute; top: 12px; left: 12px; background: #00764F; color: #FFFFFF; border-radius: 999px; padding: 4px 10px; font-size: 12px; line-height: 16px; font-weight: 500;">Cheapest on Buyhatke</div>
+            </div>
+            <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: flex-start; gap: 8px;">
+                <div style="flex: 1; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600;">Taj Holiday Village Resort</div>
+                <div style="background: #EFEFFF; color: #5855E5; border-radius: 4px; padding: 2px 6px; font-size: 12px; line-height: 16px; font-weight: 600;">4.6</div>
+              </div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">Candolim, North Goa · 1.2 km from beach</div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <div style="background: #E8F8F0; color: #00764F; border-radius: 999px; padding: 2px 8px; font-size: 12px; line-height: 16px; font-weight: 500;">Save ₹1,240</div>
+                <div style="background: #E5F1FF; color: #006CE5; border-radius: 999px; padding: 2px 8px; font-size: 12px; line-height: 16px; font-weight: 500;">Free cancellation</div>
+              </div>
+              <div style="display: flex; align-items: flex-end; justify-content: space-between; padding-top: 4px; border-top: 1px solid #E5E7EB; margin-top: 4px;">
+                <div style="display: flex; flex-direction: column; gap: 2px; padding-top: 8px;">
+                  <div style="font-size: 12px; line-height: 16px; color: #99A1AF; text-decoration: line-through;">₹12,400</div>
+                  <div style="font-weight: 700; font-size: 24px; line-height: 30px; letter-spacing: -0.5px;">₹8,420</div>
+                  <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">per night · incl. taxes</div>
+                </div>
+                <div style="background: #5855E5; color: #FFFFFF; border-radius: 999px; padding: 10px 18px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600;">Compare</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRICE COMPARISON ROW -->
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; width: 392px; box-sizing: border-box;">
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">06 — PRICE COMPARISON ROW</div>
+        <div style="background: #F9FAFB; padding: 16px; border-radius: 8px;">
+          <div style="width: 328px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #E8F8F0; border-bottom: 1px solid #E5E7EB;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 4px, #DDE0E5 4px 8px);"></div>
+              <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+                <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600;">Agoda</div>
+                <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #00764F; font-weight: 500;">Lowest price · save ₹1,240</div>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px;">
+                <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 700;">₹8,420</div>
+                <div style="font-size: 12px; line-height: 16px; color: #5855E5; font-weight: 500;">Book →</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border-bottom: 1px solid #E5E7EB;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 4px, #DDE0E5 4px 8px);"></div>
+              <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+                <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600;">MakeMyTrip</div>
+                <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">Coupon MMTGO applied</div>
+              </div>
+              <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 700;">₹8,960</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 4px, #DDE0E5 4px 8px);"></div>
+              <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+                <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600;">Booking.com</div>
+                <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF;">Taxes added at checkout</div>
+              </div>
+              <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 700; color: #4A5565;">₹9,310</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB BAR -->
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; width: 392px; box-sizing: border-box;">
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">07 — TAB BAR</div>
+        <div style="background: #F9FAFB; padding: 16px; border-radius: 8px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="width: 294px; background: #FFFFFF; border-top: 1px solid #E5E7EB; border-radius: 0 0 12px 12px; padding: 8px 16px 12px; display: flex; justify-content: space-between; box-shadow: 0 -1px 2px rgba(3,7,18,0.04); height: 39px">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 64px;">
+              <div style="width: 22px; height: 22px; border-radius: 4px; border: 2px solid #5855E5;"></div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #5855E5;">Stays</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 64px;">
+              <div style="width: 22px; height: 22px; border-radius: 999px; border: 2px solid #99A1AF;"></div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 400; color: #4A5565;">Deals</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 64px;">
+              <div style="width: 22px; height: 22px; border-radius: 4px; border: 2px solid #99A1AF; transform: rotate(45deg);"></div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 400; color: #4A5565;">Alerts</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 64px;">
+              <div style="width: 22px; height: 22px; border-radius: 999px; border: 2px solid #99A1AF;"></div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 400; color: #4A5565;">Trips</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0; width: 328px; border-bottom: 1px solid #E5E7EB; background: #FFFFFF; border-radius: 8px 8px 0 0;">
+            <div style="padding: 12px 16px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #5855E5; border-bottom: 2px solid #5855E5;">Prices</div>
+            <div style="padding: 12px 16px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 400; color: #4A5565;">Rooms</div>
+            <div style="padding: 12px 16px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 400; color: #4A5565;">Reviews</div>
+          </div>
+          <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">bottom nav · in-page tabs (icons are placeholders)</div>
+        </div>
+      </div>
+
+      <!-- BOTTOM SHEET -->
+      <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 16px; width: 392px; box-sizing: border-box;">
+        <div style="font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 16px; color: #99A1AF;">08 — BOTTOM SHEET</div>
+        <div style="background: rgba(3,7,18,0.45); padding: 40px 16px 0; border-radius: 8px;">
+          <div style="width: 296px; background: #FFFFFF; border-radius: 20px 20px 8px 8px; padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 16px; height: 230px">
+            <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB; align-self: center;"></div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600;">Sort &amp; filter</div>
+              <div style="width: 28px; height: 28px; border-radius: 999px; background: #F9FAFB; display: flex; align-items: center; justify-content: center; color: #4A5565; font-size: 14px;">×</div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 20px; height: 20px; border-radius: 999px; border: 6px solid #5855E5;"></div>
+                <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">Lowest total price</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 20px; height: 20px; border-radius: 999px; border: 2px solid #99A1AF;"></div>
+                <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565;">Biggest savings</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 20px; height: 20px; border-radius: 999px; border: 2px solid #99A1AF;"></div>
+                <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565;">Guest rating</div>
+              </div>
+            </div>
+            <div style="background: #5855E5; color: #FFFFFF; border-radius: 999px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600;">Show 128 stays</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #E5E7EB; padding-top: 24px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565; max-width: 720px; text-wrap: pretty;">
+    Note: Google Sans Flex is not served by a public web font CDN, so this file requests it first and falls back to Roboto Flex — the closest metric match — for rendering here. In production the real family is loaded.
+  </div>
+
+</div>
+
+</x-dc>
+</body>
+</html>

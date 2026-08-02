@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F1F2F4; -webkit-font-smoothing: antialiased; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; }
+  a { color: #5855E5; text-decoration: none; }
+  a:hover { color: #4442B2; }
+</style>
+</helmet>
+
+<section style="padding: 32px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; color: #030712;">
+
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Empty state — auto-fill available</div>
+<div data-screen-label="Webview checkout — empty" style="width: 390px; height: 780px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+
+  <div style="flex-shrink: 0; background: #000000; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between;">
+    <div style="font-size: 14px; line-height: 18px; font-weight: 600; color: #FFFFFF;">16:10</div>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 10.5l6.5-6.8A9.2 9.2 0 008 1a9.2 9.2 0 00-6.5 2.7L8 10.5z" fill="#FFFFFF"></path></svg>
+      <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><rect x="1" y="7" width="2.5" height="4" rx="0.6" fill="#FFFFFF"></rect><rect x="4.8" y="5" width="2.5" height="6" rx="0.6" fill="#FFFFFF"></rect><rect x="8.6" y="3" width="2.5" height="8" rx="0.6" fill="#FFFFFF"></rect><rect x="12.4" y="1" width="2.5" height="10" rx="0.6" fill="#FFFFFF"></rect></svg>
+      <div style="font-size: 12px; line-height: 16px; font-weight: 600; color: #000000; background: #FFFFFF; border-radius: 5px; padding: 0 5px;">53</div>
+    </div>
+  </div>
+
+  <div style="flex-shrink: 0; background: #FFFFFF; padding: 10px 12px;">
+    <div style="position: relative; padding: 8px 7px;">
+      <div style="position: absolute; inset: 0; background: #FFD400; border-radius: 14px; -webkit-mask-image: radial-gradient(circle 5px at 5px 5px, #000 98%, transparent 100%); mask-image: radial-gradient(circle 5px at 5px 5px, #000 98%, transparent 100%); -webkit-mask-size: 10px 10px; mask-size: 10px 10px;"></div>
+      <div style="position: absolute; left: 5px; top: 5px; right: 5px; bottom: 5px; background: #FFD400; border-radius: 11px;"></div>
+      <div style="position: relative; background: #F7F8FB; border-radius: 9px; padding: 10px 12px; display: flex; align-items: center; gap: 8px;">
+        <div style="font-size: 13px; line-height: 1; flex-shrink: 0;">✨</div>
+        <div style="font-size: 13px; font-weight: 600; color: #1A1A1A; white-space: nowrap;">Auto Coupons</div>
+        <div style="font-size: 10px; color: #6A7282; flex-shrink: 0;">by</div>
+        <div style="width: 16px; height: 16px; border-radius: 4px; background: #4F46E5; flex-shrink: 0;"></div>
+        <div style="font-size: 13px; color: #1A1A1A; white-space: nowrap;">buyhatke</div>
+        <div style="margin-left: auto; font-size: 13px; font-weight: 600; color: #4F46E5; white-space: nowrap;">Apply Now →</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; overflow-y: auto; background: #FFFFFF;">
+    <div style="padding: 16px; display: flex; align-items: center; gap: 14px;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink: 0;"><path d="M11 4l-5 5 5 5" stroke="#6A7282" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">Who's travelling?</div>
+    </div>
+
+    <div style="padding: 0 16px 14px;">
+      <div style="background: #F3F4F6; border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+        <div style="font-size: 13px; line-height: 18px; color: #6A7282; flex: 1;">Checkout faster with saved travellers.</div>
+        <div style="font-size: 13px; line-height: 18px; font-weight: 600; color: #45556C;">Log In</div>
+      </div>
+    </div>
+
+    <div style="padding: 6px 16px 18px; display: flex; align-items: center; gap: 12px;">
+      <div style="font-size: 17px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">Adults</div>
+      <div style="font-size: 13px; line-height: 18px; color: #99A1AF;">(0/1 added)</div>
+      <div style="margin-left: auto; border: 1px solid #D1D5DC; border-radius: 8px; padding: 11px 16px; font-size: 13px; line-height: 18px; font-weight: 600; color: #45556C; cursor: pointer;">Add adult</div>
+    </div>
+
+    <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 12px;">
+      <div>
+        <div style="font-size: 17px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">Contact Information</div>
+        <div style="font-size: 13px; line-height: 18px; color: #99A1AF; margin-top: 4px;">Booking updates will be shared here</div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="border: 1px solid #D1D5DC; border-radius: 8px; padding: 0 8px 0 14px; height: 50px; display: flex; align-items: center; gap: 12px; position: relative;">
+          <div style="font-size: 14px; line-height: 18px; color: #99A1AF; flex: 1;">Email Address</div>
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #4F46E5; flex-shrink: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(79,70,229,0.35);">
+            <div style="position: relative; width: 21px; height: 19px;">
+              <div style="position: absolute; left: 5px; top: 1px; width: 9px; height: 9px; border-radius: 50%; background: #FFFFFF;"></div>
+              <div style="position: absolute; left: 1px; top: 11px; width: 17px; height: 9px; border-radius: 9px 9px 0 0; background: #FFFFFF;"></div>
+              <div style="position: absolute; right: -1px; bottom: 0; width: 10px; height: 10px; border-radius: 50%; background: #4F46E5; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; line-height: 1; color: #FFC107;">+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #D1D5DC; border-radius: 8px; padding: 0 14px; height: 50px; display: flex; align-items: center; gap: 12px;">
+        <div style="font-size: 14px; line-height: 18px; color: #45556C; font-weight: 500;">+91</div>
+        <div style="width: 1px; height: 18px; background: #E5E7EB;"></div>
+        <div style="font-size: 14px; line-height: 18px; color: #99A1AF;">Mobile number</div>
+      </div>
+    </div>
+
+    <div style="padding: 22px 16px 0; display: flex; align-items: center; gap: 12px;">
+      <div style="font-size: 17px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">GST number</div>
+      <div style="margin-left: auto; border: 1px solid #D1D5DC; border-radius: 8px; padding: 11px 16px; font-size: 13px; line-height: 18px; font-weight: 600; color: #45556C; cursor: pointer;">Add GST</div>
+    </div>
+
+    <div style="padding: 12px 16px 24px;">
+      <div style="background: #F3F4F6; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #6A7282; line-height: 19px;">
+        <span style="font-weight: 600; color: #45556C;">NOTE:</span> Use GST number to avail GST benefits &amp; additional savings
+      </div>
+    </div>
+  </div>
+
+  <div style="flex-shrink: 0; border-top: 1px solid #E5E7EB; background: #FFFFFF; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700; color: #45556C;">₹6,447</div>
+      <div style="font-size: 12px; line-height: 16px; color: #6A7282; font-weight: 500; margin-top: 2px; text-decoration: underline;">View breakup</div>
+    </div>
+    <div style="background: #6A7282; color: #FFFFFF; text-align: center; padding: 14px 34px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 600; flex-shrink: 0;">Continue</div>
+  </div>
+
+  <div style="flex-shrink: 0; background: #1E2939; padding: 9px 24px; display: flex; align-items: center; justify-content: space-between;">
+    <sc-for list="{{ browserNav }}" as="n" hint-placeholder-count="5">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+        <div style="width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;">{{ n.icon }}</div>
+        <div style="font-size: 10px; line-height: 12px; color: {{ n.color }};">{{ n.label }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Filled state — details auto-filled</div>
+<div data-screen-label="Webview checkout — filled" style="width: 390px; height: 780px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+
+  <div style="flex-shrink: 0; background: #000000; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between;">
+    <div style="font-size: 14px; line-height: 18px; font-weight: 600; color: #FFFFFF;">16:12</div>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 10.5l6.5-6.8A9.2 9.2 0 008 1a9.2 9.2 0 00-6.5 2.7L8 10.5z" fill="#FFFFFF"></path></svg>
+      <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><rect x="1" y="7" width="2.5" height="4" rx="0.6" fill="#FFFFFF"></rect><rect x="4.8" y="5" width="2.5" height="6" rx="0.6" fill="#FFFFFF"></rect><rect x="8.6" y="3" width="2.5" height="8" rx="0.6" fill="#FFFFFF"></rect><rect x="12.4" y="1" width="2.5" height="10" rx="0.6" fill="#FFFFFF"></rect></svg>
+      <div style="font-size: 12px; line-height: 16px; font-weight: 600; color: #000000; background: #FFFFFF; border-radius: 5px; padding: 0 5px;">53</div>
+    </div>
+  </div>
+
+  <div style="flex-shrink: 0; background: #FFFFFF; padding: 10px 12px;">
+    <div style="position: relative; padding: 8px 7px;">
+      <div style="position: absolute; inset: 0; background: #FFD400; border-radius: 14px; -webkit-mask-image: radial-gradient(circle 5px at 5px 5px, #000 98%, transparent 100%); mask-image: radial-gradient(circle 5px at 5px 5px, #000 98%, transparent 100%); -webkit-mask-size: 10px 10px; mask-size: 10px 10px;"></div>
+      <div style="position: absolute; left: 5px; top: 5px; right: 5px; bottom: 5px; background: #FFD400; border-radius: 11px;"></div>
+      <div style="position: relative; background: #F7F8FB; border-radius: 9px; padding: 10px 12px; display: flex; align-items: center; gap: 8px;">
+        <div style="font-size: 13px; line-height: 1; flex-shrink: 0;">✨</div>
+        <div style="font-size: 13px; font-weight: 600; color: #1A1A1A; white-space: nowrap;">Auto Coupons</div>
+        <div style="font-size: 10px; color: #6A7282; flex-shrink: 0;">by</div>
+        <div style="width: 16px; height: 16px; border-radius: 4px; background: #4F46E5; flex-shrink: 0;"></div>
+        <div style="font-size: 13px; color: #1A1A1A; white-space: nowrap;">buyhatke</div>
+        <div style="margin-left: auto; font-size: 13px; font-weight: 600; color: #4F46E5; white-space: nowrap;">Apply Now →</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; overflow-y: auto; background: #FFFFFF;">
+    <div style="padding: 16px; display: flex; align-items: center; gap: 14px;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink: 0;"><path d="M11 4l-5 5 5 5" stroke="#6A7282" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">Who's travelling?</div>
+    </div>
+
+    <div style="padding: 0 16px 14px;">
+      <div style="background: #F3F4F6; border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+        <div style="font-size: 13px; line-height: 18px; color: #6A7282; flex: 1;">Checkout faster with saved travellers.</div>
+        <div style="font-size: 13px; line-height: 18px; font-weight: 600; color: #45556C;">Log In</div>
+      </div>
+    </div>
+
+    <div style="padding: 6px 16px 12px; display: flex; align-items: center; gap: 12px;">
+      <div style="font-size: 17px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">Adults</div>
+      <div style="font-size: 13px; line-height: 18px; color: #99A1AF;">(1/1 added)</div>
+      <div style="margin-left: auto; border: 1px solid #D1D5DC; border-radius: 8px; padding: 11px 16px; font-size: 13px; line-height: 18px; font-weight: 600; color: #45556C; cursor: pointer;">Add adult</div>
+    </div>
+
+    <div style="padding: 0 16px 18px; display: flex; align-items: center; gap: 12px;">
+      <div style="width: 20px; height: 20px; border-radius: 50%; border: 6px solid #45556C; flex-shrink: 0; box-sizing: border-box;"></div>
+      <div style="flex: 1; min-width: 0;">
+        <div style="font-size: 15px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">Ananya Rao</div>
+        <div style="font-size: 13px; line-height: 18px; color: #99A1AF; margin-top: 2px;">Female</div>
+      </div>
+      <div style="width: 18px; height: 18px; border: 1px solid #D1D5DC; border-radius: 4px; flex-shrink: 0;"></div>
+    </div>
+
+    <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 12px;">
+      <div>
+        <div style="font-size: 17px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">Contact Information</div>
+        <div style="font-size: 13px; line-height: 18px; color: #99A1AF; margin-top: 4px;">Booking updates will be shared here</div>
+      </div>
+
+      <div style="border: 1px solid #D1D5DC; border-radius: 8px; padding: 0 8px 0 14px; height: 50px; display: flex; align-items: center; gap: 12px;">
+        <div style="font-size: 14px; line-height: 18px; color: #45556C; flex: 1;">ananya.rao24@gmail.com</div>
+        <div style="width: 38px; height: 38px; border-radius: 50%; background: #4F46E5; flex-shrink: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(79,70,229,0.35);">
+          <div style="position: relative; width: 21px; height: 19px;">
+            <div style="position: absolute; left: 5px; top: 1px; width: 9px; height: 9px; border-radius: 50%; background: #FFFFFF;"></div>
+            <div style="position: absolute; left: 1px; top: 11px; width: 17px; height: 9px; border-radius: 9px 9px 0 0; background: #FFFFFF;"></div>
+            <div style="position: absolute; right: -1px; bottom: 0; width: 10px; height: 10px; border-radius: 50%; background: #4F46E5; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; line-height: 1; color: #FFC107;">+</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #D1D5DC; border-radius: 8px; padding: 0 14px; height: 50px; display: flex; align-items: center; gap: 12px;">
+        <div style="font-size: 14px; line-height: 18px; color: #45556C; font-weight: 500;">+91</div>
+        <div style="width: 1px; height: 18px; background: #E5E7EB;"></div>
+        <div style="font-size: 14px; line-height: 18px; color: #45556C;">9821440376</div>
+      </div>
+    </div>
+
+    <div style="padding: 22px 16px 0; display: flex; align-items: center; gap: 12px;">
+      <div style="font-size: 17px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #45556C;">GST number</div>
+      <div style="margin-left: auto; border: 1px solid #D1D5DC; border-radius: 8px; padding: 11px 16px; font-size: 13px; line-height: 18px; font-weight: 600; color: #45556C; cursor: pointer;">Add GST</div>
+    </div>
+
+    <div style="padding: 12px 16px 24px;">
+      <div style="background: #F3F4F6; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #6A7282; line-height: 19px;">
+        <span style="font-weight: 600; color: #45556C;">NOTE:</span> Use GST number to avail GST benefits &amp; additional savings
+      </div>
+    </div>
+  </div>
+
+  <div style="flex-shrink: 0; border-top: 1px solid #E5E7EB; background: #FFFFFF; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700; color: #45556C;">₹5,642</div>
+      <div style="font-size: 12px; line-height: 16px; color: #6A7282; font-weight: 500; margin-top: 2px; text-decoration: underline;">View breakup</div>
+    </div>
+    <div style="background: #6A7282; color: #FFFFFF; text-align: center; padding: 14px 34px; border-radius: 8px; font-size: 14px; line-height: 18px; font-weight: 600; flex-shrink: 0;">Continue</div>
+  </div>
+
+  <div style="flex-shrink: 0; background: #1E2939; padding: 9px 24px; display: flex; align-items: center; justify-content: space-between;">
+    <sc-for list="{{ browserNav }}" as="n" hint-placeholder-count="5">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+        <div style="width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;">{{ n.icon }}</div>
+        <div style="font-size: 10px; line-height: 12px; color: {{ n.color }};">{{ n.label }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+</div>
+</div>
+
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  icon(paths, color) {
+    return React.createElement('svg', { width: 20, height: 20, viewBox: '0 0 20 20', fill: 'none' },
+      paths.map((d, i) => React.createElement('path', {
+        key: i, d, stroke: color, strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round',
+      }))
+    );
+  }
+  renderVals() {
+    const on = '#FFFFFF', off = '#6A7282';
+    return {
+      browserNav: [
+        { label: 'Back', color: on, icon: this.icon(['M12 5l-5 5 5 5'], on) },
+        { label: 'Forward', color: off, icon: this.icon(['M8 5l5 5-5 5'], off) },
+        { label: 'Home', color: on, icon: this.icon(['M3.5 9.5L10 4l6.5 5.5V16h-13V9.5z'], on) },
+        { label: 'Refresh', color: on, icon: this.icon(['M16 10a6 6 0 11-1.8-4.3', 'M16 3v3.2h-3.2'], on) },
+        { label: 'Info', color: on, icon: this.icon(['M10 3.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13z', 'M10 9v4.2', 'M10 6.6v.1'], on) },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

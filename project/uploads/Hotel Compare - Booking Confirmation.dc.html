@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap');
+  body { margin:0; background:#F3F4F6; font-family:'Google Sans','Google Sans Flex',Helvetica,Arial,sans-serif; }
+  a { color:#45556C; }
+  a:hover { color:#101828; }
+</style>
+</helmet>
+<div style="width:390px;height:780px;margin:24px auto;background:#FFFFFF;border:1px solid #D1D5DC;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;position:relative;">
+
+  <div style="position:absolute;left:0;right:0;bottom:20px;z-index:5;display:flex;justify-content:center;pointer-events:none;">
+    <div style="background:#364153;color:#FFFFFF;padding:14px 28px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 6px 20px rgba(16,24,40,0.28);">Back to Home</div>
+  </div>
+
+  <div style="flex-shrink:0;padding:12px 16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between;">
+    <div style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;display:flex;align-items:center;justify-content:center;font-size:14px;color:#45556C;">×</div>
+    <div style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;display:flex;align-items:center;justify-content:center;">
+      <div style="font-size:8px;color:#99A1AF;font-family:monospace;">share</div>
+    </div>
+  </div>
+
+  <div style="flex:1;min-height:0;overflow-y:auto;">
+
+    <div style="padding:24px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;border-bottom:8px solid #F3F4F6;">
+      <div style="width:120px;height:96px;border-radius:10px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 8px,#E5E7EB 8px,#E5E7EB 16px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:9px;color:#99A1AF;font-family:monospace;">success illustration</div>
+      </div>
+      <div style="font-size: 16px; font-weight: 700; color: #101828; text-align: center">Congrats! Your booking is confirmed.</div>
+      <div style="font-size:13px;color:#6A7282;">Booked on MakeMyTrip · {{ bookingId }}</div>
+      <div style="font-size:13px;font-weight:600;color:#FFFFFF;background:#4A5565;border-radius:6px;padding:8px 12px;margin-top:4px;">You saved {{ saved }} via hotel compare</div>
+    </div>
+
+    <div style="padding:18px 16px;display:flex;flex-direction:column;gap:12px;border-bottom:8px solid #F3F4F6;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:56px;height:56px;border-radius:8px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 6px,#E5E7EB 6px,#E5E7EB 12px);border:1px solid #E5E7EB;flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:15px;font-weight:600;color:#101828;">Ocean Pearl Resort</div>
+          <div style="font-size:12px;color:#6A7282;margin-top:4px;">★★★★ · Candolim, North Goa</div>
+        </div>
+        <div style="width:44px;height:44px;border-radius:50%;border:1px solid #D1D5DC;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:14px solid #45556C;transform:rotate(45deg);"></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <sc-for list="{{ keyFeatures }}" as="f" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid #E5E7EB;border-radius:8px;padding:8px 12px;">
+            <div style="font-size:11px;color:#45556C;line-height:1;">✓</div>
+            <div style="font-size:12px;color:#45556C;">{{ f }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding:18px 16px;display:flex;flex-direction:column;gap:16px;border-bottom:8px solid #F3F4F6;">
+      <div style="font-size:15px;font-weight:600;color:#101828;">Booking details</div>
+
+      <div style="border:1px solid #E5E7EB;border-radius:10px;display:flex;">
+        <div style="flex:1;padding:12px 16px;border-right:1px solid #E5E7EB;">
+          <div style="font-size:11px;color:#99A1AF;">Check-in</div>
+          <div style="font-size:14px;color:#101828;font-weight:500;margin-top:4px;">12 Aug</div>
+          <div style="font-size:11px;color:#6A7282;margin-top:4px;">After 2:00 PM</div>
+        </div>
+        <div style="flex:1;padding:12px 16px;">
+          <div style="font-size:11px;color:#99A1AF;">Check-out</div>
+          <div style="font-size:14px;color:#101828;font-weight:500;margin-top:4px;">15 Aug</div>
+          <div style="font-size:11px;color:#6A7282;margin-top:4px;">Before 11:00 AM</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid #E5E7EB;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:12px;font-weight:600;color:#6A7282;">Room &amp; package</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:14px;font-weight:500;color:#101828;">Deluxe Room, Sea View</div>
+            <div style="font-size:12px;color:#6A7282;margin-top:4px;">Breakfast + Free cancellation</div>
+          </div>
+          <div style="width:72px;height:56px;border-radius:8px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 6px,#E5E7EB 6px,#E5E7EB 12px);border:1px solid #E5E7EB;flex-shrink:0;"></div>
+        </div>
+      </div>
+
+      <div style="border:1px solid #E5E7EB;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:12px;font-weight:600;color:#6A7282;">Guests</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <div style="font-size:14px;font-weight:500;color:#101828;">Ananya Rao</div>
+              <div style="font-size:10px;font-weight:600;color:#45556C;border:1px solid #D1D5DC;border-radius:5px;padding:4px 8px;">Primary guest</div>
+            </div>
+            <div style="font-size:12px;color:#6A7282;margin-top:4px;">1 room · 2 adults</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border:1px solid #E5E7EB;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:6px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:14px;font-weight:500;color:#101828;">{{ platform }}</div>
+            <div style="font-size:11px;color:#6A7282;margin-top:4px;">You saved {{ saved }} via compare</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="display:flex;align-items:baseline;gap:8px;justify-content:flex-end;">
+              <div style="font-size:12px;color:#99A1AF;text-decoration:line-through;">₹7,630</div>
+              <div style="font-size:16px;font-weight:700;color:#101828;">₹5,642</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;margin-top:4px;">
+              <div style="font-size:12px;font-weight:600;color:#FFFFFF;background:#4A5565;border-radius:6px;padding:4px 8px;">26% off</div>
+              <div style="font-size:11px;color:#6A7282;">Amount paid</div>
+            </div>
+          </div>
+        </div>
+        <div style="width:100%;box-sizing:border-box;background:#364153;color:#FFFFFF;text-align:center;padding:12px;border-radius:8px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;">
+          View confirmation on {{ platform }}
+          <div style="width:8px;height:8px;border-top:2px solid #FFFFFF;border-right:2px solid #FFFFFF;transform:rotate(45deg);flex-shrink:0;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:18px 16px;display:flex;flex-direction:column;gap:12px;border-bottom:8px solid #F3F4F6;">
+      <div style="font-size:15px;font-weight:600;color:#101828;">Getting around in Goa</div>
+      <div style="display:flex;gap:12px;overflow-x:auto;">
+        <sc-for list="{{ rideBanners }}" as="b" hint-placeholder-count="3">
+          <div style="flex-shrink:0;width:280px;border:1px solid #E5E7EB;border-radius:10px;background:#F9FAFB;padding:16px;display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:44px;height:44px;border-radius:8px;background:#F3F4F6;border:1px solid #E5E7EB;flex-shrink:0;"></div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:600;color:#101828;">Compare Ride Fares</div><div style="font-size: 11px; font-weight: 400; color: #6A7282">{{ b.title }}</div>
+                
+                
+              </div><div style="box-sizing: border-box; display: flex; flex-direction: row; gap: 12px; justify-content: normal; align-items: center"><div style="font-size:11px;color:#6A7282;margin-top:4px;">starting from<div style="font-size: 17px; font-weight: 700; color: #101828; margin-top: 1px; text-align: right">{{ b.from }}</div></div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:12px;color:#6A7282;">Compare on</div><div style="display:flex;align-items:center;">
+                <sc-for list="{{ b.providers }}" as="pr" hint-placeholder-count="4">
+                  <div style="width:24px;height:24px;border-radius:50%;background:#F3F4F6;border:1.5px solid #FFFFFF;box-shadow:0 0 0 1px #E5E7EB;margin-left:-8px;"></div>
+                </sc-for>
+              </div>
+              <div style="flex:1;min-width:0;">
+                
+              </div>
+              <div style="font-size:12px;color:#45556C;font-weight:500;border:1px solid #D1D5DC;border-radius:999px;padding:8px 12px;flex-shrink:0;">{{ b.cta }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="padding:18px 16px;border-bottom:8px solid #F3F4F6;">
+      <div style="width:100%;height:110px;border-radius:10px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 8px,#E5E7EB 8px,#E5E7EB 16px);border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+        <div style="font-size:10px;color:#99A1AF;font-family:monospace;">ad slot · 390×110</div>
+      </div>
+    </div>
+
+    <div style="padding:18px 16px 28px;display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:15px;font-weight:600;color:#101828;">Gift cards for your trip</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <sc-for list="{{ giftCards }}" as="g" hint-placeholder-count="6">
+          <div style="border:1px solid #E5E7EB;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:12px;">
+            <div style="width:100%;height:72px;border-radius:8px;background:#F3F4F6;border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;">
+              <div style="font-size:9px;color:#99A1AF;font-family:monospace;">logo</div>
+            </div>
+            <div style="font-size:13px;font-weight:600;color:#101828;">{{ g.brand }}</div>
+            <div>
+              <div style="font-size:11px;color:#6A7282;">{{ g.offerType }}</div>
+              <div style="font-size:18px;font-weight:700;color:#101828;margin-top:4px;">{{ g.discount }}</div>
+            </div>
+            <div style="border:1px solid #364153;color:#101828;text-align:center;padding:8px;border-radius:8px;font-size:12px;font-weight:600;">Buy now</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="width:100%;box-sizing:border-box;border:1px solid #D1D5DC;border-radius:10px;text-align:center;padding:12px;font-size:13px;font-weight:600;color:#45556C;">View all gift cards</div>
+      <div style="height:56px;"></div>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      bookingId: 'BH-4827-19340',
+      saved: '₹1,988',
+      platform: 'MakeMyTrip',
+      keyFeatures: ['Free cancellation till 10 Aug', 'Breakfast included', 'Pay at hotel'],
+      rideBanners: [
+        { title: 'Goa Airport → Hotel', sub: 'Compare cab fares', cta: 'Book Cabs', from: '₹1,180', providers: [1, 2, 3, 4] },
+        { title: 'Hotel → Goa Airport', sub: 'Pre-book for 15 Aug', cta: 'Book', from: '₹1,340', providers: [1, 2, 3] },
+        { title: 'Candolim → Old Goa', sub: 'Day trips & sightseeing', cta: 'Explore', from: '₹499', providers: [1, 2, 3] },
+      ],
+      giftCards: [
+        { brand: 'Ride brand', offerType: 'Instant off', discount: '6%' },
+        { brand: 'Food delivery brand', offerType: 'Cashback', discount: '10%' },
+        { brand: 'Restaurant chain', offerType: 'Instant off', discount: '8%' },
+        { brand: 'Retail brand', offerType: 'Cashback', discount: '5%' },
+        { brand: 'Fuel brand', offerType: 'Instant off', discount: '3%' },
+        { brand: 'Travel brand', offerType: 'Cashback', discount: '7%' },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

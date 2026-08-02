@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F1F2F4; -webkit-font-smoothing: antialiased; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; }
+  a { color: #5855E5; text-decoration: none; }
+  a:hover { color: #4442B2; }
+</style>
+</helmet>
+
+<section style="padding: 32px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; color: #030712;">
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Filter panel — bottom sheet</div>
+    <div data-screen-label="Filter panel" style="width: 390px; height: 780px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; position: relative;">
+
+      <div style="flex-shrink: 0; padding: 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px; opacity: 0.45;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink: 0;"><path d="M11 4l-5 5 5 5" stroke="#030712" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Goa</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+        </div>
+      </div>
+      <div style="flex: 1; background: #F9FAFB;"></div>
+
+      <div style="position: absolute; inset: 0; display: flex; flex-direction: column; padding-top: 56px;">
+        <div style="position: absolute; inset: 0; background: rgba(3,7,18,0.45);"></div>
+        <div style="position: relative; flex: 1; min-height: 0; background: #FFFFFF; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; overflow: hidden;">
+
+          <div style="flex-shrink: 0; padding: 12px 0 0; display: flex; justify-content: center;">
+            <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB;"></div>
+          </div>
+          <div style="flex-shrink: 0; padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px;">
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Apply Filters</div>
+              <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #5855E5; font-weight: 500; margin-top: 2px;">{{ appliedCount }} applied</div>
+            </div>
+            <div style="width: 44px; height: 44px; border-radius: 999px; background: #F1F3F9; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #4A5565; flex-shrink: 0; cursor: pointer;">×</div>
+          </div>
+
+          <div style="flex: 1; min-height: 0; display: flex;">
+            <div style="width: 132px; flex-shrink: 0; background: #F9FAFB; border-right: 1px solid #E5E7EB; overflow-y: auto;">
+              <sc-for list="{{ categories }}" as="c" hint-placeholder-count="6">
+                <div onClick="{{ c.onClick }}" style="cursor: pointer; padding: 14px 12px; border-left: 3px solid {{ c.marker }}; background: {{ c.bg }}; display: flex; align-items: center; gap: 8px;">
+                  <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: {{ c.weight }}; color: {{ c.color }}; flex: 1;">{{ c.label }}</div>
+                  <sc-if value="{{ c.count }}" hint-placeholder-val="{{ true }}">
+                    <div style="font-size: 12px; line-height: 16px; font-weight: 600; color: #312F80; border-radius: 999px; min-width: 18px; text-align: center; padding: 2px 6px; background-color: #D0CFFF">{{ c.count }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="flex: 1; min-width: 0; overflow-y: auto; padding: 4px 16px 16px; display: flex; flex-direction: column;">
+              <div style="display: flex; flex-direction: column;">
+                <sc-for list="{{ options }}" as="o" hint-placeholder-count="6">
+                  <div onClick="{{ o.onClick }}" style="padding: 12px 0; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #F9FAFB; cursor: pointer;">
+                    <div style="width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0; border: 1.5px solid {{ o.boxBorder }}; background: {{ o.boxBg }}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1;">{{ o.tick }}</div>
+                    <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #030712; flex: 1;">{{ o.label }}</div>
+                    <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF;">{{ o.count }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex-shrink: 0; padding: 12px 16px 24px; display: flex; align-items: center; gap: 12px;">
+            <div onClick="{{ clearAll }}" style="flex: 1; background: #F1F3F9; color: #5855E5; text-align: center; padding: 16px; border-radius: 16px; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;" style-hover="background: #E6E9F2;">Reset all</div>
+            <div style="flex: 1; background: #5855E5; color: #FFFFFF; text-align: center; padding: 16px; border-radius: 16px; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;" style-hover="background: #4442B2;">Apply filters</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Sort — bottom sheet</div>
+    <div data-screen-label="Sort sheet" style="width: 390px; height: 780px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; position: relative;">
+
+      <div style="flex-shrink: 0; padding: 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px; opacity: 0.45;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink: 0;"><path d="M11 4l-5 5 5 5" stroke="#030712" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Goa</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+        </div>
+      </div>
+      <div style="flex: 1; background: #F9FAFB;"></div>
+
+      <div style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 56px;">
+        <div style="position: absolute; inset: 0; background: rgba(3,7,18,0.45);"></div>
+        <div style="position: relative; background: #FFFFFF; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; overflow: hidden;">
+
+          <div style="padding: 12px 0 0; display: flex; justify-content: center;">
+            <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB;"></div>
+          </div>
+          <div style="padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #030712; flex: 1;">Sort by</div>
+            <div style="width: 44px; height: 44px; border-radius: 999px; background: #F1F3F9; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #4A5565; cursor: pointer;">×</div>
+          </div>
+
+          <div style="padding: 8px 8px 8px; display: flex; flex-direction: column; gap: 2px;">
+            <sc-for list="{{ sortOptions }}" as="s" hint-placeholder-count="5">
+              <div onClick="{{ s.onClick }}" style="padding: 12px; border-radius: 12px; background: {{ s.bg }}; display: flex; align-items: center; gap: 16px; cursor: pointer; min-height: 44px; box-sizing: border-box;">
+                <div style="width: 22px; height: 22px; border-radius: 999px; border: {{ s.radioBorder }}; flex-shrink: 0; box-sizing: border-box;"></div>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: {{ s.weight }}; color: {{ s.color }};">{{ s.label }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="padding: 12px 16px 24px; display: flex; align-items: center; gap: 12px;">
+            
+            <div style="flex: 1; background: #5855E5; color: #FFFFFF; text-align: center; padding: 16px; border-radius: 16px; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; cursor: pointer;" style-hover="background: #4442B2;">Apply</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CAT_DEFS = [
+  { label: 'Quick filters', options: [
+    { label: 'Free cancellation', count: '84', checked: true },
+    { label: 'Breakfast included', count: '62', checked: true },
+    { label: 'Pay at hotel', count: '48' },
+    { label: 'Couple friendly', count: '31' },
+    { label: 'Instant confirmation', count: '96' },
+    { label: 'Book with ₹0 advance', count: '22' },
+  ] },
+  { label: 'Price range', options: [
+    { label: 'Under ₹2,000', count: '18' },
+    { label: '₹2,000 – ₹4,000', count: '46', checked: true },
+    { label: '₹4,000 – ₹7,000', count: '38' },
+    { label: '₹7,000 – ₹12,000', count: '19' },
+    { label: 'Above ₹12,000', count: '7' },
+  ] },
+  { label: 'Hotel rating', options: [
+    { label: '5 star', count: '14' },
+    { label: '4 star', count: '39' },
+    { label: '3 star', count: '52' },
+    { label: '2 star & below', count: '23' },
+  ] },
+  { label: 'Guest rating', options: [
+    { label: '4.5 & above', count: '21' },
+    { label: '4.0 & above', count: '58' },
+    { label: '3.5 & above', count: '87' },
+    { label: '3.0 & above', count: '104' },
+  ] },
+  { label: 'Amenities', options: [
+    { label: 'Swimming pool', count: '44' },
+    { label: 'Free Wi-Fi', count: '112' },
+    { label: 'Spa', count: '18' },
+    { label: 'Gym', count: '35' },
+    { label: 'Restaurant', count: '76' },
+    { label: 'Parking', count: '81' },
+  ] },
+  { label: 'Property type', options: [
+    { label: 'Hotel', count: '68' },
+    { label: 'Resort', count: '24' },
+    { label: 'Villa', count: '17' },
+    { label: 'Homestay', count: '12' },
+    { label: 'Hostel', count: '7' },
+  ] },
+  { label: 'Locality', options: [
+    { label: 'Candolim', count: '31' },
+    { label: 'Baga', count: '27' },
+    { label: 'Anjuna', count: '19' },
+    { label: 'Panjim', count: '22' },
+    { label: 'Palolem', count: '14' },
+  ] },
+  { label: 'Payment', options: [
+    { label: 'Pay at hotel', count: '48' },
+    { label: 'Book with ₹0 advance', count: '22' },
+    { label: 'EMI available', count: '30' },
+  ] },
+];
+
+const SORTS = ['Recommended', 'Price: low to high', 'Price: high to low', 'Guest rating', 'Popularity', 'Distance'];
+
+class Component extends DCLogic {
+  state = {
+    category: 0,
+    sort: 'Recommended',
+    checked: { 'Quick filters': ['Free cancellation', 'Breakfast included'], 'Price range': ['₹2,000 – ₹4,000'] },
+  };
+
+  toggleOption(catLabel, optLabel) {
+    const cur = this.state.checked[catLabel] || [];
+    const next = cur.includes(optLabel) ? cur.filter(x => x !== optLabel) : cur.concat(optLabel);
+    this.setState({ checked: { ...this.state.checked, [catLabel]: next } });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const countFor = (label) => (s.checked[label] || []).length;
+    const active = CAT_DEFS[s.category];
+    const activeChecked = s.checked[active.label] || [];
+
+    return {
+      appliedCount: CAT_DEFS.reduce((n, c) => n + countFor(c.label), 0),
+      clearAll: () => this.setState({ checked: {} }),
+      resetSort: () => this.setState({ sort: 'Recommended' }),
+      categories: CAT_DEFS.map((c, i) => {
+        const on = s.category === i;
+        const n = countFor(c.label);
+        return {
+          label: c.label,
+          count: n > 0 ? n : null,
+          onClick: () => this.setState({ category: i }),
+          bg: on ? '#FFFFFF' : 'transparent',
+          color: on ? '#5855E5' : '#4A5565',
+          weight: on ? 600 : 400,
+          marker: on ? '#5855E5' : 'transparent',
+        };
+      }),
+      options: active.options.map(o => {
+        const on = activeChecked.includes(o.label);
+        return {
+          label: o.label,
+          count: o.count,
+          tick: on ? '✓' : '',
+          boxBg: on ? '#5855E5' : '#FFFFFF',
+          boxBorder: on ? '#5855E5' : '#D6DAE3',
+          onClick: () => this.toggleOption(active.label, o.label),
+        };
+      }),
+      sortOptions: SORTS.map(label => {
+        const on = s.sort === label;
+        return {
+          label,
+          onClick: () => this.setState({ sort: label }),
+          bg: 'transparent',
+          color: on ? '#5855E5' : '#030712',
+          weight: on ? 600 : 400,
+          radioBorder: on ? '7px solid #5855E5' : '1.5px solid #C9CEDA',
+        };
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>

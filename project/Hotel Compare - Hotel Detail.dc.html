@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700&amp;family=Roboto+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F1F2F4; -webkit-font-smoothing: antialiased; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; }
+  a { color: #5855E5; text-decoration: none; }
+  a:hover { color: #4442B2; }
+  .hs::-webkit-scrollbar { display: none; }
+  @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</helmet>
+
+<div data-screen-label="Hotel Detail" style="width: 390px; height: 780px; margin: 24px auto; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; position: relative; font-family: 'Google Sans Flex', 'Google Sans', 'Roboto Flex', Helvetica, Arial, sans-serif; color: #030712;">
+  <div ref="{{ scrollRef }}" onScroll="{{ onScroll }}" style="flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; background: #F9FAFB;">
+
+  <div style="position: sticky; top: 0; z-index: 5; background: #FFFFFF; border-bottom: 1px solid #E5E7EB; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+      <div style="width: 44px; height: 44px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E5E7EB; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer;" style-hover="border-color: #5855E5;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4l-5 5 5 5" stroke="#030712" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </div>
+      <div style="flex: 1; min-width: 0; opacity: {{ headerTitleOpacity }};">
+        <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ hotel.name }}</div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">12 Aug – 15 Aug · 1 room · 2 adults</div>
+      </div>
+      <div style="width: 44px; height: 44px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E5E7EB; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer;" style-hover="border-color: #5855E5;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.5 9.8l5 2.6M11.5 5.6l-5 2.6" stroke="#5855E5" stroke-width="1.4" stroke-linecap="round"></path><circle cx="13.2" cy="4.6" r="2.1" stroke="#5855E5" stroke-width="1.4"></circle><circle cx="4.8" cy="9" r="2.1" stroke="#5855E5" stroke-width="1.4"></circle><circle cx="13.2" cy="13.4" r="2.1" stroke="#5855E5" stroke-width="1.4"></circle></svg>
+      </div>
+  </div>
+
+  <div style="position: relative;">
+    <div style="display: flex; gap: 4px; height: 260px;">
+      <div style="flex: 0 0 78%; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 8px, #DDE0E5 8px 16px); display: flex; align-items: center; justify-content: center;">
+        <div style="font-size: 12px; line-height: 16px; color: #4A5565; font-family: 'Roboto Mono', monospace; background: rgba(255,255,255,0.85); padding: 4px 8px; border-radius: 4px;">hero photo</div>
+      </div>
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+        <div style="flex: 1; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 6px, #DDE0E5 6px 12px);"></div>
+        <div style="flex: 1; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 6px, #DDE0E5 6px 12px);"></div>
+        <div onClick="{{ openGallery }}" style="flex: 1; background: #030712; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #FFFFFF; font-weight: 600;">+{{ morePhotos }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 16px; display: flex; flex-direction: column; gap: 16px; border-bottom: 8px solid #F9FAFB; background: #FFFFFF;">
+    <div>
+      <div style="font-size: 20px; line-height: 24px; letter-spacing: -0.5px; font-weight: 700; color: #030712; text-wrap: pretty;">{{ hotel.name }}</div>
+      <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+        <div style="font-size: 12px; line-height: 16px; color: #DEA20C; letter-spacing: 1px;">{{ hotel.stars }}</div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">· {{ hotel.type }}</div>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer;" style-hover="border-color: #5855E5;">
+      <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 700; color: #5855E5; background: #EFEFFF; border-radius: 8px; padding: 6px 10px;">{{ hotel.guestRating }}</div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ hotel.ratingLabel }}</div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ hotel.reviewCount }} Google reviews</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink: 0;"><path d="M5 3l4 4-4 4" stroke="#99A1AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </div>
+
+    <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+      <div style="width: 48px; height: 48px; border-radius: 8px; flex-shrink: 0; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 5px, #DDE0E5 5px 10px);"></div>
+      <div style="flex: 1; min-width: 0;">
+        <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #030712; font-weight: 500;">{{ hotel.locality }}</div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ hotel.distance }}</div>
+      </div>
+      <div style="width: 44px; height: 44px; border-radius: 999px; background: #EFEFFF; flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15 3L3 8l5.2 1.8L10 15l5-12z" stroke="#5855E5" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #E5E7EB; border-radius: 12px; display: flex; flex-direction: column;">
+    <div style="display: flex;">
+      <div style="flex: 1; padding: 12px 16px; border-right: 1px solid #E5E7EB;">
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF;">Check-in</div>
+        <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 600; margin-top: 4px;">12 Aug</div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 4px;">After 2:00 PM</div>
+      </div>
+      <div style="flex: 1; padding: 12px 16px;">
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF;">Check-out</div>
+        <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 600; margin-top: 4px;">15 Aug</div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 4px;">Before 11:00 AM</div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #E5E7EB; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+      <div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF;">Rooms &amp; guests</div>
+        <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 600; margin-top: 4px;">1 room · 2 adults</div>
+      </div>
+      <div onClick="{{ openBooking }}" style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #5855E5; font-weight: 600; background: #EFEFFF; border-radius: 999px; padding: 10px 14px; margin-left: auto; cursor: pointer;" style-hover="background: #E0E0FF;">Edit</div>
+    </div>
+    </div>
+  </div>
+
+  <div style="padding: 20px 16px; display: flex; flex-direction: column; gap: 8px; border-bottom: 8px solid #F9FAFB; background: #FFFFFF;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">About the property</div>
+    <div style="font-size: 14px; line-height: 20px; letter-spacing: -0.5px; color: #4A5565; text-wrap: pretty;">{{ hotel.about }}</div>
+    <div onClick="{{ openAbout }}" style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #5855E5; font-weight: 600; cursor: pointer; margin-top: 4px;" style-hover="color: #4442B2;">Read more</div>
+  </div>
+
+  <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 8px solid #F9FAFB; background: #FFFFFF;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712; padding: 0 16px;">Property media</div>
+    <div class="hs" style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px; scrollbar-width: none;">
+      <sc-for list="{{ media }}" as="m" hint-placeholder-count="3">
+        <div style="flex-shrink: 0; width: 130px; cursor: pointer;">
+          <div style="width: 130px; height: 88px; border-radius: 12px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 6px, #DDE0E5 6px 12px); display: flex; align-items: center; justify-content: center;">
+            <div style="width: 32px; height: 32px; border-radius: 999px; background: rgba(255,255,255,0.92); display: flex; align-items: center; justify-content: center;">
+              <div style="width: 0; height: 0; border-left: 9px solid #5855E5; border-top: 6px solid transparent; border-bottom: 6px solid transparent; margin-left: 3px;"></div>
+            </div>
+          </div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 8px;">{{ m }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 8px solid #F9FAFB; background: #FFFFFF;">
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 16px;">
+      <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ amenityCount }} amenities</div>
+      <div onClick="{{ openAmenities }}" style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #5855E5; font-weight: 600; background: #EFEFFF; border-radius: 999px; padding: 10px 14px; cursor: pointer;" style-hover="background: #E0E0FF;">View all</div>
+    </div>
+    <div class="hs" style="display: flex; gap: 8px; overflow-x: auto; padding: 0 16px; scrollbar-width: none;">
+      <sc-for list="{{ amenities }}" as="a" hint-placeholder-count="5">
+        <div style="flex-shrink: 0; width: 84px; border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; background: #FFFFFF;">
+          <div style="width: 32px; height: 32px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background-color: #F1F5F9">
+            <div style="width: 12px; height: 12px; border-radius: 3px; background-color: #45556C"></div>
+          </div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; text-align: center;">{{ a }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 8px solid #F9FAFB; background: #FFFFFF;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712; padding: 0 16px;">Ratings &amp; reviews</div>
+    <div class="hs" style="display: flex; gap: 8px; overflow-x: auto; padding: 0 16px; scrollbar-width: none;">
+      <div style="flex-shrink: 0; padding: 10px 14px; border-radius: 999px; background: #EFEFFF; border: 1px solid #5855E5; color: #5855E5; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">Google</div>
+      <div style="flex-shrink: 0; padding: 10px 14px; border-radius: 999px; border: 1px solid #E5E7EB; color: #030712; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">MakeMyTrip</div>
+      <div style="flex-shrink: 0; padding: 10px 14px; border-radius: 999px; border: 1px solid #E5E7EB; color: #030712; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">Booking.com</div>
+    </div>
+    <div style="margin: 0 16px; display: flex; align-items: center; gap: 12px; border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 16px;">
+      <div style="font-size: 24px; line-height: 30px; letter-spacing: -0.5px; font-weight: 700; color: #030712;">{{ hotel.guestRating }}</div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #030712; font-weight: 600;">{{ hotel.ratingLabel }}</div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">Based on {{ hotel.reviewCount }} Google reviews</div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px;">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="2">
+        <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 16px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 28px; height: 28px; border-radius: 999px; background: #EFEFFF; color: #5855E5; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 16px; font-weight: 600;">{{ r.initial }}</div>
+            <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; color: #030712;">{{ r.name }}</div>
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF; margin-left: auto;">{{ r.date }}</div>
+          </div>
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565; margin-top: 8px; text-wrap: pretty;">{{ r.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #5855E5; font-weight: 600; padding: 0 16px; cursor: pointer;" style-hover="color: #4442B2;">See all reviews</div>
+  </div>
+
+  <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 12px; border-bottom: 8px solid #F9FAFB; background: #FFFFFF;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712; padding: 0 16px;">Location</div>
+    <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565; padding: 0 16px;">{{ hotel.address }}</div>
+    <div style="margin: 0 16px; height: 140px; border-radius: 12px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 8px, #DDE0E5 8px 16px); display: flex; align-items: center; justify-content: center;">
+      <div style="font-size: 12px; line-height: 16px; color: #4A5565; font-family: 'Roboto Mono', monospace; background: rgba(255,255,255,0.85); padding: 4px 8px; border-radius: 4px;">map view</div>
+    </div>
+    <div class="hs" style="display: flex; gap: 8px; overflow-x: auto; padding: 0 16px; scrollbar-width: none;">
+      <div style="flex-shrink: 0; padding: 10px 14px; border-radius: 999px; background: #EFEFFF; border: 1px solid #5855E5; color: #5855E5; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">Key landmarks</div>
+      <sc-for list="{{ locationFilters }}" as="lf" hint-placeholder-count="3">
+        <div style="flex-shrink: 0; padding: 10px 14px; border-radius: 999px; border: 1px solid #E5E7EB; color: #030712; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500;">{{ lf }}</div>
+      </sc-for>
+    </div>
+    <div style="display: flex; flex-direction: column; padding: 0 16px;">
+      <sc-for list="{{ landmarks }}" as="l" hint-placeholder-count="4">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F9FAFB;">
+          <div style="width: 20px; height: 20px; border-radius: 999px; background: #EFEFFF; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 6px; height: 6px; border-radius: 999px; background: #5855E5;"></div>
+          </div>
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #030712; flex: 1;">{{ l.name }}</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565;">{{ l.distance }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding: 20px 16px; display: flex; flex-direction: column; gap: 12px; border-bottom: 8px solid #F9FAFB; background: #FFFFFF;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Food &amp; dining</div>
+    <sc-for list="{{ dining }}" as="d" hint-placeholder-count="3">
+      <div style="display: flex; align-items: center; gap: 12px; border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 16px;">
+        <div style="width: 36px; height: 36px; border-radius: 8px; background: #FDF5D4; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 12px; height: 12px; border-radius: 3px; background: #DEA20C;"></div>
+        </div>
+        <div style="flex: 1;">
+          <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; color: #030712;">{{ d.name }}</div>
+          <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ d.detail }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF;">
+    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">Property rules</div>
+    <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+      <div style="display: flex; gap: 12px; align-items: flex-start;">
+        <div style="width: 5px; height: 5px; border-radius: 999px; background: #99A1AF; margin-top: 7px; flex-shrink: 0;"></div>
+        <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565;">{{ r }}</div>
+      </div>
+    </sc-for>
+    <div onClick="{{ openRules }}" style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #5855E5; font-weight: 600; margin-top: 4px; cursor: pointer;" style-hover="color: #4442B2;">View all rules</div>
+  </div>
+
+  </div>
+
+  <sc-if value="{{ galleryOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; z-index: 25; display: flex; justify-content: center; background: #FFFFFF; animation: fadeIn 0.14s ease-out;">
+      <div style="width: 100%; display: flex; flex-direction: column;">
+        <div style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+          <div onClick="{{ closeGallery }}" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E5E7EB; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #4A5565; cursor: pointer;">×</div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">All photos</div>
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ morePhotos }}</div>
+          </div>
+        </div>
+        <div class="hs" style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; gap: 8px; overflow-x: auto; flex-shrink: 0; scrollbar-width: none;">
+          <sc-for list="{{ galleryChips }}" as="gf" hint-placeholder-count="5">
+            <div onClick="{{ gf.onClick }}" style="flex-shrink: 0; padding: 10px 14px; border-radius: 999px; border: 1px solid {{ gf.border }}; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; cursor: pointer; background: {{ gf.bg }}; color: {{ gf.color }}; white-space: nowrap;">{{ gf.label }}</div>
+          </sc-for>
+        </div>
+        <div style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 16px;">
+          <sc-for list="{{ visibleGallerySections }}" as="gs" hint-placeholder-count="3">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ gs.title }} <span style="color: #4A5565; font-weight: 400;">· {{ gs.count }}</span></div>
+              <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+                <sc-for list="{{ gs.photos }}" as="p" hint-placeholder-count="4">
+                  <div style="aspect-ratio: 4/3; border-radius: 12px; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 6px, #DDE0E5 6px 12px);"></div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ aboutOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; z-index: 20; display: flex; align-items: flex-end; justify-content: center; animation: fadeIn 0.14s ease-out;">
+      <div onClick="{{ closeAbout }}" style="position: absolute; inset: 0; background: rgba(3,7,18,0.45);"></div>
+      <div style="position: relative; width: 100%; max-height: 78%; background: #FFFFFF; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; overflow: hidden; animation: sheetUp 0.2s cubic-bezier(0.2,0,0,1);">
+        <div style="padding: 12px 0 0; display: flex; justify-content: center;">
+          <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB;"></div>
+        </div>
+        <div style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px;">
+          <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #030712; flex: 1;">About the property</div>
+          <div onClick="{{ closeAbout }}" style="width: 44px; height: 44px; border-radius: 999px; background: #F1F3F9; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #4A5565; cursor: pointer;">×</div>
+        </div>
+        <div style="padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px;">
+          <sc-for list="{{ aboutParagraphs }}" as="p" hint-placeholder-count="4">
+            <div style="font-size: 14px; line-height: 20px; letter-spacing: -0.5px; color: #4A5565; text-wrap: pretty;">{{ p }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ amenitiesOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; z-index: 20; display: flex; align-items: flex-end; justify-content: center; animation: fadeIn 0.14s ease-out;">
+      <div onClick="{{ closeAmenities }}" style="position: absolute; inset: 0; background: rgba(3,7,18,0.45);"></div>
+      <div style="position: relative; width: 100%; max-height: 82%; background: #FFFFFF; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; overflow: hidden; animation: sheetUp 0.2s cubic-bezier(0.2,0,0,1);">
+        <div style="padding: 12px 0 0; display: flex; justify-content: center;">
+          <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB;"></div>
+        </div>
+        <div style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px;">
+          <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #030712; flex: 1;">{{ amenityCount }} amenities</div>
+          <div onClick="{{ closeAmenities }}" style="width: 44px; height: 44px; border-radius: 999px; background: #F1F3F9; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #4A5565; cursor: pointer;">×</div>
+        </div>
+        <div class="hs" style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;">
+          <sc-for list="{{ amenityChips }}" as="c" hint-placeholder-count="5">
+            <div onClick="{{ c.onClick }}" style="flex-shrink: 0; padding: 10px 14px; border-radius: 999px; border: 1px solid {{ c.border }}; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 500; cursor: pointer; background: {{ c.bg }}; color: {{ c.color }}; white-space: nowrap;">{{ c.label }}</div>
+          </sc-for>
+        </div>
+        <div style="padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px;">
+          <sc-for list="{{ visibleAmenityGroups }}" as="g" hint-placeholder-count="3">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ g.title }}</div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="4">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 24px; height: 24px; border-radius: 999px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background-color: #F1F5F9">
+                      <div style="width: 9px; height: 9px; border-radius: 2px; background-color: #45556C"></div>
+                    </div>
+                    <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565;">{{ i }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ bookingOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; z-index: 20; display: flex; align-items: flex-end; justify-content: center; animation: fadeIn 0.14s ease-out;">
+      <div onClick="{{ closeBooking }}" style="position: absolute; inset: 0; background: rgba(3,7,18,0.45);"></div>
+      <div style="position: relative; width: 100%; max-height: 82%; background: #FFFFFF; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; overflow: hidden; animation: sheetUp 0.2s cubic-bezier(0.2,0,0,1);">
+        <div style="padding: 12px 0 0; display: flex; justify-content: center;">
+          <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB;"></div>
+        </div>
+        <div style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px;">
+          <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #030712; flex: 1;">Edit your stay</div>
+          <div onClick="{{ closeBooking }}" style="width: 44px; height: 44px; border-radius: 999px; background: #F1F3F9; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #4A5565; cursor: pointer;">×</div>
+        </div>
+        <div style="padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #4A5565;">Destination</div>
+            <div style="border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink: 0;"><circle cx="9" cy="9" r="6" stroke="#5855E5" stroke-width="1.6"></circle><line x1="13.5" y1="13.5" x2="17.5" y2="17.5" stroke="#5855E5" stroke-width="1.6" stroke-linecap="round"></line></svg>
+              <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; flex: 1;">Candolim, North Goa</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #4A5565;">Dates</div>
+            <div style="border: 1px solid #E5E7EB; border-radius: 12px; display: flex; overflow: hidden;">
+              <div style="flex: 1; padding: 12px 16px; border-right: 1px solid #E5E7EB;">
+                <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF; margin-bottom: 2px;">Check-in</div>
+                <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 500;">12 Aug</div>
+              </div>
+              <div style="flex: 1; padding: 12px 16px;">
+                <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #99A1AF; margin-bottom: 2px;">Check-out</div>
+                <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 500;">15 Aug</div>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 500; color: #4A5565;">Rooms &amp; guests</div>
+            <div style="border: 1px solid #E5E7EB; border-radius: 12px; display: flex; flex-direction: column;">
+              <sc-for list="{{ guestSteppers }}" as="s" hint-placeholder-count="3">
+                <div style="padding: 12px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #F9FAFB;">
+                  <div style="flex: 1;">
+                    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; color: #030712; font-weight: 500;">{{ s.label }}</div>
+                    <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 2px;">{{ s.hint }}</div>
+                  </div>
+                  <div style="display: flex; align-items: center; border: 1px solid #5855E5; border-radius: 14px; flex-shrink: 0; overflow: hidden;">
+                    <div onClick="{{ s.dec }}" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 20px; color: {{ s.decColor }}; cursor: {{ s.decCursor }}; user-select: none;">−</div>
+                    <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712; min-width: 24px; text-align: center;">{{ s.value }}</div>
+                    <div onClick="{{ s.inc }}" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 20px; color: {{ s.incColor }}; cursor: {{ s.incCursor }}; user-select: none;">+</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div onClick="{{ closeBooking }}" style="width: 100%; box-sizing: border-box; background: #5855E5; color: #FFFFFF; text-align: center; padding: 16px; border-radius: 16px; font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; margin-top: 4px; cursor: pointer;" style-hover="background: #4442B2;">Update search</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ rulesOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; z-index: 20; display: flex; align-items: flex-end; justify-content: center; animation: fadeIn 0.14s ease-out;">
+      <div onClick="{{ closeRules }}" style="position: absolute; inset: 0; background: rgba(3,7,18,0.45);"></div>
+      <div style="position: relative; width: 100%; max-height: 78%; background: #FFFFFF; border-radius: 20px 20px 0 0; display: flex; flex-direction: column; overflow: hidden; animation: sheetUp 0.2s cubic-bezier(0.2,0,0,1);">
+        <div style="padding: 12px 0 0; display: flex; justify-content: center;">
+          <div style="width: 36px; height: 4px; border-radius: 999px; background: #E5E7EB;"></div>
+        </div>
+        <div style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 12px;">
+          <div style="font-size: 18px; line-height: 22px; letter-spacing: -0.5px; font-weight: 600; color: #030712; flex: 1;">Property rules</div>
+          <div onClick="{{ closeRules }}" style="width: 44px; height: 44px; border-radius: 999px; background: #F1F3F9; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #4A5565; cursor: pointer;">×</div>
+        </div>
+        <div style="padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px;">
+          <sc-for list="{{ ruleGroups }}" as="g" hint-placeholder-count="4">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 24px; height: 24px; border-radius: 999px; background: #EFEFFF; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                  <div style="width: 9px; height: 9px; border-radius: 2px; background: #5855E5;"></div>
+                </div>
+                <div style="font-size: 16px; line-height: 20px; letter-spacing: -0.5px; font-weight: 600; color: #030712;">{{ g.title }}</div>
+              </div>
+              <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="3">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                  <div style="width: 5px; height: 5px; border-radius: 999px; background: #99A1AF; margin-top: 7px; flex-shrink: 0;"></div>
+                  <div style="font-size: 14px; line-height: 18px; letter-spacing: -0.5px; color: #4A5565;">{{ i }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="flex-shrink: 0; background: #FFFFFF; border-top: 1px solid #E5E7EB; display: flex; flex-direction: column; box-shadow: 0 -2px 8px rgba(3,7,18,0.06);">
+  <div style="padding: 12px 16px 16px; display: flex; align-items: center; gap: 12px; min-height: 88px; box-sizing: border-box;">
+    <div style="flex: 1; min-width: 0;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 20px; height: 20px; border-radius: 4px; flex-shrink: 0; background-color: #E5E7EB; background-image: repeating-linear-gradient(135deg, #E5E7EB 0 3px, #DDE0E5 3px 6px);"></div>
+        <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; font-weight: 600; color: #4A5565;">{{ bestPrice.platform }} · <span style="color: #00764F;">Best price</span></div>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
+        <div style="font-size: 24px; line-height: 30px; letter-spacing: -0.5px; font-weight: 700; color: #030712;">{{ bestPrice.total }}</div>
+        <div style="font-size: 12px; line-height: 16px; font-weight: 500; color: #FFFFFF; background: #00764F; border-radius: 999px; padding: 4px 10px;">{{ bestPrice.discount }} off</div>
+      </div>
+      <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #4A5565; margin-top: 4px;">{{ bestPrice.taxes }}</div>
+    </div>
+    <div style="background: #5855E5; color: #FFFFFF; text-align: center; padding: 16px 20px; border-radius: 16px; font-size: 14px; line-height: 18px; letter-spacing: -0.5px; font-weight: 600; flex-shrink: 0; cursor: pointer;" style-hover="background: #4442B2;">Select room</div>
+  </div>
+  <div style="background: #EFEFFF; border-top: 1px solid #E5E7EB; padding: 10px 16px; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+    <div style="font-size: 12px; line-height: 16px; letter-spacing: -0.5px; color: #5855E5; font-weight: 500; flex: 1;">{{ otherPriceCount }} more prices available from {{ otherSiteCount }} sites</div>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink: 0;"><path d="M5 3l4 4-4 4" stroke="#5855E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 440, &quot;height&quot;: 830}}">
+class Component extends DCLogic {
+  state = { scrolled: false, rulesOpen: false, galleryOpen: false, aboutOpen: false, amenitiesOpen: false, bookingOpen: false, galleryFilter: 'All', amenityFilter: 'All', rooms: 1, adults: 2, children: 0 };
+  scrollRef = React.createRef();
+
+  chip(label, active, onClick) {
+    return { label, onClick, bg: active ? '#EFEFFF' : '#FFFFFF', color: active ? '#5855E5' : '#030712', border: active ? '#5855E5' : '#E5E7EB' };
+  }
+
+  stepper(field, label, hint, min, max) {
+    const v = this.state[field];
+    const off = { border: '#E5E7EB', color: '#99A1AF', cursor: 'default' };
+    const on = { border: '#5855E5', color: '#5855E5', cursor: 'pointer' };
+    const d = v > min ? on : off, i = v < max ? on : off;
+    const set = (delta) => this.setState({ [field]: Math.min(max, Math.max(min, v + delta)) });
+    return {
+      label, hint, value: v,
+      dec: () => set(-1), inc: () => set(1),
+      decBorder: d.border, decColor: d.color, decCursor: d.cursor,
+      incBorder: i.border, incColor: i.color, incCursor: i.cursor,
+    };
+  }
+
+  renderVals() {
+    const gallerySections = [
+      { title: 'Rooms', count: '18 photos', photos: ['photo', 'photo', 'photo', 'photo'] },
+      { title: 'Pool & outdoors', count: '12 photos', photos: ['photo', 'photo', 'photo', 'photo'] },
+      { title: 'Dining', count: '8 photos', photos: ['photo', 'photo'] },
+      { title: 'Bathroom', count: '2 photos', photos: ['photo', 'photo'] },
+      { title: 'Exterior', count: '2 photos', photos: ['photo', 'photo'] },
+    ];
+    const amenityGroups = [
+      { title: 'Popular', items: ['Outdoor pool', 'Free Wi-Fi', 'Free parking', 'Airport shuttle', 'Beach access', 'Air conditioning'] },
+      { title: 'Wellness', items: ['Spa', 'Gym', 'Yoga deck', 'Sauna'] },
+      { title: 'Food & drink', items: ['Restaurant', 'Poolside bar', 'Room service', 'Breakfast buffet'] },
+      { title: 'Services', items: ['24-hr front desk', 'Laundry', 'Travel desk', 'Currency exchange'] },
+      { title: 'Rooms', items: ['Private balcony', 'Mini fridge', 'Safe', 'Tea/coffee maker'] },
+    ];
+    return {
+      headerTitleOpacity: this.state.scrolled ? 1 : 0,
+      scrollRef: this.scrollRef,
+      onScroll: (e) => {
+        const s = e.target.scrollTop > 120;
+        if (s !== this.state.scrolled) this.setState({ scrolled: s });
+      },
+      galleryOpen: this.state.galleryOpen,
+      openGallery: () => this.setState({ galleryOpen: true }),
+      closeGallery: () => this.setState({ galleryOpen: false }),
+      galleryChips: ['All', 'Rooms', 'Pool & outdoors', 'Dining', 'Bathroom', 'Exterior'].map(
+        (l) => this.chip(l, this.state.galleryFilter === l, () => this.setState({ galleryFilter: l }))
+      ),
+      visibleGallerySections: gallerySections.filter(
+        (s) => this.state.galleryFilter === 'All' || s.title === this.state.galleryFilter
+      ),
+      aboutOpen: this.state.aboutOpen,
+      openAbout: () => this.setState({ aboutOpen: true }),
+      closeAbout: () => this.setState({ aboutOpen: false }),
+      aboutParagraphs: [
+        'Beachfront resort with two outdoor pools, a spa and three dining options. Rooms feature private balconies with sea or garden views, and the property offers airport transfers on request.',
+        'The resort sits 400 m from Candolim Beach, with a shaded walkway leading directly to a private beach deck. Sun loungers and towels are provided at no extra charge.',
+        'Facilities include a 24-hour front desk, currency exchange, travel desk for local tours, laundry service, and a supervised kids club open through the day.',
+        'Placeholder copy for the remaining property description. Final content to be supplied by the content team before high-fidelity design.',
+      ],
+      amenitiesOpen: this.state.amenitiesOpen,
+      openAmenities: () => this.setState({ amenitiesOpen: true }),
+      closeAmenities: () => this.setState({ amenitiesOpen: false }),
+      amenityChips: ['All', 'Popular', 'Wellness', 'Food & drink', 'Services', 'Rooms'].map(
+        (l) => this.chip(l, this.state.amenityFilter === l, () => this.setState({ amenityFilter: l }))
+      ),
+      visibleAmenityGroups: amenityGroups.filter(
+        (g) => this.state.amenityFilter === 'All' || g.title === this.state.amenityFilter
+      ),
+      bookingOpen: this.state.bookingOpen,
+      openBooking: () => this.setState({ bookingOpen: true }),
+      closeBooking: () => this.setState({ bookingOpen: false }),
+      guestSteppers: [
+        this.stepper('rooms', 'Rooms', 'Up to 4 rooms', 1, 4),
+        this.stepper('adults', 'Adults', 'Age 13+', 1, 16),
+        this.stepper('children', 'Children', 'Age 0–12', 0, 8),
+      ],
+      rulesOpen: this.state.rulesOpen,
+      openRules: () => this.setState({ rulesOpen: true }),
+      closeRules: () => this.setState({ rulesOpen: false }),
+      ruleGroups: [
+        { title: 'Check-in & check-out', items: ['Check-in after 2:00 PM', 'Check-out before 11:00 AM', 'Early check-in subject to availability'] },
+        { title: 'ID & documentation', items: ['Valid government photo ID required for all guests', 'PAN card not accepted as ID proof', 'Local IDs accepted'] },
+        { title: 'Guests & children', items: ['Children of all ages are welcome', 'Extra bed available on request at additional cost', 'Unmarried couples allowed'] },
+        { title: 'Pets & smoking', items: ['Pets are not allowed', 'Smoking permitted in designated areas only'] },
+        { title: 'Payment & cancellation', items: ['Free cancellation up to 48 hours before check-in', 'Security deposit may be collected at check-in', 'Cards and UPI accepted'] },
+      ],
+      morePhotos: '42 photos',
+      otherPriceCount: 6,
+      otherSiteCount: 4,
+      amenityCount: 32,
+      hotel: {
+        name: 'Ocean Pearl Resort',
+        stars: '★★★★',
+        type: 'Resort',
+        guestRating: '4.3',
+        ratingLabel: 'Very good',
+        reviewCount: '1,240',
+        locality: 'Candolim Beach, North Goa',
+        distance: '2.1 km from city center · 400 m from beach',
+        about: 'Beachfront resort with two outdoor pools, a spa and three dining options. Rooms feature private balconies with sea or garden views, and the property offers airport transfers on request.',
+        address: 'Survey No. 142, Candolim Beach Road, Candolim, North Goa, 403515',
+      },
+      media: ['Property tour', 'Pool & deck', 'Room walkthrough', 'Spa'],
+      amenities: ['Pool', 'Free Wi-Fi', 'Spa', 'Restaurant', 'Gym', 'Parking'],
+      reviews: [
+        { name: 'Reviewer name', initial: 'R', date: '2 weeks ago', text: 'Placeholder review text spanning two lines to show the expected content length in this card layout.' },
+        { name: 'Reviewer name', initial: 'R', date: '1 month ago', text: 'Placeholder review text spanning two lines to show the expected content length in this card layout.' },
+      ],
+      locationFilters: ['Food & shopping', 'Transportation', 'Beaches', 'Nightlife'],
+      landmarks: [
+        { name: 'Candolim Beach', distance: '400 m' },
+        { name: 'Goa Intl. Airport', distance: '38 km' },
+        { name: 'Fort Aguada', distance: '3.2 km' },
+        { name: 'Calangute Market', distance: '4.5 km' },
+      ],
+      dining: [
+        { name: 'Restaurant name', detail: 'Multi-cuisine · Breakfast, lunch, dinner' },
+        { name: 'Poolside bar', detail: 'Snacks & beverages · 11 AM – 11 PM' },
+        { name: 'In-room dining', detail: '24 hours' },
+      ],
+      rules: [
+        'Check-in after 2:00 PM, check-out before 11:00 AM',
+        'Valid government ID required at check-in',
+        'Children of all ages are welcome',
+        'Pets are not allowed',
+      ],
+      bestPrice: {
+        platform: 'MakeMyTrip',
+        total: '₹4,899',
+        discount: '22%',
+        taxes: '+ ₹588 taxes & fees',
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
