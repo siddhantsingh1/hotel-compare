@@ -1,4 +1,35 @@
-# CODING AGENTS: READ THIS FIRST
+# Hotel Compare — Buyhatke
+
+React Native (Expo) implementation of the Buyhatke Hotel Compare designs handed off from
+Claude Design. The `project/` folder holds the original HTML prototypes; `src/` holds the app.
+
+## Running
+
+```bash
+npm install
+npm start          # Expo dev server — press i / a, or scan the QR code
+npm run web        # browser preview (react-native-web)
+npm run typecheck  # tsc --noEmit
+```
+
+## Layout
+
+| Path | What's in it |
+| --- | --- |
+| `src/theme/tokens.ts` | Colour ramps, type scale, radius + spacing scales from the design foundation |
+| `src/components/` | Shared UI: buttons, chips/pills, stepper, bottom sheet, header, icons, empty states |
+| `src/screens/` | One file per screen, plus `screens/sheets/` for the filter, sort, date and guest sheets |
+| `src/state/BookingContext.tsx` | Search, filters, sort and selection shared across the flow |
+| `src/data/mock.ts` | Copy and pricing from the prototypes |
+
+The flow runs Entry Search → Results → Hotel Detail → Price Comparison → Webview Checkout →
+Booking Confirmation. The four empty states are wired to real conditions rather than being
+standalone screens: search a destination with no stays (Zuluk), filter to a combination with
+no matches, open a property with no reviews (Palm Grove Inn), or filter every package out.
+
+---
+
+# Handoff bundle notes
 
 This is a **handoff bundle** from Claude Design (claude.ai/design).
 
