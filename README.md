@@ -43,6 +43,33 @@ Booking Confirmation. The four empty states are wired to real conditions rather 
 standalone screens: search a destination with no stays (Zuluk), filter to a combination with
 no matches, open a property with no reviews (Palm Grove Inn), or filter every package out.
 
+## Notes for developers
+
+Things that aren't obvious from reading the code:
+
+- **The empty states are wired to real conditions**, not built as standalone screens. To
+  reach them: search `Zuluk` (destination with no stays), apply a filter combination with no
+  matches, open *Palm Grove Inn* (no reviews on any source), or filter every package out on
+  Price Comparison.
+- **Price Comparison ships Layout A only** (tabbed by room). The by-site layout that was in
+  the design file was dropped on request.
+- **Webview Checkout** reproduces the Auto Coupons banner and the traveller auto-fill button
+  exactly as shipped. Everything around them is deliberately neutral third-party UI and sits
+  outside the Buyhatke palette — don't "fix" those greys. Tap the purple auto-fill button to
+  toggle the empty and filled states.
+- **Price deltas use an arrow icon, not `↑`.** Google Sans Flex has no U+2191, so a literal
+  arrow character renders as tofu.
+- **Corner smoothing** (the ~60% squircle from the design hygiene audit) is deliberately not
+  implemented — deferred to post-launch, standard radii for v1, no native dependency.
+
+### Open follow-ups
+
+1. **Photos** — `src/data/images.ts` points at Unsplash URLs as stand-ins. Swap in the real
+   hotel/destination assets there. The `Photo` component keeps a neutral placeholder fill
+   behind every image, so a missing or slow image never breaks layout.
+2. **Native builds** — only the web preview is automated. EAS is the next step for
+   TestFlight / internal Android builds.
+
 ---
 
 # Handoff bundle notes
