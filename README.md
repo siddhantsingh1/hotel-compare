@@ -12,6 +12,18 @@ npm run web        # browser preview (react-native-web)
 npm run typecheck  # tsc --noEmit
 ```
 
+## Web preview
+
+`.github/workflows/deploy-web-preview.yml` exports the app for web and publishes it to
+GitHub Pages on every push to `main` or `implement-hotel-compare`, giving a link that opens
+on a phone or desktop browser with no local setup:
+
+**https://siddhantsingh1.github.io/hotel-compare/**
+
+`expo.experiments.baseUrl` in `app.json` is set to `/hotel-compare` so assets resolve under
+that sub-path; change it if the repo is renamed. Build it yourself with `npx expo export
+--platform web` (output in `dist/`).
+
 ## Layout
 
 | Path | What's in it |
