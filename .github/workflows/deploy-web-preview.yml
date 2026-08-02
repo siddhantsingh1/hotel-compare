@@ -33,10 +33,9 @@ jobs:
       - name: Export web build
         run: npx expo export --platform web
 
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
+      # Pages must already be enabled with Source = GitHub Actions (Settings →
+      # Pages). The workflow token cannot create the site itself, so there is no
+      # configure-pages step here — uploading the artifact is enough.
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

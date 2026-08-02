@@ -20,6 +20,9 @@ on a phone or desktop browser with no local setup:
 
 **https://siddhantsingh1.github.io/hotel-compare/**
 
+This requires GitHub Pages to be enabled once, by hand: **Settings → Pages → Source →
+GitHub Actions**. The workflow token is not permitted to create the Pages site itself.
+
 `expo.experiments.baseUrl` in `app.json` is set to `/hotel-compare` so assets resolve under
 that sub-path; change it if the repo is renamed. Build it yourself with `npx expo export
 --platform web` (output in `dist/`).
