@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { Button } from '../../components/Button';
 import { ArrowDownIcon } from '../../components/Icon';
 import { Photo } from '../../components/Photo';
@@ -8,7 +8,7 @@ import { Stars } from '../../components/Stars';
 import { Txt } from '../../components/Txt';
 import { Hotel } from '../../data/mock';
 import { ALERT_PRESETS, inr, PRICE_SPREAD } from '../../data/trend';
-import { color, radius, space } from '../../theme/tokens';
+import { color, fontFamily, radius, space, type } from '../../theme/tokens';
 
 type Props = {
   visible: boolean;
@@ -33,7 +33,9 @@ export function AlertSheet({
   guestLine,
   roomLine,
 }: Props) {
-  const below = Math.max(0, PRICE_SPREAD.current - amount);
+  const below = PRICE_SPREAD.current - amount;
+  // An alert at or above today's price would fire immediately and mean nothing.
+  const valid = amount > 0 && below > 0;
 
   return (
     <Sheet visible={visible} onClose={onClose} title="Set price alert" headerDivider={false} maxHeight="88%">
@@ -76,22 +78,38 @@ export function AlertSheet({
             </Txt>
           </View>
 
-          <View style={styles.amountField}>
+          <View style={[styles.amountField, !valid && styles.amountFieldInvalid]}>
             <Txt variant="bold20">₹</Txt>
-            <Txt variant="bold20" style={{ flex: 1 }}>
-              {amount.toLocaleString('en-IN')}
-            </Txt>
-            <View style={styles.belowPill}>
-              <ArrowDownIcon size={10} color={color.success} />
-              <Txt variant="semibold14" color={color.success} style={styles.smallText}>
-                {inr(below)} below
-              </Txt>
-            </View>
+            <TextInput
+              value={amount ? amount.toLocaleString('en-IN') : ''}
+              onChangeText={(text) => onChangeAmount(Number(text.replace(/[^0-9]/g, '')) || 0)}
+              keyboardType="number-pad"
+              inputMode="numeric"
+              selectTextOnFocus
+              style={styles.amountInput}
+              placeholder="0"
+              placeholderTextColor={color.textMuted}
+            />
+            {valid ? (
+              <View style={styles.belowPill}>
+                <ArrowDownIcon size={10} color={color.success} />
+                <Txt variant="semibold14" color={color.success} style={styles.smallText}>
+                  {inr(below)} below
+                </Txt>
+              </View>
+            ) : (
+              <View style={styles.invalidPill}>
+                <Txt variant="semibold14" color={color.error} style={styles.smallText}>
+                  Below {inr(PRICE_SPREAD.current)}
+                </Txt>
+              </View>
+            )}
           </View>
 
-          <View style={styles.presetRow}>
+          <View style={styles.presetGrid}>
             {ALERT_PRESETS.map((preset) => {
               const on = amount === preset;
+              const off = Math.round(((preset - PRICE_SPREAD.current) / PRICE_SPREAD.current) * 100);
               return (
                 <Pressable
                   key={preset}
@@ -109,7 +127,7 @@ export function AlertSheet({
                     color={on ? color.primary : color.textSecondary}
                     style={styles.smallText}
                   >
-                    {inr(preset)}
+                    {`−${Math.abs(off)}% · ${inr(preset)}`}
                   </Txt>
                 </Pressable>
               );
@@ -124,7 +142,7 @@ export function AlertSheet({
           </Txt>
         </View>
 
-        <Button label="Set alert" onPress={onSetAlert} />
+        <Button label="Set alert" onPress={onSetAlert} disabled={!valid} />
       </ScrollView>
     </Sheet>
   );
@@ -177,6 +195,28 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
   },
+  amountInput: {
+    flex: 1,
+    // Without this the web input keeps its intrinsic width and pushes the
+    // trailing pill outside the field.
+    minWidth: 0,
+    padding: 0,
+    color: color.text,
+    fontFamily: fontFamily.bold,
+    fontSize: type.bold20.fontSize,
+    letterSpacing: type.bold20.letterSpacing,
+    ...({ outlineStyle: 'none' } as object),
+  },
+  invalidPill: {
+    flexShrink: 0,
+    backgroundColor: color.errorTint,
+    borderRadius: radius.pill,
+    paddingVertical: space.x4,
+    paddingHorizontal: 10,
+  },
+  amountFieldInvalid: {
+    borderColor: color.error,
+  },
   amountField: {
     borderWidth: 1,
     borderColor: color.primary,
@@ -189,6 +229,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.surface,
   },
   belowPill: {
+    flexShrink: 0,
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.x4,
@@ -197,12 +238,15 @@ const styles = StyleSheet.create({
     paddingVertical: space.x4,
     paddingHorizontal: 10,
   },
-  presetRow: {
+  presetGrid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: space.x8,
   },
   preset: {
-    flex: 1,
+    // Two per row: the "−8% · ₹4,500" form does not fit four across.
+    flexGrow: 1,
+    flexBasis: '45%',
     alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: space.x4,

@@ -473,11 +473,46 @@ export const PACKAGE_FILTERS = [
   'Pay at hotel',
 ];
 
-export const ROOM_TABS = [
-  { name: 'Deluxe Room', from: '₹4,899' },
-  { name: 'Premier Sea View', from: '₹6,250' },
-  { name: 'Executive Suite', from: '₹9,400' },
+export type Room = {
+  /** Full name, used wherever there is room for it. */
+  name: string;
+  /** Short label for the Price Comparison tabs. */
+  shortName: string;
+  meta: string;
+  from: string;
+  /** Centre of the generated price series for this room. */
+  base: number;
+};
+
+/**
+ * The one room list. Price Comparison tabs and the Hotel Detail trend picker
+ * both read from it, so they can never drift apart.
+ */
+export const ROOMS: Room[] = [
+  {
+    name: 'Deluxe Room, Sea View',
+    shortName: 'Deluxe Room',
+    meta: '28 sqm · 2 adults · King bed',
+    from: '₹4,899',
+    base: 5240,
+  },
+  {
+    name: 'Premier Sea View',
+    shortName: 'Premier Sea View',
+    meta: '34 sqm · 2 adults · Balcony',
+    from: '₹6,250',
+    base: 6480,
+  },
+  {
+    name: 'Executive Suite',
+    shortName: 'Executive Suite',
+    meta: '48 sqm · 3 guests · Living area',
+    from: '₹9,400',
+    base: 9620,
+  },
 ];
+
+export const ROOM_TABS = ROOMS.map((room) => ({ name: room.shortName, from: room.from }));
 
 export const ROOM_FACTS = ['28 sqm', 'Sleeps 2 adults + 1 child', '1 king bed'];
 

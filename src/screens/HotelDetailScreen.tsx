@@ -30,6 +30,7 @@ import { Photo } from '../components/Photo';
 import { Sheet } from '../components/Sheet';
 import { Stars } from '../components/Stars';
 import { Stepper } from '../components/Stepper';
+import { Toast } from '../components/Toast';
 import { Txt } from '../components/Txt';
 import { mapTile, platformLogos } from '../data/images';
 import {
@@ -49,6 +50,7 @@ import {
 import {
   DEFAULT_ALERT_AMOUNT,
   DEFAULT_TREND_RANGE,
+  inr,
   TREND_ROOMS,
   TrendRange,
 } from '../data/trend';
@@ -58,6 +60,9 @@ import { RoomPickerSheet } from './sheets/RoomPickerSheet';
 import { color, radius, shadow, space, TOUCH_TARGET } from '../theme/tokens';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HotelDetail'>;
+
+/** Price block + CTA row, plus the "more prices" strip beneath it. */
+const BOTTOM_BAR_HEIGHT = 128;
 type SheetName = 'gallery' | 'about' | 'amenities' | 'booking' | 'rules' | 'alert' | 'roomPicker' | null;
 
 export function HotelDetailScreen({ navigation }: Props) {
@@ -68,6 +73,7 @@ export function HotelDetailScreen({ navigation }: Props) {
   const [trendRange, setTrendRange] = useState<TrendRange>(DEFAULT_TREND_RANGE);
   const [trendRoom, setTrendRoom] = useState(0);
   const [alertAmount, setAlertAmount] = useState(DEFAULT_ALERT_AMOUNT);
+  const [toast, setToast] = useState<string | null>(null);
   const insets = useSafeAreaInsets();
 
   const hotel = selectedHotel;
@@ -395,6 +401,8 @@ export function HotelDetailScreen({ navigation }: Props) {
         </View>
       </ScrollView>
 
+      <Toast message={toast} onHide={() => setToast(null)} bottomOffset={BOTTOM_BAR_HEIGHT} />
+
       <View style={[styles.bottomBar, { paddingBottom: insets.bottom }]}>
         <View style={styles.bottomBarMain}>
           <View style={{ flex: 1, minWidth: 0 }}>
@@ -471,7 +479,10 @@ export function HotelDetailScreen({ navigation }: Props) {
       <AlertSheet
         visible={sheet === 'alert'}
         onClose={() => setSheet(null)}
-        onSetAlert={() => setSheet(null)}
+        onSetAlert={() => {
+          setSheet(null);
+          setToast(`Price alert set — we'll tell you when it drops below ${inr(alertAmount)}`);
+        }}
         hotel={hotel}
         amount={alertAmount}
         onChangeAmount={setAlertAmount}

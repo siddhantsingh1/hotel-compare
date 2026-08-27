@@ -7,6 +7,8 @@
  * when it exists; everything downstream reads the shape it returns.
  */
 
+import { ROOMS } from './mock';
+
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 /** The last day the series covers — the check-in date used throughout the mocks. */
@@ -17,19 +19,8 @@ export type TrendRange = (typeof TREND_RANGES)[number];
 
 export const DEFAULT_TREND_RANGE: TrendRange = '1M';
 
-export type TrendRoom = {
-  name: string;
-  meta: string;
-  from: string;
-  base: number;
-};
-
-export const TREND_ROOMS: TrendRoom[] = [
-  { name: 'Deluxe Room, Sea View', meta: '28 sqm · 2 adults · King bed', from: '₹4,899', base: 5240 },
-  { name: 'Premier Sea View', meta: '34 sqm · 2 adults · Balcony', from: '₹6,250', base: 6480 },
-  { name: 'Executive Suite', meta: '48 sqm · 3 guests · Living area', from: '₹9,400', base: 9620 },
-  { name: 'Garden Villa', meta: '62 sqm · 4 guests · Private deck', from: '₹12,800', base: 13100 },
-];
+/** The trend picker plots whatever rooms the rest of the app offers. */
+export const TREND_ROOMS = ROOMS;
 
 /** Spread across booking sites for the current stay. */
 export const PRICE_SPREAD = {
