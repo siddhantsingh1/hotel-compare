@@ -19,6 +19,8 @@ type Props = {
   onClose: () => void;
   title?: string;
   subtitle?: string;
+  /** Filter sheet counts read as purple; descriptive subtitles read as secondary. */
+  subtitleColor?: string;
   /** Divider under the header — the Sort sheet deliberately has none. */
   headerDivider?: boolean;
   children: React.ReactNode;
@@ -33,6 +35,7 @@ export function Sheet({
   onClose,
   title,
   subtitle,
+  subtitleColor = color.primary,
   headerDivider = true,
   children,
   footer,
@@ -83,7 +86,7 @@ export function Sheet({
               <View style={styles.headerText}>
                 <Txt variant="semibold18">{title}</Txt>
                 {subtitle ? (
-                  <Txt variant="medium12" color={color.primary} style={{ marginTop: space.x2 }}>
+                  <Txt variant="medium12" color={subtitleColor} style={{ marginTop: space.x2 }}>
                     {subtitle}
                   </Txt>
                 ) : null}

@@ -16,6 +16,7 @@ import { Chip, Pill } from '../components/Chip';
 import { NoReviewsArt } from '../components/EmptyState';
 import { Header } from '../components/Header';
 import {
+  BellIcon,
   ChevronRight,
   CloseIcon,
   DirectionsIcon,
@@ -23,6 +24,8 @@ import {
   ShareIcon,
   TileGlyph,
 } from '../components/Icon';
+import { PriceSpreadCard } from '../components/PriceSpreadCard';
+import { PriceTrendGraph } from '../components/PriceTrendGraph';
 import { Photo } from '../components/Photo';
 import { Sheet } from '../components/Sheet';
 import { Stars } from '../components/Stars';
@@ -43,17 +46,28 @@ import {
   RULE_GROUPS,
   TOP_AMENITIES,
 } from '../data/mock';
-import { formatDay, useBooking } from '../state/BookingContext';
+import {
+  DEFAULT_ALERT_AMOUNT,
+  DEFAULT_TREND_RANGE,
+  TREND_ROOMS,
+  TrendRange,
+} from '../data/trend';
+import { formatDay, nightsBetween, useBooking } from '../state/BookingContext';
+import { AlertSheet } from './sheets/AlertSheet';
+import { RoomPickerSheet } from './sheets/RoomPickerSheet';
 import { color, radius, shadow, space, TOUCH_TARGET } from '../theme/tokens';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HotelDetail'>;
-type SheetName = 'gallery' | 'about' | 'amenities' | 'booking' | 'rules' | null;
+type SheetName = 'gallery' | 'about' | 'amenities' | 'booking' | 'rules' | 'alert' | 'roomPicker' | null;
 
 export function HotelDetailScreen({ navigation }: Props) {
   const { selectedHotel, search, stayLabel, roomsLabel, guestsLabel } = useBooking();
   const [sheet, setSheet] = useState<SheetName>(null);
   const [scrolled, setScrolled] = useState(false);
   const [reviewSource, setReviewSource] = useState(REVIEW_SOURCES[0]);
+  const [trendRange, setTrendRange] = useState<TrendRange>(DEFAULT_TREND_RANGE);
+  const [trendRoom, setTrendRoom] = useState(0);
+  const [alertAmount, setAlertAmount] = useState(DEFAULT_ALERT_AMOUNT);
   const insets = useSafeAreaInsets();
 
   const hotel = selectedHotel;
@@ -74,11 +88,25 @@ export function HotelDetailScreen({ navigation }: Props) {
           subtitle={stayLabel}
           titleOpacity={scrolled ? 1 : 0}
           onBack={() => navigation.goBack()}
+          onTitlePress={() => setSheet('booking')}
           floatingBack
           right={
-            <IconButton>
-              <ShareIcon size={18} />
-            </IconButton>
+            <>
+              <Pressable
+                onPress={() => setSheet('alert')}
+                style={[styles.alertPill, scrolled && styles.alertPillCollapsed]}
+              >
+                <BellIcon size={16} />
+                {scrolled ? null : (
+                  <Txt variant="semibold14" color={color.primary}>
+                    Set Alert
+                  </Txt>
+                )}
+              </Pressable>
+              <IconButton>
+                <ShareIcon size={18} />
+              </IconButton>
+            </>
           }
         />
       </SafeAreaView>
@@ -180,6 +208,15 @@ export function HotelDetailScreen({ navigation }: Props) {
             </View>
           </View>
         </View>
+
+        <PriceSpreadCard />
+
+        <PriceTrendGraph
+          range={trendRange}
+          onChangeRange={setTrendRange}
+          roomIndex={trendRoom}
+          onOpenRoomPicker={() => setSheet('roomPicker')}
+        />
 
         <View style={styles.sectionTight}>
           <Txt variant="semibold16">About the property</Txt>
@@ -420,6 +457,30 @@ export function HotelDetailScreen({ navigation }: Props) {
       />
 
       <EditStaySheet visible={sheet === 'booking'} onClose={() => setSheet(null)} />
+
+      <RoomPickerSheet
+        visible={sheet === 'roomPicker'}
+        onClose={() => setSheet(null)}
+        roomIndex={trendRoom}
+        onSelect={(index) => {
+          setTrendRoom(index);
+          setSheet(null);
+        }}
+      />
+
+      <AlertSheet
+        visible={sheet === 'alert'}
+        onClose={() => setSheet(null)}
+        onSetAlert={() => setSheet(null)}
+        hotel={hotel}
+        amount={alertAmount}
+        onChangeAmount={setAlertAmount}
+        stayLine={`${formatDay(search.checkIn)} – ${formatDay(search.checkOut)} · ${nightsBetween(search.checkIn, search.checkOut)} ${
+          nightsBetween(search.checkIn, search.checkOut) === 1 ? 'night' : 'nights'
+        }`}
+        guestLine={`${roomsLabel} · ${guestsLabel}`}
+        roomLine={TREND_ROOMS[trendRoom].name}
+      />
 
       <Sheet visible={sheet === 'rules'} onClose={() => setSheet(null)} title="Property rules" maxHeight="78%">
         <ScrollView contentContainerStyle={[styles.sheetBody, { gap: 18 }]}>
@@ -714,6 +775,20 @@ const styles = StyleSheet.create({
   headerSafeArea: {
     backgroundColor: color.surface,
     zIndex: 5,
+  },
+  alertPill: {
+    height: TOUCH_TARGET,
+    borderRadius: radius.pill,
+    backgroundColor: color.primaryTint,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingHorizontal: 14,
+  },
+  alertPillCollapsed: {
+    width: TOUCH_TARGET,
+    paddingHorizontal: 0,
   },
   scroll: {
     flex: 1,

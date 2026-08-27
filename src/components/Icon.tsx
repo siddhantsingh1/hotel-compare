@@ -141,6 +141,44 @@ export function CheckIcon({ size = 13, color: c = color.surface }: IconProps) {
   );
 }
 
+/** Marks a price as lower — the counterpart to ArrowUpIcon. */
+export function ArrowDownIcon({ size = 10, color: c = color.surface }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 10 10" fill="none">
+      <Path d="M5 1.5V8M2.2 5.4L5 8.4l2.8-3" stroke={c} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+/** Bell — the price-alert affordance in the header. */
+export function BellIcon({ size = 16, color: c = color.primary }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 16 16" fill="none">
+      <Path
+        d="M4 6.6a4 4 0 018 0c0 3 1.2 4.2 1.2 4.2H2.8S4 9.6 4 6.6z"
+        stroke={c}
+        strokeWidth={1.4}
+        strokeLinejoin="round"
+      />
+      <Path d="M6.6 13a1.6 1.6 0 002.8 0" stroke={c} strokeWidth={1.4} strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+/** Pencil — signals the header booking summary is tappable to edit. */
+export function PencilIcon({ size = 14, color: c = color.primary }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 14 14" fill="none">
+      <Path
+        d="M9.1 2.2l2.7 2.7-6.4 6.4H2.7V8.6l6.4-6.4z"
+        stroke={c}
+        strokeWidth={1.4}
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
 /** Marks a price as higher, so the delta isn't carried by colour alone. */
 export function ArrowUpIcon({ size = 10, color: c = color.error }: IconProps) {
   return (
