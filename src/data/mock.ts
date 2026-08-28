@@ -25,6 +25,9 @@ export type Hotel = {
   photos: string[];
   bestPrice: BestPrice;
   altPrices: AltPrice[];
+  /** Prices on sites other than the best-price one, and how many sites those span. */
+  otherPriceCount: number;
+  otherSiteCount: number;
   /** Drives empty state 3 — a property with no reviews on any source. */
   hasReviews: boolean;
   type: string;
@@ -61,6 +64,8 @@ export const HOTELS: Hotel[] = [
       { platform: 'Booking.com', price: '₹5,120', higherBy: '5%' },
       { platform: 'Goibibo', price: '₹5,340', higherBy: '9%' },
     ],
+    otherPriceCount: 6,
+    otherSiteCount: 4,
     hasReviews: true,
     type: 'Resort',
     locality: 'Candolim Beach, North Goa',
@@ -95,6 +100,8 @@ export const HOTELS: Hotel[] = [
       { platform: 'MakeMyTrip', price: '₹3,150', higherBy: '5%' },
       { platform: 'Agoda', price: '₹3,299', higherBy: '10%' },
     ],
+    otherPriceCount: 5,
+    otherSiteCount: 3,
     hasReviews: false,
     type: 'Hotel',
     locality: 'Baga, North Goa',
@@ -129,6 +136,8 @@ export const HOTELS: Hotel[] = [
       { platform: 'MakeMyTrip', price: '₹7,820', higherBy: '5%' },
       { platform: 'Booking.com', price: '₹8,010', higherBy: '8%' },
     ],
+    otherPriceCount: 6,
+    otherSiteCount: 4,
     hasReviews: true,
     type: 'Hotel',
     locality: 'Miramar, Panjim',

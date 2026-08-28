@@ -233,7 +233,7 @@ function HotelCard({ hotel, onOpen }: { hotel: Hotel; onOpen: () => void }) {
         />
         <Pressable onPress={onOpen} style={styles.packagesLink}>
           <Txt variant="medium12" color={color.primary}>
-            View other packages from {hotel.bestPrice.platform}
+            View prices from other website · {hotel.otherPriceCount} available
           </Txt>
         </Pressable>
       </View>

@@ -435,7 +435,7 @@ export function HotelDetailScreen({ navigation }: Props) {
         </View>
         <Pressable style={styles.morePrices} onPress={() => navigation.navigate('PriceComparison')}>
           <Txt variant="medium12" color={color.primary} style={{ flex: 1 }}>
-            6 more prices available from 4 sites
+            {hotel.otherPriceCount} more prices available from {hotel.otherSiteCount} sites
           </Txt>
           <ChevronRight size={14} color={color.primary} />
         </Pressable>
