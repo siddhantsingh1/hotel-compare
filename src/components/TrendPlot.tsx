@@ -84,7 +84,12 @@ export function TrendPlot({ data, picked, onPick, compact = false, hoverable = f
         </View>
       ) : null}
 
-      <View style={[styles.bars, { gap, height }]}>
+      <Pressable
+        // Hover-out lives on the row, not each bar: sliding between adjacent
+        // bars stays inside it, so the selection never blinks to empty.
+        style={[styles.bars, { gap, height }]}
+        onHoverOut={hoverable ? () => onPick(null) : undefined}
+      >
         {data.values.map((value, i) => {
           const band = bandFor(value, min, max);
           const on = picked === i;
@@ -107,7 +112,7 @@ export function TrendPlot({ data, picked, onPick, compact = false, hoverable = f
             </Pressable>
           );
         })}
-      </View>
+      </Pressable>
     </View>
   );
 
