@@ -1,10 +1,18 @@
-import React, { useRef } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { Button } from '../components/Button';
+import { Calendar, monthOffset, pickDate } from '../components/Calendar';
 import { Chip, Pill } from '../components/Chip';
+import {
+  DestinationResults,
+  resultsHeading,
+  useDestinationMatches,
+} from '../components/DestinationResults';
 import { FeatureCards } from '../components/FeatureCards';
+import { GuestControls } from '../components/GuestControls';
 import { ChevronDown, ChevronLeft, ChevronRight, SearchIcon } from '../components/Icon';
 import { Photo } from '../components/Photo';
+import { Anchor, measureAnchor, Popover } from '../components/Popover';
 import { Txt } from '../components/Txt';
 import { brandTile } from '../data/images';
 import {
@@ -14,41 +22,56 @@ import {
   RECENT_SEARCHES,
   TRIP_TYPES,
 } from '../data/mock';
-import { formatDay } from '../state/BookingContext';
+import { formatDay, nightsBetween, useBooking } from '../state/BookingContext';
 import { DESKTOP_CONTENT_WIDTH } from '../theme/breakpoints';
-import { color, radius, shadow, space } from '../theme/tokens';
+import { color, fontFamily, radius, shadow, space, type } from '../theme/tokens';
 
 const DEAL_CARD_WIDTH = 280;
+const DESTINATION_POPOVER_WIDTH = 480;
+const DATE_POPOVER_WIDTH = 640;
+const GUEST_POPOVER_WIDTH = 380;
+
+type Popper = 'destination' | 'dates' | 'guests' | null;
 
 type Props = {
-  destination: string;
-  checkIn: string | null;
-  checkOut: string | null;
-  roomsLabel: string;
-  guestsLabel: string;
-  tripType: string | null;
-  onPickTripType: (label: string | null) => void;
-  onOpenDestination: () => void;
-  onOpenDates: () => void;
-  onOpenGuests: () => void;
   onSearch: (destination?: string) => void;
 };
 
-export function EntrySearchDesktop({
-  destination,
-  checkIn,
-  checkOut,
-  roomsLabel,
-  guestsLabel,
-  tripType,
-  onPickTripType,
-  onOpenDestination,
-  onOpenDates,
-  onOpenGuests,
-  onSearch,
-}: Props) {
+export function EntrySearchDesktop({ onSearch }: Props) {
+  const { search, setSearch, roomsLabel, guestsLabel } = useBooking();
+  const { destination, checkIn, checkOut, tripType } = search;
+
   const dealsRef = useRef<ScrollView>(null);
   const dealsOffset = useRef(0);
+
+  const destinationRef = useRef<View>(null);
+  const checkInRef = useRef<View>(null);
+  const checkOutRef = useRef<View>(null);
+  const guestsRef = useRef<View>(null);
+  const inputRef = useRef<TextInput>(null);
+
+  const [popper, setPopper] = useState<Popper>(null);
+  const [anchor, setAnchor] = useState<Anchor | null>(null);
+  // Which field opened the calendar, so it can start on the relevant month.
+  const [dateOffset, setDateOffset] = useState(0);
+  const [query, setQuery] = useState('');
+  const { trimmed, matches } = useDestinationMatches(query);
+  const searching = popper === 'destination';
+
+  const open = (ref: React.RefObject<View | null>, which: Exclude<Popper, null>, offset = 0) => {
+    measureAnchor(ref, (next) => {
+      setAnchor(next);
+      setDateOffset(offset);
+      setPopper(which);
+    });
+  };
+
+  const close = () => {
+    setPopper(null);
+    inputRef.current?.blur();
+  };
+
+  const nights = nightsBetween(checkIn, checkOut);
 
   const scrollDeals = (direction: 1 | -1) => {
     const page = (DEAL_CARD_WIDTH + space.x16) * 2;
@@ -58,7 +81,11 @@ export function EntrySearchDesktop({
   };
 
   return (
-    <ScrollView style={styles.root} contentContainerStyle={styles.content}>
+    <View style={styles.root}>
+    {/* The popovers sit outside the ScrollView: their backdrop then covers the
+        page and holds the scroll still, so a panel can never drift off its
+        trigger while it is open. */}
+    <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
       <View style={styles.hero}>
         <View style={styles.column}>
           <Txt variant="regular12" color={color.primaryTint} style={styles.eyebrow}>
@@ -78,56 +105,78 @@ export function EntrySearchDesktop({
         <View style={styles.column}>
           <View style={styles.searchBand}>
           <View style={styles.searchRow}>
-            <Pressable style={[styles.field, styles.fieldDestination]} onPress={onOpenDestination}>
-              <SearchIcon size={20} />
-              <View style={{ flex: 1, minWidth: 0 }}>
-                <Txt variant="medium12" color={color.textSecondary}>
-                  Destination
-                </Txt>
-                <Txt
-                  variant="medium16"
-                  color={destination ? color.text : color.textMuted}
-                  numberOfLines={1}
-                  style={{ marginTop: space.x2 }}
-                >
-                  {destination || 'Search hotel, city, or country'}
-                </Txt>
-              </View>
-            </Pressable>
+            <View ref={destinationRef} style={[styles.fieldWrap, styles.fieldDestination]}>
+              <Pressable style={styles.field} onPress={() => inputRef.current?.focus()}>
+                <SearchIcon size={20} />
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Txt variant="medium12" color={color.textSecondary}>
+                    Destination
+                  </Txt>
+                  {/* Typing happens in the field itself — the popover only lists
+                      results, so the desktop flow never hands off to a screen. */}
+                  <TextInput
+                    ref={inputRef}
+                    value={searching ? query : destination}
+                    onChangeText={setQuery}
+                    onFocus={() => {
+                      setQuery('');
+                      open(destinationRef, 'destination');
+                    }}
+                    placeholder="Search hotel, city, or country"
+                    placeholderTextColor={color.textMuted}
+                    style={styles.fieldInput}
+                  />
+                </View>
+              </Pressable>
+            </View>
 
-            <Pressable style={styles.field} onPress={onOpenDates}>
-              <View style={{ flex: 1, minWidth: 0 }}>
-                <Txt variant="medium12" color={color.textSecondary}>
-                  Check-in
-                </Txt>
-                <Txt variant="medium16" style={{ marginTop: space.x2 }}>
-                  {formatDay(checkIn)}
-                </Txt>
-              </View>
-            </Pressable>
+            <View ref={checkInRef} style={styles.fieldWrap}>
+              <Pressable
+                style={styles.field}
+                onPress={() => open(checkInRef, 'dates', monthOffset(checkIn))}
+              >
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Txt variant="medium12" color={color.textSecondary}>
+                    Check-in
+                  </Txt>
+                  <Txt variant="medium16" style={{ marginTop: space.x2 }}>
+                    {formatDay(checkIn)}
+                  </Txt>
+                </View>
+              </Pressable>
+            </View>
 
-            <Pressable style={styles.field} onPress={onOpenDates}>
-              <View style={{ flex: 1, minWidth: 0 }}>
-                <Txt variant="medium12" color={color.textSecondary}>
-                  Check-out
-                </Txt>
-                <Txt variant="medium16" style={{ marginTop: space.x2 }}>
-                  {formatDay(checkOut)}
-                </Txt>
-              </View>
-            </Pressable>
+            <View ref={checkOutRef} style={styles.fieldWrap}>
+              {/* Opens on the check-in's month: the pair of months on show then
+                  covers the existing range and the nights just past it. */}
+              <Pressable
+                style={styles.field}
+                onPress={() => open(checkOutRef, 'dates', monthOffset(checkIn))}
+              >
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Txt variant="medium12" color={color.textSecondary}>
+                    Check-out
+                  </Txt>
+                  <Txt variant="medium16" style={{ marginTop: space.x2 }}>
+                    {formatDay(checkOut)}
+                  </Txt>
+                </View>
+              </Pressable>
+            </View>
 
-            <Pressable style={[styles.field, styles.fieldGuests]} onPress={onOpenGuests}>
-              <View style={{ flex: 1, minWidth: 0 }}>
-                <Txt variant="medium12" color={color.textSecondary}>
-                  Rooms & guests
-                </Txt>
-                <Txt variant="medium16" numberOfLines={1} style={{ marginTop: space.x2 }}>
-                  {roomsLabel} · {guestsLabel}
-                </Txt>
-              </View>
-              <ChevronDown size={16} />
-            </Pressable>
+            <View ref={guestsRef} style={[styles.fieldWrap, styles.fieldGuests]}>
+              <Pressable style={styles.field} onPress={() => open(guestsRef, 'guests')}>
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Txt variant="medium12" color={color.textSecondary}>
+                    Rooms & guests
+                  </Txt>
+                  <Txt variant="medium16" numberOfLines={1} style={{ marginTop: space.x2 }}>
+                    {roomsLabel} · {guestsLabel}
+                  </Txt>
+                </View>
+                <ChevronDown size={16} />
+              </Pressable>
+            </View>
 
             <Button label="Search hotels" onPress={() => onSearch()} style={styles.searchCta} />
           </View>
@@ -141,7 +190,7 @@ export function EntrySearchDesktop({
                 key={label}
                 label={label}
                 active={tripType === label}
-                onPress={() => onPickTripType(tripType === label ? null : label)}
+                onPress={() => setSearch({ tripType: tripType === label ? null : label })}
               />
             ))}
           </View>
@@ -266,12 +315,81 @@ export function EntrySearchDesktop({
           ))}
         </View>
       </View>
-    </ScrollView>
+      </ScrollView>
+
+      <Popover visible={popper === 'destination'} anchor={anchor} onClose={close} width={DESTINATION_POPOVER_WIDTH}>
+        <Txt variant="medium12" color={color.textSecondary} style={styles.popHeading}>
+          {resultsHeading(trimmed, matches.length)}
+        </Txt>
+        <ScrollView>
+          <DestinationResults
+            matches={matches}
+            onSelect={(name) => {
+              setSearch({ destination: name });
+              setQuery('');
+              close();
+            }}
+          />
+          {trimmed.length > 0 && matches.length === 0 ? (
+            <Txt variant="regular14" color={color.textSecondary} style={styles.popEmpty}>
+              No matches. Try a city or hotel name.
+            </Txt>
+          ) : null}
+        </ScrollView>
+      </Popover>
+
+      <Popover visible={popper === 'dates'} anchor={anchor} onClose={close} width={DATE_POPOVER_WIDTH}>
+        <View style={styles.popBody}>
+          <Calendar
+            checkIn={checkIn}
+            checkOut={checkOut}
+            onPick={(key) => setSearch(pickDate(checkIn, checkOut, key))}
+            count={2}
+            offset={dateOffset}
+            side
+          />
+        </View>
+        <View style={styles.popFooter}>
+          <View style={{ flex: 1, minWidth: 0 }}>
+            <Txt variant="semibold14">
+              {nights > 0
+                ? `${nights} ${nights > 1 ? 'nights' : 'night'} selected`
+                : 'Pick your check-in date'}
+            </Txt>
+            <Pressable onPress={() => setSearch({ checkIn: null, checkOut: null })}>
+              <Txt variant="medium12" color={color.primary} style={{ marginTop: space.x2 }}>
+                Reset
+              </Txt>
+            </Pressable>
+          </View>
+          <Button label="Apply" onPress={close} disabled={nights === 0} />
+        </View>
+      </Popover>
+
+      <Popover
+        visible={popper === 'guests'}
+        anchor={anchor}
+        onClose={close}
+        width={GUEST_POPOVER_WIDTH}
+        align="right"
+      >
+        <View style={styles.popBody}>
+          <GuestControls
+            counts={{ rooms: search.rooms, adults: search.adults, children: search.children }}
+            onChange={(patch) => setSearch(patch)}
+          />
+          <Button label="Apply" onPress={close} style={{ marginTop: space.x16 }} />
+        </View>
+      </Popover>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
+  },
+  scroll: {
     flex: 1,
     backgroundColor: color.page,
   },
@@ -317,6 +435,41 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     gap: space.x12,
+  },
+  fieldWrap: {
+    flex: 1,
+    minWidth: 0,
+  },
+  fieldInput: {
+    marginTop: space.x2,
+    padding: 0,
+    color: color.text,
+    fontFamily: fontFamily.medium,
+    fontSize: type.medium16.fontSize,
+    lineHeight: type.medium16.lineHeight,
+    letterSpacing: type.medium16.letterSpacing,
+    ...({ outlineStyle: 'none' } as object),
+  },
+  popHeading: {
+    paddingTop: space.x16,
+    paddingBottom: space.x8,
+    paddingHorizontal: space.x16,
+  },
+  popEmpty: {
+    padding: space.x24,
+    textAlign: 'center',
+  },
+  popBody: {
+    padding: space.x20,
+  },
+  popFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.x12,
+    paddingHorizontal: space.x20,
+    paddingVertical: space.x16,
+    borderTopWidth: 1,
+    borderTopColor: color.border,
   },
   field: {
     flex: 1,

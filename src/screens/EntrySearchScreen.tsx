@@ -39,19 +39,7 @@ export function EntrySearchScreen({ navigation }: Props) {
   return (
     <View style={styles.root}>
       {isDesktop ? (
-        <EntrySearchDesktop
-          destination={search.destination}
-          checkIn={search.checkIn}
-          checkOut={search.checkOut}
-          roomsLabel={roomsLabel}
-          guestsLabel={guestsLabel}
-          tripType={search.tripType}
-          onPickTripType={(label) => setSearch({ tripType: label })}
-          onOpenDestination={() => setOverlay('search')}
-          onOpenDates={() => setOverlay('dates')}
-          onOpenGuests={() => setOverlay('guests')}
-          onSearch={startSearch}
-        />
+        <EntrySearchDesktop onSearch={startSearch} />
       ) : (
         <>
       <SafeAreaView edges={['top']} style={styles.headerSafeArea} />
@@ -248,6 +236,8 @@ export function EntrySearchScreen({ navigation }: Props) {
         </>
       )}
 
+      {isDesktop ? null : (
+        <>
       <DestinationSearchScreen
         visible={overlay === 'search'}
         onClose={() => setOverlay(null)}
@@ -269,6 +259,8 @@ export function EntrySearchScreen({ navigation }: Props) {
         counts={{ rooms: search.rooms, adults: search.adults, children: search.children }}
         onChange={(patch) => setSearch(patch)}
       />
+        </>
+      )}
     </View>
   );
 }

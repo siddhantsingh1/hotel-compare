@@ -1,9 +1,13 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  DestinationResults,
+  resultsHeading,
+  useDestinationMatches,
+} from '../components/DestinationResults';
 import { ChevronLeft, SearchIcon } from '../components/Icon';
 import { Txt } from '../components/Txt';
-import { PLACES } from '../data/mock';
 import { color, fontFamily, radius, space, TOUCH_TARGET, type } from '../theme/tokens';
 
 type Props = {
@@ -14,15 +18,7 @@ type Props = {
 
 export function DestinationSearchScreen({ visible, onClose, onSelect }: Props) {
   const [query, setQuery] = useState('');
-  const trimmed = query.trim().toLowerCase();
-
-  const matches = useMemo(
-    () =>
-      trimmed
-        ? PLACES.filter((place) => place.name.toLowerCase().includes(trimmed))
-        : PLACES.slice(0, 5),
-    [trimmed]
-  );
+  const { trimmed, matches } = useDestinationMatches(query);
 
   const close = () => {
     setQuery('');
@@ -59,46 +55,16 @@ export function DestinationSearchScreen({ visible, onClose, onSelect }: Props) {
 
         <ScrollView keyboardShouldPersistTaps="handled">
           <Txt variant="medium12" color={color.textSecondary} style={styles.heading}>
-            {trimmed
-              ? `${matches.length} ${matches.length === 1 ? 'RESULT' : 'RESULTS'}`
-              : 'POPULAR RIGHT NOW'}
+            {resultsHeading(trimmed, matches.length)}
           </Txt>
 
-          {matches.map((place) => {
-            const isHotel = place.meta.startsWith('Hotel');
-            return (
-              <Pressable
-                key={place.name}
-                style={styles.result}
-                onPress={() => {
-                  setQuery('');
-                  onSelect(place.name);
-                }}
-              >
-                <View
-                  style={[
-                    styles.initial,
-                    { backgroundColor: isHotel ? color.primaryTint : color.infoTint },
-                  ]}
-                >
-                  <Txt variant="semibold14" color={isHotel ? color.primary : color.info}>
-                    {place.name.charAt(0)}
-                  </Txt>
-                </View>
-                <View style={{ flex: 1, minWidth: 0 }}>
-                  <Txt variant="medium16">{place.name}</Txt>
-                  <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x2 }}>
-                    {place.meta}
-                  </Txt>
-                </View>
-                {place.from ? (
-                  <Txt variant="medium12" color={color.success}>
-                    {place.from}
-                  </Txt>
-                ) : null}
-              </Pressable>
-            );
-          })}
+          <DestinationResults
+            matches={matches}
+            onSelect={(name) => {
+              setQuery('');
+              onSelect(name);
+            }}
+          />
 
           {trimmed.length > 0 && matches.length === 0 ? (
             <Txt variant="regular14" color={color.textSecondary} style={styles.noResults}>
@@ -166,22 +132,6 @@ const styles = StyleSheet.create({
     paddingTop: space.x12,
     paddingBottom: space.x4,
     paddingHorizontal: space.x16,
-  },
-  result: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.x12,
-    paddingVertical: space.x12,
-    paddingHorizontal: space.x16,
-    borderBottomWidth: 1,
-    borderBottomColor: color.page,
-  },
-  initial: {
-    width: 36,
-    height: 36,
-    borderRadius: radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   noResults: {
     paddingVertical: space.x32,
