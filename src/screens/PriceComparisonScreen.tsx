@@ -1,6 +1,14 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { RootStackParamList } from '../../App';
 import { Button } from '../components/Button';
@@ -34,6 +42,7 @@ import {
   ROOM_TABS,
 } from '../data/mock';
 import { useBooking } from '../state/BookingContext';
+import { DESKTOP_CONTENT_WIDTH, useIsDesktop } from '../theme/breakpoints';
 import { color, radius, shadow, space, TOUCH_TARGET } from '../theme/tokens';
 import { EditStaySheet } from './HotelDetailScreen';
 
@@ -45,6 +54,7 @@ export function PriceComparisonScreen({ navigation }: Props) {
   const [sheet, setSheet] = useState<SheetName>(null);
   const [filters, setFilters] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const isDesktop = useIsDesktop();
 
   const hotel = selectedHotel;
   if (!hotel) return null;
@@ -59,20 +69,23 @@ export function PriceComparisonScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={styles.root} edges={['top', 'bottom']}>
-      <Header
-        title={hotel.name}
-        subtitle={stayLabel}
-        onBack={() => navigation.goBack()}
-        right={
-          <Button
-            label="Edit"
-            variant="secondary"
-            size="compact"
-            onPress={() => setSheet('edit')}
-            style={styles.editButton}
-          />
-        }
-      />
+      <View style={isDesktop && styles.headerBand}>
+        <Header
+          title={hotel.name}
+          subtitle={stayLabel}
+          onBack={() => navigation.goBack()}
+          style={isDesktop ? styles.headerInner : undefined}
+          right={
+            <Button
+              label="Edit"
+              variant="secondary"
+              size="compact"
+              onPress={() => setSheet('edit')}
+              style={styles.editButton}
+            />
+          }
+        />
+      </View>
 
       <ByRoomLayout
         filters={filters}
@@ -82,6 +95,7 @@ export function PriceComparisonScreen({ navigation }: Props) {
         onOpenPhoto={setLightboxIndex}
         onSelect={goToCheckout}
         onClearFilters={() => setFilters([])}
+        desktop={isDesktop}
       />
 
       <EditStaySheet visible={sheet === 'edit'} onClose={() => setSheet(null)} />
@@ -168,6 +182,7 @@ function ByRoomLayout({
   onOpenPhoto,
   onSelect,
   onClearFilters,
+  desktop = false,
 }: {
   filters: string[];
   onToggleFilter: (label: string) => void;
@@ -176,6 +191,7 @@ function ByRoomLayout({
   onOpenPhoto: (index: number) => void;
   onSelect: (packageIndex: number) => void;
   onClearFilters: () => void;
+  desktop?: boolean;
 }) {
   const { selection, setSelection } = useBooking();
   const [expanded, setExpanded] = useState(0);
@@ -186,132 +202,141 @@ function ByRoomLayout({
 
   return (
     <ScrollView style={styles.scroll}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.tabStrip}
-        contentContainerStyle={{ flexGrow: 1 }}
-      >
-        {ROOM_TABS.map((tab, index) => {
-          const active = selection.roomIndex === index;
-          return (
-            <Pressable
-              key={tab.name}
-              style={[styles.roomTab, active ? styles.roomTabActive : styles.roomTabIdle]}
-              onPress={() => setSelection({ roomIndex: index })}
-            >
-              <Txt variant="semibold14" color={active ? color.primary : color.textSecondary}>
-                {tab.name}
-              </Txt>
-              <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x4 }}>
-                from <Txt variant="semibold14" style={styles.smallText}>{tab.from}</Txt>
-              </Txt>
+      <View style={desktop ? styles.desktopColumn : undefined}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.tabStrip}
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
+          {ROOM_TABS.map((tab, index) => {
+            const active = selection.roomIndex === index;
+            return (
+              <Pressable
+                key={tab.name}
+                style={[styles.roomTab, active ? styles.roomTabActive : styles.roomTabIdle]}
+                onPress={() => setSelection({ roomIndex: index })}
+              >
+                <Txt variant="semibold14" color={active ? color.primary : color.textSecondary}>
+                  {tab.name}
+                </Txt>
+                <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x4 }}>
+                  from <Txt variant="semibold14" style={styles.smallText}>{tab.from}</Txt>
+                </Txt>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.photoStrip}>
+          {ROOM_PHOTO_URIS.map((uri, index) => (
+            <Pressable key={ROOM_PHOTO_LABELS[index]} onPress={() => onOpenPhoto(index)}>
+              <Photo uri={uri} style={styles.roomPhoto} />
             </Pressable>
-          );
-        })}
-      </ScrollView>
+          ))}
+        </ScrollView>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.photoStrip}>
-        {ROOM_PHOTO_URIS.map((uri, index) => (
-          <Pressable key={ROOM_PHOTO_LABELS[index]} onPress={() => onOpenPhoto(index)}>
-            <Photo uri={uri} style={styles.roomPhoto} />
-          </Pressable>
-        ))}
-      </ScrollView>
-
-      <View style={styles.factRow}>
-        {ROOM_FACTS.map((fact) => (
-          <View key={fact} style={styles.fact}>
-            <TileGlyph size={20} />
-            <Txt variant="regular12" color={color.textSecondary}>
-              {fact}
-            </Txt>
-          </View>
-        ))}
-      </View>
-
-      <View style={styles.amenitySection}>
-        <View style={styles.rowBetween}>
-          <Txt variant="semibold16">Room amenities</Txt>
-          <Pressable onPress={onOpenAmenities} style={styles.textLink}>
-            <Txt variant="semibold14" color={color.primary}>
-              View all
-            </Txt>
-          </Pressable>
-        </View>
-        <View style={styles.amenityWrap}>
-          {ROOM_AMENITIES.map((amenity) => (
-            <View key={amenity} style={styles.fact}>
+        <View style={styles.factRow}>
+          {ROOM_FACTS.map((fact) => (
+            <View key={fact} style={styles.fact}>
               <TileGlyph size={20} />
               <Txt variant="regular12" color={color.textSecondary}>
-                {amenity}
+                {fact}
               </Txt>
             </View>
           ))}
         </View>
-      </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.chipStrip}
-        contentContainerStyle={styles.chipStripContent}
-      >
-        {PACKAGE_FILTERS.map((label) => (
-          <Chip
-            key={label}
-            label={label}
-            checkbox
-            active={filters.includes(label)}
-            onPress={() => onToggleFilter(label)}
-          />
-        ))}
-      </ScrollView>
+        <View style={styles.amenitySection}>
+          <View style={styles.rowBetween}>
+            <Txt variant="semibold16">Room amenities</Txt>
+            <Pressable onPress={onOpenAmenities} style={styles.textLink}>
+              <Txt variant="semibold14" color={color.primary}>
+                View all
+              </Txt>
+            </Pressable>
+          </View>
+          <View style={styles.amenityWrap}>
+            {ROOM_AMENITIES.map((amenity) => (
+              <View key={amenity} style={styles.fact}>
+                <TileGlyph size={20} />
+                <Txt variant="regular12" color={color.textSecondary}>
+                  {amenity}
+                </Txt>
+              </View>
+            ))}
+          </View>
+        </View>
 
-      {visiblePackages.length > 0 ? (
-        <View style={styles.packageList}>
-          <Txt variant="regular14" color={color.textSecondary}>
-            <Txt variant="semibold14">{PACKAGE_SUMMARY.packageCount} packages</Txt> from{' '}
-            <Txt variant="semibold14">{PACKAGE_SUMMARY.siteCount} sites</Txt>
-          </Txt>
-          {visiblePackages.map(({ pkg, index }) => (
-            <PackageCard
-              key={pkg.name}
-              pkg={pkg}
-              expanded={expanded === index}
-              onToggle={() => setExpanded((prev) => (prev === index ? -1 : index))}
-              onViewAll={onOpenPrices}
-              onSelect={() => onSelect(index)}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.chipStrip}
+          contentContainerStyle={styles.chipStripContent}
+        >
+          {PACKAGE_FILTERS.map((label) => (
+            <Chip
+              key={label}
+              label={label}
+              checkbox
+              active={filters.includes(label)}
+              onPress={() => onToggleFilter(label)}
             />
           ))}
-        </View>
-      ) : (
-        <View style={styles.emptyWrap}>
-          <EmptyState
-            art={<NoPackagesArt />}
-            title="No packages match your filters"
-            body="Try removing a filter to see more packages for this room."
-            actionLabel="Clear filters"
-            onAction={onClearFilters}
-          />
-        </View>
-      )}
+        </ScrollView>
+
+        {visiblePackages.length > 0 ? (
+          <View style={styles.packageList}>
+            <Txt variant="regular14" color={color.textSecondary}>
+              <Txt variant="semibold14">{PACKAGE_SUMMARY.packageCount} packages</Txt> from{' '}
+              <Txt variant="semibold14">{PACKAGE_SUMMARY.siteCount} sites</Txt>
+            </Txt>
+            <View style={desktop ? styles.packageGrid : undefined}>
+              {visiblePackages.map(({ pkg, index }) => (
+                <PackageCard
+                  key={pkg.name}
+                  pkg={pkg}
+                  expanded={expanded === index}
+                  onToggle={() => setExpanded((prev) => (prev === index ? -1 : index))}
+                  onViewAll={onOpenPrices}
+                  onSelect={() => onSelect(index)}
+                  style={desktop ? styles.packageGridItem : undefined}
+                />
+              ))}
+            </View>
+          </View>
+        ) : (
+          <View style={[styles.emptyWrap, desktop && styles.emptyWrapDesktop]}>
+            <View style={desktop ? styles.emptyInnerDesktop : undefined}>
+              <EmptyState
+                art={<NoPackagesArt />}
+                title="No packages match your filters"
+                body="Try removing a filter to see more packages for this room."
+                actionLabel="Clear filters"
+                onAction={onClearFilters}
+              />
+            </View>
+          </View>
+        )}
+      </View>
     </ScrollView>
   );
 }
 
-function PackageCard({
+export function PackageCard({
   pkg,
   expanded,
   onToggle,
   onViewAll,
   onSelect,
+  style,
 }: {
   pkg: Package;
   expanded: boolean;
   onToggle: () => void;
   onViewAll: () => void;
   onSelect: () => void;
+  style?: StyleProp<ViewStyle>;
 }) {
   return (
     <Pressable
@@ -322,6 +347,7 @@ function PackageCard({
           borderColor: expanded ? color.primary : color.border,
         },
         expanded ? shadow.cardActive : shadow.card,
+        style,
       ]}
     >
       <View style={styles.packageHeader}>
@@ -485,6 +511,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
   },
+  headerBand: {
+    backgroundColor: color.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: color.border,
+  },
+  headerInner: {
+    width: '100%',
+    maxWidth: DESKTOP_CONTENT_WIDTH,
+    alignSelf: 'center',
+    paddingHorizontal: space.x32,
+    borderBottomWidth: 0,
+  },
   tabStrip: {
     flexGrow: 0,
     borderBottomWidth: 1,
@@ -561,6 +599,31 @@ const styles = StyleSheet.create({
   packageList: {
     padding: space.x16,
     gap: space.x12,
+  },
+  desktopColumn: {
+    width: '100%',
+    maxWidth: DESKTOP_CONTENT_WIDTH,
+    alignSelf: 'center',
+  },
+  packageGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: space.x16,
+    alignItems: 'flex-start',
+  },
+  packageGridItem: {
+    flexGrow: 1,
+    flexBasis: 420,
+    maxWidth: 560,
+  },
+  emptyWrapDesktop: {
+    height: 480,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyInnerDesktop: {
+    width: '100%',
+    maxWidth: 480,
   },
   packageCard: {
     borderWidth: 1,

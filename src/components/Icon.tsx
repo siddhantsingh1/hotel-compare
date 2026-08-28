@@ -196,6 +196,29 @@ export function StarIcon({ size = 12, color: c = color.highlightPressed }: IconP
   );
 }
 
+/** Multi-column grid — the default Results List view on desktop. */
+export function GridIcon({ size = 18, color: c = color.primary }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 18 18" fill="none">
+      <Rect x={2} y={2} width={6} height={6} rx={1.4} stroke={c} strokeWidth={1.5} />
+      <Rect x={10} y={2} width={6} height={6} rx={1.4} stroke={c} strokeWidth={1.5} />
+      <Rect x={2} y={10} width={6} height={6} rx={1.4} stroke={c} strokeWidth={1.5} />
+      <Rect x={10} y={10} width={6} height={6} rx={1.4} stroke={c} strokeWidth={1.5} />
+    </Svg>
+  );
+}
+
+/** Stacked rows — the horizontal-card Results List view on desktop. */
+export function ListIcon({ size = 18, color: c = color.primary }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 18 18" fill="none">
+      <Rect x={2} y={3} width={14} height={3.2} rx={1} stroke={c} strokeWidth={1.5} />
+      <Rect x={2} y={7.4} width={14} height={3.2} rx={1} stroke={c} strokeWidth={1.5} />
+      <Rect x={2} y={11.8} width={14} height={3.2} rx={1} stroke={c} strokeWidth={1.5} />
+    </Svg>
+  );
+}
+
 /** Small square-in-circle glyph used for amenity / rule / fact rows. */
 export function TileGlyph({
   size = 32,

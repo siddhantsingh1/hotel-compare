@@ -13,8 +13,6 @@ type Props = {
 };
 
 export function SortSheet({ visible, onClose }: Props) {
-  const { sort, setSort } = useBooking();
-
   return (
     <Sheet
       visible={visible}
@@ -23,31 +21,40 @@ export function SortSheet({ visible, onClose }: Props) {
       headerDivider={false}
       footer={<Button label="Apply" onPress={onClose} style={{ flex: 1 }} />}
     >
-      <View style={styles.list}>
-        {SORT_OPTIONS.map((option) => {
-          const selected = option === sort;
-          return (
-            <Pressable key={option} style={styles.row} onPress={() => setSort(option)}>
-              <View
-                style={[
-                  styles.radio,
-                  selected
-                    ? { borderWidth: 7, borderColor: color.primary }
-                    : { borderWidth: 1.5, borderColor: color.radioBorder },
-                ]}
-              />
-              <Txt
-                variant={selected ? 'semibold16' : 'regular16'}
-                color={selected ? color.primary : color.text}
-                style={{ flex: 1 }}
-              >
-                {option}
-              </Txt>
-            </Pressable>
-          );
-        })}
-      </View>
+      <SortOptions />
     </Sheet>
+  );
+}
+
+/** The radio list. Shared by the mobile bottom sheet and the desktop Popover. */
+export function SortOptions() {
+  const { sort, setSort } = useBooking();
+
+  return (
+    <View style={styles.list}>
+      {SORT_OPTIONS.map((option) => {
+        const selected = option === sort;
+        return (
+          <Pressable key={option} style={styles.row} onPress={() => setSort(option)}>
+            <View
+              style={[
+                styles.radio,
+                selected
+                  ? { borderWidth: 7, borderColor: color.primary }
+                  : { borderWidth: 1.5, borderColor: color.radioBorder },
+              ]}
+            />
+            <Txt
+              variant={selected ? 'semibold16' : 'regular16'}
+              color={selected ? color.primary : color.text}
+              style={{ flex: 1 }}
+            >
+              {option}
+            </Txt>
+          </Pressable>
+        );
+      })}
+    </View>
   );
 }
 
