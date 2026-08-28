@@ -10,9 +10,10 @@ import {
   NoFilterMatchArt,
   NoHotelsArt,
 } from '../components/EmptyState';
-import { ArrowUpIcon, ChevronRight, FilterIcon, HeartIcon, MapIcon, SortIcon } from '../components/Icon';
+import { ChevronRight, FilterIcon, HeartIcon, MapIcon, SortIcon } from '../components/Icon';
 import { Header } from '../components/Header';
 import { Photo } from '../components/Photo';
+import { PriceCompareRow } from '../components/PriceCompareRow';
 import { Stars } from '../components/Stars';
 import { Txt } from '../components/Txt';
 import { platformLogos } from '../data/images';
@@ -240,24 +241,14 @@ function HotelCard({ hotel, onOpen }: { hotel: Hotel; onOpen: () => void }) {
 
       <View>
         {hotel.altPrices.map((alt) => (
-          <Pressable key={alt.platform} style={styles.altRow} onPress={onOpen}>
-            <Photo uri={platformLogos[alt.platform]} style={styles.platformLogo} />
-            <View style={{ flex: 1, minWidth: 0 }}>
-              <Txt variant="regular14" color={color.textSecondary}>
-                {alt.platform}
-              </Txt>
-              <View style={styles.altPriceRow}>
-                <Txt variant="semibold16">{alt.price}</Txt>
-                <View style={styles.deltaRow}>
-                  <ArrowUpIcon size={10} />
-                  <Txt variant="regular12" color={color.error}>
-                    {alt.higherBy} higher
-                  </Txt>
-                </View>
-              </View>
-            </View>
-            <ChevronRight size={14} />
-          </Pressable>
+          <PriceCompareRow
+            key={alt.platform}
+            platform={alt.platform}
+            price={alt.price}
+            higherBy={alt.higherBy}
+            onPress={onOpen}
+            style={styles.altRow}
+          />
         ))}
       </View>
     </View>
@@ -405,23 +396,7 @@ const styles = StyleSheet.create({
     minHeight: 24,
   },
   altRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.x12,
-    paddingVertical: space.x12,
-    paddingHorizontal: space.x4,
     borderTopWidth: 1,
     borderTopColor: color.border,
-  },
-  altPriceRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.x8,
-    marginTop: space.x2,
-  },
-  deltaRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.x4,
   },
 });
