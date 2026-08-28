@@ -17,8 +17,10 @@ import {
 } from '../data/mock';
 import { brandTile } from '../data/images';
 import { formatDay, useBooking } from '../state/BookingContext';
+import { useIsDesktop } from '../theme/breakpoints';
 import { color, radius, space } from '../theme/tokens';
 import { DestinationSearchScreen } from './DestinationSearchScreen';
+import { EntrySearchDesktop } from './EntrySearchDesktop';
 import { DateSheet } from './sheets/DateSheet';
 import { GuestsSheet } from './sheets/GuestsSheet';
 
@@ -27,6 +29,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'EntrySearch'>;
 export function EntrySearchScreen({ navigation }: Props) {
   const { search, setSearch, commitSearch, roomsLabel, guestsLabel } = useBooking();
   const [overlay, setOverlay] = useState<'search' | 'dates' | 'guests' | null>(null);
+  const isDesktop = useIsDesktop();
 
   const startSearch = (destination?: string) => {
     commitSearch(destination);
@@ -35,6 +38,22 @@ export function EntrySearchScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
+      {isDesktop ? (
+        <EntrySearchDesktop
+          destination={search.destination}
+          checkIn={search.checkIn}
+          checkOut={search.checkOut}
+          roomsLabel={roomsLabel}
+          guestsLabel={guestsLabel}
+          tripType={search.tripType}
+          onPickTripType={(label) => setSearch({ tripType: label })}
+          onOpenDestination={() => setOverlay('search')}
+          onOpenDates={() => setOverlay('dates')}
+          onOpenGuests={() => setOverlay('guests')}
+          onSearch={startSearch}
+        />
+      ) : (
+        <>
       <SafeAreaView edges={['top']} style={styles.headerSafeArea} />
 
       <ScrollView style={styles.scroll}>
@@ -226,6 +245,8 @@ export function EntrySearchScreen({ navigation }: Props) {
           </View>
         </View>
       </ScrollView>
+        </>
+      )}
 
       <DestinationSearchScreen
         visible={overlay === 'search'}
