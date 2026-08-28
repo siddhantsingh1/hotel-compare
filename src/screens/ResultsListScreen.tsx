@@ -19,7 +19,9 @@ import { Txt } from '../components/Txt';
 import { platformLogos } from '../data/images';
 import { Hotel, QUICK_FILTERS, RESULTS_SUMMARY } from '../data/mock';
 import { useBooking } from '../state/BookingContext';
+import { useIsDesktop } from '../theme/breakpoints';
 import { color, radius, shadow, space } from '../theme/tokens';
+import { ResultsListDesktop } from './ResultsListDesktop';
 import { FilterSheet } from './sheets/FilterSheet';
 import { SortSheet } from './sheets/SortSheet';
 
@@ -38,11 +40,20 @@ export function ResultsListScreen({ navigation }: Props) {
   } = useBooking();
   const [sheet, setSheet] = useState<'filter' | 'sort' | null>(null);
   const [quickFilters, setQuickFilters] = useState<string[]>([]);
+  const isDesktop = useIsDesktop();
 
   const openHotel = (hotel: Hotel) => {
     setSelection({ hotelId: hotel.id, roomIndex: 0, packageIndex: 0 });
     navigation.navigate('HotelDetail');
   };
+
+  if (isDesktop) {
+    return (
+      <SafeAreaView style={styles.root} edges={['top', 'bottom']}>
+        <ResultsListDesktop onOpenHotel={openHotel} onBack={() => navigation.goBack()} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.root} edges={['top', 'bottom']}>

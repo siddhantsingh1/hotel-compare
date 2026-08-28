@@ -14,11 +14,7 @@ type Props = {
 };
 
 export function FilterSheet({ visible, onClose }: Props) {
-  const { filters, toggleFilter, clearFilters, appliedFilterCount } = useBooking();
-  const [categoryIndex, setCategoryIndex] = useState(0);
-
-  const activeCategory = FILTER_CATEGORIES[categoryIndex];
-  const activeChecked = filters[activeCategory.label] ?? [];
+  const { clearFilters, appliedFilterCount } = useBooking();
 
   return (
     <Sheet
@@ -35,74 +31,90 @@ export function FilterSheet({ visible, onClose }: Props) {
         </>
       }
     >
-      <View style={styles.columns}>
-        <ScrollView style={styles.rail} contentContainerStyle={{ paddingBottom: space.x16 }}>
-          {FILTER_CATEGORIES.map((category, index) => {
-            const active = index === categoryIndex;
-            const count = (filters[category.label] ?? []).length;
-            return (
-              <Pressable
-                key={category.label}
-                onPress={() => setCategoryIndex(index)}
+      <FilterOptions />
+    </Sheet>
+  );
+}
+
+/**
+ * The category rail + options list. Shared by the mobile bottom sheet and the
+ * desktop Popover so the filtering logic can't drift between the two.
+ */
+export function FilterOptions() {
+  const { filters, toggleFilter } = useBooking();
+  const [categoryIndex, setCategoryIndex] = useState(0);
+
+  const activeCategory = FILTER_CATEGORIES[categoryIndex];
+  const activeChecked = filters[activeCategory.label] ?? [];
+
+  return (
+    <View style={styles.columns}>
+      <ScrollView style={styles.rail} contentContainerStyle={{ paddingBottom: space.x16 }}>
+        {FILTER_CATEGORIES.map((category, index) => {
+          const active = index === categoryIndex;
+          const count = (filters[category.label] ?? []).length;
+          return (
+            <Pressable
+              key={category.label}
+              onPress={() => setCategoryIndex(index)}
+              style={[
+                styles.railItem,
+                {
+                  borderLeftColor: active ? color.primary : 'transparent',
+                  backgroundColor: active ? color.surface : 'transparent',
+                },
+              ]}
+            >
+              <Txt
+                variant={active ? 'semibold14' : 'regular14'}
+                color={active ? color.primary : color.textSecondary}
+                style={{ flex: 1 }}
+              >
+                {category.label}
+              </Txt>
+              {count > 0 ? (
+                <View style={styles.countBadge}>
+                  <Txt variant="semibold14" color={color.countBadgeText} style={styles.countText}>
+                    {count}
+                  </Txt>
+                </View>
+              ) : null}
+            </Pressable>
+          );
+        })}
+      </ScrollView>
+
+      <ScrollView style={styles.options} contentContainerStyle={styles.optionsContent}>
+        {activeCategory.options.map((option) => {
+          const checked = activeChecked.includes(option.label);
+          return (
+            <Pressable
+              key={option.label}
+              style={styles.option}
+              onPress={() => toggleFilter(activeCategory.label, option.label)}
+            >
+              <View
                 style={[
-                  styles.railItem,
+                  styles.checkbox,
                   {
-                    borderLeftColor: active ? color.primary : 'transparent',
-                    backgroundColor: active ? color.surface : 'transparent',
+                    backgroundColor: checked ? color.primary : color.surface,
+                    borderColor: checked ? color.primary : color.checkboxBorder,
                   },
                 ]}
               >
-                <Txt
-                  variant={active ? 'semibold14' : 'regular14'}
-                  color={active ? color.primary : color.textSecondary}
-                  style={{ flex: 1 }}
-                >
-                  {category.label}
-                </Txt>
-                {count > 0 ? (
-                  <View style={styles.countBadge}>
-                    <Txt variant="semibold14" color={color.countBadgeText} style={styles.countText}>
-                      {count}
-                    </Txt>
-                  </View>
-                ) : null}
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-
-        <ScrollView style={styles.options} contentContainerStyle={styles.optionsContent}>
-          {activeCategory.options.map((option) => {
-            const checked = activeChecked.includes(option.label);
-            return (
-              <Pressable
-                key={option.label}
-                style={styles.option}
-                onPress={() => toggleFilter(activeCategory.label, option.label)}
-              >
-                <View
-                  style={[
-                    styles.checkbox,
-                    {
-                      backgroundColor: checked ? color.primary : color.surface,
-                      borderColor: checked ? color.primary : color.checkboxBorder,
-                    },
-                  ]}
-                >
-                  {checked ? <CheckIcon size={13} /> : null}
-                </View>
-                <Txt variant="regular14" style={{ flex: 1 }}>
-                  {option.label}
-                </Txt>
-                <Txt variant="regular12" color={color.textMuted}>
-                  {option.count}
-                </Txt>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-      </View>
-    </Sheet>
+                {checked ? <CheckIcon size={13} /> : null}
+              </View>
+              <Txt variant="regular14" style={{ flex: 1 }}>
+                {option.label}
+              </Txt>
+              <Txt variant="regular12" color={color.textMuted}>
+                {option.count}
+              </Txt>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
+    </View>
   );
 }
 

@@ -13,17 +13,8 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import type { RootStackParamList } from '../../App';
 import { Button, IconButton } from '../components/Button';
 import { Chip, Pill } from '../components/Chip';
-import { NoReviewsArt } from '../components/EmptyState';
 import { Header } from '../components/Header';
-import {
-  BellIcon,
-  ChevronRight,
-  CloseIcon,
-  DirectionsIcon,
-  PlayIcon,
-  ShareIcon,
-  TileGlyph,
-} from '../components/Icon';
+import { BellIcon, ChevronRight, CloseIcon, DirectionsIcon, ShareIcon, TileGlyph } from '../components/Icon';
 import { PriceSpreadCard } from '../components/PriceSpreadCard';
 import { PriceTrendGraph } from '../components/PriceTrendGraph';
 import { Photo } from '../components/Photo';
@@ -33,20 +24,7 @@ import { Stepper } from '../components/Stepper';
 import { Toast } from '../components/Toast';
 import { Txt } from '../components/Txt';
 import { mapTile, platformLogos } from '../data/images';
-import {
-  ABOUT_PARAGRAPHS,
-  AMENITY_GROUPS,
-  DINING,
-  GALLERY_SECTIONS,
-  LANDMARKS,
-  LOCATION_FILTERS,
-  MEDIA_ITEMS,
-  REVIEWS,
-  REVIEW_SOURCES,
-  RULES,
-  RULE_GROUPS,
-  TOP_AMENITIES,
-} from '../data/mock';
+import { ABOUT_PARAGRAPHS, AMENITY_GROUPS, GALLERY_SECTIONS, REVIEW_SOURCES, RULE_GROUPS } from '../data/mock';
 import {
   DEFAULT_ALERT_AMOUNT,
   DEFAULT_TREND_RANGE,
@@ -55,6 +33,18 @@ import {
   TrendRange,
 } from '../data/trend';
 import { formatDay, nightsBetween, useBooking } from '../state/BookingContext';
+import { useIsDesktop } from '../theme/breakpoints';
+import { HotelDetailDesktop } from './HotelDetailDesktop';
+import {
+  AboutSection,
+  AmenitiesSection,
+  DiningSection,
+  LocationSection,
+  MediaSection,
+  OverviewSection,
+  ReviewsSection,
+  RulesSection,
+} from './HotelDetailSections';
 import { AlertSheet } from './sheets/AlertSheet';
 import { RoomPickerSheet } from './sheets/RoomPickerSheet';
 import { color, radius, shadow, space, TOUCH_TARGET } from '../theme/tokens';
@@ -63,7 +53,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'HotelDetail'>;
 
 /** Price block + CTA row, plus the "more prices" strip beneath it. */
 const BOTTOM_BAR_HEIGHT = 128;
-type SheetName = 'gallery' | 'about' | 'amenities' | 'booking' | 'rules' | 'alert' | 'roomPicker' | null;
+export type SheetName = 'gallery' | 'about' | 'amenities' | 'booking' | 'rules' | 'alert' | 'roomPicker' | null;
 
 export function HotelDetailScreen({ navigation }: Props) {
   const { selectedHotel, search, stayLabel, roomsLabel, guestsLabel } = useBooking();
@@ -75,6 +65,7 @@ export function HotelDetailScreen({ navigation }: Props) {
   const [alertAmount, setAlertAmount] = useState(DEFAULT_ALERT_AMOUNT);
   const [toast, setToast] = useState<string | null>(null);
   const insets = useSafeAreaInsets();
+  const isDesktop = useIsDesktop();
 
   const hotel = selectedHotel;
   if (!hotel) return null;
@@ -85,6 +76,33 @@ export function HotelDetailScreen({ navigation }: Props) {
   };
 
   const showsReviews = hotel.hasReviews && reviewSource === 'Google';
+
+  if (isDesktop) {
+    return (
+      <HotelDetailDesktop
+        hotel={hotel}
+        search={search}
+        stayLabel={stayLabel}
+        roomsLabel={roomsLabel}
+        guestsLabel={guestsLabel}
+        sheet={sheet}
+        setSheet={setSheet}
+        reviewSource={reviewSource}
+        setReviewSource={setReviewSource}
+        showsReviews={showsReviews}
+        trendRange={trendRange}
+        setTrendRange={setTrendRange}
+        trendRoom={trendRoom}
+        setTrendRoom={setTrendRoom}
+        alertAmount={alertAmount}
+        setAlertAmount={setAlertAmount}
+        toast={toast}
+        setToast={setToast}
+        onBack={() => navigation.goBack()}
+        onSelectRoom={() => navigation.navigate('PriceComparison')}
+      />
+    );
+  }
 
   return (
     <View style={styles.root}>
@@ -131,89 +149,13 @@ export function HotelDetailScreen({ navigation }: Props) {
           </View>
         </View>
 
-        <View style={styles.section}>
-          <View>
-            <Txt variant="bold20">{hotel.name}</Txt>
-            <View style={styles.starRow}>
-              <Stars count={hotel.starCount} />
-              <Txt variant="regular12" color={color.textSecondary}>
-                · {hotel.type}
-              </Txt>
-            </View>
-          </View>
-
-          <View style={styles.outlinedRow}>
-            <View style={styles.ratingTile}>
-              <Txt variant="bold16" color={color.primary}>
-                {hotel.guestRating}
-              </Txt>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Txt variant="semibold14">{hotel.ratingLabel}</Txt>
-              <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x2 }}>
-                {hotel.reviewCount} Google reviews
-              </Txt>
-            </View>
-            <ChevronRight size={14} />
-          </View>
-
-          <View style={styles.outlinedRow}>
-            <Photo uri={mapTile} style={styles.locationThumb} />
-            <View style={{ flex: 1, minWidth: 0 }}>
-              <Txt variant="medium14">{hotel.locality}</Txt>
-              <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x2 }}>
-                {hotel.detailDistance}
-              </Txt>
-            </View>
-            <IconButton background={color.primaryTint} bordered={false}>
-              <DirectionsIcon size={18} />
-            </IconButton>
-          </View>
-
-          <View style={styles.stayCard}>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={[styles.stayHalf, styles.stayDivider]}>
-                <Txt variant="regular12" color={color.textMuted}>
-                  Check-in
-                </Txt>
-                <Txt variant="semibold16" style={{ marginTop: space.x4 }}>
-                  {formatDay(search.checkIn)}
-                </Txt>
-                <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x4 }}>
-                  After 2:00 PM
-                </Txt>
-              </View>
-              <View style={styles.stayHalf}>
-                <Txt variant="regular12" color={color.textMuted}>
-                  Check-out
-                </Txt>
-                <Txt variant="semibold16" style={{ marginTop: space.x4 }}>
-                  {formatDay(search.checkOut)}
-                </Txt>
-                <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x4 }}>
-                  Before 11:00 AM
-                </Txt>
-              </View>
-            </View>
-            <View style={styles.stayGuests}>
-              <View>
-                <Txt variant="regular12" color={color.textMuted}>
-                  Rooms & guests
-                </Txt>
-                <Txt variant="semibold16" style={{ marginTop: space.x4 }}>
-                  {roomsLabel} · {guestsLabel}
-                </Txt>
-              </View>
-              <Button
-                label="Edit"
-                variant="secondary"
-                size="compact"
-                onPress={() => setSheet('booking')}
-                style={styles.editButton}
-              />
-            </View>
-          </View>
-        </View>
+        <OverviewSection
+          hotel={hotel}
+          search={search}
+          roomsLabel={roomsLabel}
+          guestsLabel={guestsLabel}
+          onEditStay={() => setSheet('booking')}
+        />
 
         <PriceSpreadCard />
 
@@ -224,181 +166,19 @@ export function HotelDetailScreen({ navigation }: Props) {
           onOpenRoomPicker={() => setSheet('roomPicker')}
         />
 
-        <View style={styles.sectionTight}>
-          <Txt variant="semibold16">About the property</Txt>
-          <Txt variant="regular14" color={color.textSecondary} style={styles.paragraph}>
-            {hotel.about}
-          </Txt>
-          <Pressable onPress={() => setSheet('about')} style={styles.textLink}>
-            <Txt variant="semibold14" color={color.primary}>
-              Read more
-            </Txt>
-          </Pressable>
-        </View>
-
-        <View style={styles.sectionFlush}>
-          <Txt variant="semibold16" style={styles.inset}>
-            Property media
-          </Txt>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.hScroll}>
-            {MEDIA_ITEMS.map((item, index) => (
-              <View key={item} style={{ width: 130 }}>
-                <Photo uri={hotel.photos[index % hotel.photos.length]} style={styles.mediaThumb}>
-                  <View style={styles.playBadge}>
-                    <PlayIcon size={14} />
-                  </View>
-                </Photo>
-                <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x8 }}>
-                  {item}
-                </Txt>
-              </View>
-            ))}
-          </ScrollView>
-        </View>
-
-        <View style={styles.sectionFlush}>
-          <View style={[styles.rowBetween, styles.inset]}>
-            <Txt variant="semibold16">{hotel.amenityCount} amenities</Txt>
-            <Button
-              label="View all"
-              variant="secondary"
-              size="compact"
-              onPress={() => setSheet('amenities')}
-              style={styles.editButton}
-            />
-          </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.hScrollTight}>
-            {TOP_AMENITIES.map((amenity) => (
-              <View key={amenity} style={styles.amenityTile}>
-                <TileGlyph size={32} />
-                <Txt variant="regular12" color={color.textSecondary} style={styles.centered}>
-                  {amenity}
-                </Txt>
-              </View>
-            ))}
-          </ScrollView>
-        </View>
-
-        <View style={styles.sectionFlush}>
-          <Txt variant="semibold16" style={styles.inset}>
-            Ratings & reviews
-          </Txt>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.hScrollTight}>
-            {REVIEW_SOURCES.map((source) => (
-              <Chip
-                key={source}
-                label={source}
-                active={reviewSource === source}
-                onPress={() => setReviewSource(source)}
-              />
-            ))}
-          </ScrollView>
-
-          {showsReviews ? (
-            <>
-              <View style={[styles.outlinedRow, styles.inset]}>
-                <Txt variant="bold24">{hotel.guestRating}</Txt>
-                <View style={{ flex: 1 }}>
-                  <Txt variant="semibold14">{hotel.ratingLabel}</Txt>
-                  <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x2 }}>
-                    Based on {hotel.reviewCount} Google reviews
-                  </Txt>
-                </View>
-              </View>
-              <View style={[styles.inset, { gap: space.x12 }]}>
-                {REVIEWS.map((review, index) => (
-                  <View key={index} style={styles.reviewCard}>
-                    <View style={styles.reviewHeader}>
-                      <View style={styles.avatar}>
-                        <Txt variant="semibold14" color={color.primary} style={styles.avatarText}>
-                          {review.initial}
-                        </Txt>
-                      </View>
-                      <Txt variant="medium14">{review.name}</Txt>
-                      <Txt variant="regular12" color={color.textMuted} style={{ marginLeft: 'auto' }}>
-                        {review.date}
-                      </Txt>
-                    </View>
-                    <Txt variant="regular14" color={color.textSecondary} style={{ marginTop: space.x8 }}>
-                      {review.text}
-                    </Txt>
-                  </View>
-                ))}
-              </View>
-              <Pressable style={[styles.inset, styles.textLink]}>
-                <Txt variant="semibold14" color={color.primary}>
-                  See all reviews
-                </Txt>
-              </Pressable>
-            </>
-          ) : (
-            <NoReviewsFallbacks hotel={hotel} source={reviewSource} />
-          )}
-        </View>
-
-        <View style={styles.sectionFlush}>
-          <Txt variant="semibold16" style={styles.inset}>
-            Location
-          </Txt>
-          <Txt variant="regular14" color={color.textSecondary} style={styles.inset}>
-            {hotel.address}
-          </Txt>
-          <Photo uri={mapTile} style={[styles.mapView, styles.inset]} />
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.hScrollTight}>
-            {LOCATION_FILTERS.map((filter, index) => (
-              <Chip key={filter} label={filter} active={index === 0} />
-            ))}
-          </ScrollView>
-          <View style={styles.inset}>
-            {LANDMARKS.map((landmark) => (
-              <View key={landmark.name} style={styles.landmarkRow}>
-                <View style={styles.landmarkDot}>
-                  <View style={styles.landmarkDotInner} />
-                </View>
-                <Txt variant="regular14" style={{ flex: 1 }}>
-                  {landmark.name}
-                </Txt>
-                <Txt variant="regular12" color={color.textSecondary}>
-                  {landmark.distance}
-                </Txt>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        <View style={styles.sectionTight}>
-          <Txt variant="semibold16">Food & dining</Txt>
-          {DINING.map((item) => (
-            <View key={item.name} style={styles.outlinedRow}>
-              <View style={styles.diningIcon}>
-                <TileGlyph size={36} bg={color.highlightTint} mark={color.highlightPressed} />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Txt variant="medium14">{item.name}</Txt>
-                <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x2 }}>
-                  {item.detail}
-                </Txt>
-              </View>
-            </View>
-          ))}
-        </View>
-
-        <View style={[styles.sectionTight, styles.lastSection]}>
-          <Txt variant="semibold16">Property rules</Txt>
-          {RULES.map((rule) => (
-            <View key={rule} style={styles.bulletRow}>
-              <View style={styles.bullet} />
-              <Txt variant="regular14" color={color.textSecondary} style={{ flex: 1 }}>
-                {rule}
-              </Txt>
-            </View>
-          ))}
-          <Pressable onPress={() => setSheet('rules')} style={styles.textLink}>
-            <Txt variant="semibold14" color={color.primary}>
-              View all rules
-            </Txt>
-          </Pressable>
-        </View>
+        <AboutSection hotel={hotel} onReadMore={() => setSheet('about')} />
+        <MediaSection hotel={hotel} />
+        <AmenitiesSection hotel={hotel} onViewAll={() => setSheet('amenities')} />
+        <ReviewsSection
+          hotel={hotel}
+          reviewSource={reviewSource}
+          onChangeSource={setReviewSource}
+          showsReviews={showsReviews}
+          reviewSources={REVIEW_SOURCES}
+        />
+        <LocationSection hotel={hotel} />
+        <DiningSection />
+        <RulesSection onViewAll={() => setSheet('rules')} />
       </ScrollView>
 
       <Toast message={toast} onHide={() => setToast(null)} bottomOffset={BOTTOM_BAR_HEIGHT} />
@@ -448,15 +228,7 @@ export function HotelDetailScreen({ navigation }: Props) {
         photoCount={hotel.photoCount}
       />
 
-      <Sheet visible={sheet === 'about'} onClose={() => setSheet(null)} title="About the property" maxHeight="78%">
-        <ScrollView contentContainerStyle={styles.sheetBody}>
-          {ABOUT_PARAGRAPHS.map((paragraph, index) => (
-            <Txt key={index} variant="regular14" color={color.textSecondary} style={styles.paragraph}>
-              {paragraph}
-            </Txt>
-          ))}
-        </ScrollView>
-      </Sheet>
+      <AboutSheet visible={sheet === 'about'} onClose={() => setSheet(null)} />
 
       <AmenitiesSheet
         visible={sheet === 'amenities'}
@@ -493,106 +265,51 @@ export function HotelDetailScreen({ navigation }: Props) {
         roomLine={TREND_ROOMS[trendRoom].name}
       />
 
-      <Sheet visible={sheet === 'rules'} onClose={() => setSheet(null)} title="Property rules" maxHeight="78%">
-        <ScrollView contentContainerStyle={[styles.sheetBody, { gap: 18 }]}>
-          {RULE_GROUPS.map((group) => (
-            <View key={group.title} style={{ gap: space.x8 }}>
-              <View style={styles.ruleGroupHeader}>
-                <TileGlyph size={24} bg={color.primaryTint} mark={color.primary} />
-                <Txt variant="semibold16">{group.title}</Txt>
-              </View>
-              {group.items.map((item) => (
-                <View key={item} style={styles.bulletRow}>
-                  <View style={styles.bullet} />
-                  <Txt variant="regular14" color={color.textSecondary} style={{ flex: 1 }}>
-                    {item}
-                  </Txt>
-                </View>
-              ))}
-            </View>
-          ))}
-        </ScrollView>
-      </Sheet>
+      <RulesSheet visible={sheet === 'rules'} onClose={() => setSheet(null)} />
     </View>
   );
 }
 
-function NoReviewsFallbacks({
-  hotel,
-  source,
-}: {
-  hotel: { starCount: number; hasReviews: boolean };
-  source: string;
-}) {
+export function AboutSheet({ visible, onClose }: { visible: boolean; onClose: () => void }) {
   return (
-    <View style={[styles.inset, { gap: space.x20 }]}>
-      <View style={{ gap: space.x8 }}>
-        <Txt variant="semibold14" color={color.textMuted} style={styles.kicker}>
-          PRIMARY FALLBACK · STAR RATING SHOWN
-        </Txt>
-        <View style={styles.fallbackCard}>
-          <View style={styles.rowCenter}>
-            <Stars count={hotel.starCount} size={20} />
-            <View style={{ flex: 1, minWidth: 0 }}>
-              <Txt variant="semibold14">{hotel.starCount}-star property</Txt>
-              <Txt variant="regular12" color={color.textSecondary} style={{ marginTop: space.x2 }}>
-                No {source} reviews yet
-              </Txt>
-            </View>
-          </View>
-          <View style={styles.fallbackDivider}>
-            <Txt variant="regular12" color={color.textSecondary}>
-              Reviews available on{' '}
-              <Txt variant="semibold14" color={color.primary} style={styles.smallText}>
-                MakeMyTrip
-              </Txt>{' '}
-              &{' '}
-              <Txt variant="semibold14" color={color.primary} style={styles.smallText}>
-                Booking.com
-              </Txt>
-            </Txt>
-          </View>
-        </View>
-      </View>
-
-      <View style={{ gap: space.x8 }}>
-        <Txt variant="semibold14" color={color.textMuted} style={styles.kicker}>
-          SECONDARY FALLBACK · NO RATING EITHER
-        </Txt>
-        <View style={styles.fallbackCard}>
-          <View style={styles.rowCenter}>
-            <Pill label="Newly listed" background={color.infoTint} foreground={color.info} />
-            <Txt variant="regular12" color={color.textSecondary} style={{ flex: 1, minWidth: 0 }}>
-              Not rated yet · no reviews on any site
-            </Txt>
-          </View>
-          <View style={styles.fallbackDivider}>
-            <Txt variant="regular12" color={color.textSecondary} style={{ lineHeight: 18 }}>
-              Ratings will appear here once guests review this property.
-            </Txt>
-          </View>
-        </View>
-      </View>
-
-      <View style={{ gap: space.x8 }}>
-        <Txt variant="semibold14" color={color.textMuted} style={styles.kicker}>
-          ALTERNATE PATH · EMPTY SOURCE TAB
-        </Txt>
-        <View style={styles.emptySourceCard}>
-          <NoReviewsArt />
-          <Txt variant="semibold16" style={styles.centered}>
-            No {source} reviews yet
+    <Sheet visible={visible} onClose={onClose} title="About the property" maxHeight="78%">
+      <ScrollView contentContainerStyle={styles.sheetBody}>
+        {ABOUT_PARAGRAPHS.map((paragraph, index) => (
+          <Txt key={index} variant="regular14" color={color.textSecondary} style={styles.paragraph}>
+            {paragraph}
           </Txt>
-          <Txt variant="regular12" color={color.textSecondary} style={[styles.centered, { lineHeight: 18 }]}>
-            Reviews available on MakeMyTrip (320) and Booking.com (118) — switch source above.
-          </Txt>
-        </View>
-      </View>
-    </View>
+        ))}
+      </ScrollView>
+    </Sheet>
   );
 }
 
-function GallerySheet({
+export function RulesSheet({ visible, onClose }: { visible: boolean; onClose: () => void }) {
+  return (
+    <Sheet visible={visible} onClose={onClose} title="Property rules" maxHeight="78%">
+      <ScrollView contentContainerStyle={[styles.sheetBody, { gap: 18 }]}>
+        {RULE_GROUPS.map((group) => (
+          <View key={group.title} style={{ gap: space.x8 }}>
+            <View style={styles.ruleGroupHeader}>
+              <TileGlyph size={24} bg={color.primaryTint} mark={color.primary} />
+              <Txt variant="semibold16">{group.title}</Txt>
+            </View>
+            {group.items.map((item) => (
+              <View key={item} style={styles.bulletRow}>
+                <View style={styles.bullet} />
+                <Txt variant="regular14" color={color.textSecondary} style={{ flex: 1 }}>
+                  {item}
+                </Txt>
+              </View>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
+    </Sheet>
+  );
+}
+
+export function GallerySheet({
   visible,
   onClose,
   photos,
@@ -656,7 +373,7 @@ function GallerySheet({
   );
 }
 
-function AmenitiesSheet({
+export function AmenitiesSheet({
   visible,
   onClose,
   title,

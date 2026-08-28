@@ -20,16 +20,31 @@ import { Txt } from '../components/Txt';
 import { brandTile, mapTile, platformLogos } from '../data/images';
 import { CONFIRMATION, RIDE_BANNERS, TRIP_GIFT_CARDS } from '../data/mock';
 import { formatDay, useBooking } from '../state/BookingContext';
+import { useIsDesktop } from '../theme/breakpoints';
 import { color, radius, shadow, space } from '../theme/tokens';
+import { BookingConfirmationDesktop } from './BookingConfirmationDesktop';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Confirmation'>;
 
 export function BookingConfirmationScreen({ navigation }: Props) {
   const { selectedHotel, search, roomsLabel, guestsLabel } = useBooking();
   const hotel = selectedHotel;
+  const isDesktop = useIsDesktop();
 
   const goHome = () =>
     navigation.reset({ index: 0, routes: [{ name: 'EntrySearch' }] });
+
+  if (isDesktop) {
+    return (
+      <BookingConfirmationDesktop
+        hotel={hotel}
+        search={search}
+        roomsLabel={roomsLabel}
+        guestsLabel={guestsLabel}
+        onGoHome={goHome}
+      />
+    );
+  }
 
   return (
     <SafeAreaView style={styles.root} edges={['top', 'bottom']}>
@@ -278,7 +293,7 @@ export function BookingConfirmationScreen({ navigation }: Props) {
   );
 }
 
-function SuccessArt() {
+export function SuccessArt() {
   return (
     <Svg width={120} height={96} viewBox="0 0 120 96" fill="none">
       <Circle cx={60} cy={48} r={40} fill={color.successTint} />
